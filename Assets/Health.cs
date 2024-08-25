@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public float health;
+    // Object Health
+    public float health = 100;
+    // Object Maximum Health
+    public float maxHealth = 100;
+
+    void Start()
+    {
+        // Clamp health
+        health = Mathf.Clamp(health, 0, maxHealth);
+    }
 
     void Update()
     {
-        if (health < 0) {
-            health = 0;
-        }
-        if (health <= 10 && health >= 5)
-        {
-            print(gameObject.name + " is low on health!");
-        }
+        // Still clamping health
+        health = Mathf.Clamp(health, 0, maxHealth);
     }
 }
