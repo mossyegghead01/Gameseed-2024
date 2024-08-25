@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour
 
     // Movement Speed for the player
     public float movementSpeed = 5;
+    public GunProperty gun;
 
     private float inputX;
     private float inputY;
@@ -33,9 +34,14 @@ public class PlayerControl : MonoBehaviour
         worldMousePos.z = 0;
         
         lookVector = worldMousePos - pivotObject.position;
+
+        if (Input.GetButton("Fire1"))
+        {
+            gun.Fire();
+        }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector3(inputX * movementSpeed, inputY * movementSpeed);
         pivotObject.eulerAngles = new Vector3(0, 0, -(Mathf.Atan2(lookVector.x, lookVector.y) * Mathf.Rad2Deg - 90f));
