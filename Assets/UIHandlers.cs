@@ -56,10 +56,10 @@ public class UIHandlers : MonoBehaviour
             var clicked = inventoryHolder.transform.GetChild(index);
             var current = playerGunAxis.transform.GetChild(0);
             clicked.transform.SetParent(playerGunAxis.transform, false);
-            clicked.GetChild(0).gameObject.SetActive(true);
+            clicked.GetComponentInChildren<ParticleSystem>().Stop();
             current.transform.SetParent(inventoryHolder.transform, false);
             current.SetSiblingIndex(index);
-            current.GetChild(0).gameObject.SetActive(true);
+            current.GetComponentInChildren<ParticleSystem>().Stop();
             //inventoryHolder.transform.GetChild(index).transform.SetParent(playerGun.transform.parent, false);
             //playerGun.transform.SetParent(inventoryHolder.transform, false);
             //playerGun
