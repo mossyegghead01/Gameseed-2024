@@ -24,7 +24,7 @@ public class Grid
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                cell[x, y] = new Cell(x, y, this);
+                cell[x, y] = new Cell(CellType.Empty, CellState.Empty, x, y, this);
                 // spawnedTile.GetComponent<SpriteRenderer>().sprite = cell[x, y].GetSprite();
             }
         }
@@ -39,11 +39,11 @@ public class Grid
         return gridContainer;
     }
 
-    private void SetValue(int x, int y, int value)
+    public void SetCell(int x, int y, CellType cellType, CellState cellState)
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
-            gridArray[x, y] = value;
+
         }
     }
 
@@ -56,13 +56,6 @@ public class Grid
     {
         x = Mathf.FloorToInt(worldPosition.x / cellSize);
         y = Mathf.FloorToInt(worldPosition.y / cellSize);
-    }
-
-    public void SetValue(Vector3 worldPosition, int value)
-    {
-        int x, y;
-        GetXY(worldPosition, out x, out y);
-        SetValue(x, y, value);
     }
 
 }

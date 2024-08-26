@@ -16,6 +16,10 @@ public class GridManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            grid.GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y);
+            grid.SetCell(x, y, CellType.Plant, CellState.Carrot);
+        }
     }
 }

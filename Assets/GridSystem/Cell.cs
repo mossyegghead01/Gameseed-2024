@@ -10,32 +10,22 @@ public class Cell
     private bool isLit, canCollide;
     private Sprite sprite;
     private GameObject gridContainer;
-    private PlantType plantType;
-    private StructureType structureType;
+    private CellState cellState;
 
-    public Cell(CellType cellType, PlantType plantType, int x, int y, Grid grid)
-    {
-        this.cellType = cellType;
-        if (cellType == CellType.Plant)
-        {
-            this.plantType = plantType;
-            StartCell(x, y, grid);
-        }
-    }
-    public Cell(CellType cellType, StructureType structureType, int x, int y, Grid grid)
+    public Cell(CellType cellType, CellState cellState, int x, int y, Grid grid)
     {
         this.cellType = cellType;
         if (cellType == CellType.Structure)
         {
-            StartCell(x, y, grid);
-        }
-    }
 
-    public Cell(int x, int y, Grid grid)
-    {
-        if (cellType == CellType.Empty)
+        }
+        else if (cellType == CellType.Plant)
         {
             maxHealth = 1;
+        }
+        else
+        {
+            maxHealth = -1;
         }
         StartCell(x, y, grid);
     }
@@ -49,6 +39,7 @@ public class Cell
         cellSize = grid.GetCellSize();
         Instantiate();
     }
+
 
     private void Instantiate()
     {
@@ -83,15 +74,7 @@ public class Cell
 
     public Sprite GetSprite()
     {
-        if (cellType == CellType.Structure)
-        {
-            return SpriteManager.GetGridStructure(structureType);
-        }
-        else if (cellType == CellType.Plant)
-        {
-            return SpriteManager.GetGridPlant(plantType);
-        }
-        return SpriteManager.GetGridEmpty();
+        return SpriteManager.GetGrid(cellType, cellState);
     }
 
     public Vector3 GetWorldPosition(int x, int y)
@@ -112,14 +95,11 @@ public enum CellType
     Structure
 }
 
-public enum PlantType
+public enum CellState
 {
+    Empty,
     Carrot,
-    Corn
-}
-
-public enum StructureType
-{
+    Corn,
     Fence,
     Wall
 }

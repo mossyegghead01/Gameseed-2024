@@ -4,17 +4,20 @@ using UnityEngine;
 
 public static class SpriteManager
 {
-  public static Sprite GetGridPlant(PlantType name)
+  public static Sprite GetGrid(CellType cellType, CellState cellState)
   {
-    return Resources.Load<Sprite>($"Sprites/Grid/Plants/{name}");
-  }
-  public static Sprite GetGridStructure(StructureType name)
-  {
-    return Resources.Load<Sprite>($"Sprites/Grid/Structure/{name}");
-  }
-  public static Sprite GetGridEmpty()
-  {
-    return Resources.Load<Sprite>("Sprites/Grid/Shadow");
+    if (cellType == CellType.Plant)
+    {
+      return Resources.Load<Sprite>($"Sprites/Grid/Plants/{cellState}");
+    }
+    else if (cellType == CellType.Structure)
+    {
+      return Resources.Load<Sprite>($"Sprites/Grid/Structure/{cellState}");
+    }
+    else
+    {
+      return Resources.Load<Sprite>("Sprites/Grid/Shadow");
+    }
   }
 }
 
