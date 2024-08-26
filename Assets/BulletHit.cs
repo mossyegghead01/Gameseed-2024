@@ -33,8 +33,7 @@ public class BulletHit : MonoBehaviour
     {
         // Check if the object it collided with has health
         // If it has, reduce it by the amount of bullet damage
-        var collidedHealth = collision.gameObject.GetComponent<Health>();
-        if (collidedHealth != null)
+        if (collision.gameObject.TryGetComponent<Health>(out var collidedHealth))
         {
             collidedHealth.health -= damage;
         }

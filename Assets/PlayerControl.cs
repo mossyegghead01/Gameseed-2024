@@ -40,9 +40,14 @@ public class PlayerControl : MonoBehaviour
         lookVector = worldMousePos - pivotObject.position;
 
         // Shooting
+        // TODO: Fix issue where clickin on UI component still register
         if (Input.GetButton("Fire1"))
         {
-            gun.Fire();
+            if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
+            {
+                prop.Fire();
+            }
+            //gun.Fire();
         }
     }
 
