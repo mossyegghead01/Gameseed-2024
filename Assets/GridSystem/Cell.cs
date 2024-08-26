@@ -11,6 +11,7 @@ public class Cell
     private Sprite sprite;
     private GameObject gridContainer;
     private CellState cellState;
+    private GameObject cellObject;
 
     public Cell(CellType cellType, CellState cellState, int x, int y, Grid grid)
     {
@@ -37,24 +38,48 @@ public class Cell
         this.x = x;
         this.y = y;
         cellSize = grid.GetCellSize();
-        Instantiate();
+        UpdateObject();
+    }
+    public void setCell(CellType cellType, CellState cellState)
+    {
+        this.cellType = cellType;
+        this.cellState = cellState;
+        UpdateObject();
     }
 
-
-    private void Instantiate()
+    private void UpdateObject()
     {
-        GameObject cellObject = Resources.Load<GameObject>("Prefabs/Cell");
-        if (cellObject != null)
+        if (cellObject == null)
         {
-            var spawnedTile = GameObject.Instantiate(cellObject, GetWorldPosition(x, y), Quaternion.identity);
-            spawnedTile.GetComponent<SpriteRenderer>().sprite = GetSprite();
-            spawnedTile.transform.parent = gridContainer.transform;
-            spawnedTile.GetComponent<CellObject>().x = x;
-            spawnedTile.GetComponent<CellObject>().y = y;
+
+            Debug.Log("Cell Object is null");
+            var cellPrefab = Resources.Load<GameObject>("Prefabs/Cell");
+            if (cellPrefab != null)
+            {
+                cellObject = GameObject.Instantiate(cellPrefab, GetWorldPosition(x, y) + new Vector3(cellSize * 0.5f, cellSize * 0.5f), Quaternion.identity);
+                cellObject.GetComponent<SpriteRenderer>().sprite = GetSprite();
+                cellObject.transform.parent = gridContainer.transform;
+                cellObject.GetComponent<CellObject>().x = x;
+                cellObject.GetComponent<CellObject>().y = y;
+            }
+            else
+            {
+                Debug.Log("File Not Found");
+            }
         }
         else
         {
-            Debug.Log("Cell Object is null");
+            Debug.Log("Cell Object is not null");
+            Sprite sprite = GetSprite();
+            if (sprite != null)
+            {
+                Debug.Log("CellObject" + cellObject.GetComponent<CellObject>().x + " " + cellObject.GetComponent<CellObject>().y);
+                cellObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else
+            {
+                Debug.Log("Sprite is null");
+            }
         }
     }
 
@@ -72,7 +97,7 @@ public class Cell
         this.health += health;
     }
 
-    public Sprite GetSprite()
+    private Sprite GetSprite()
     {
         return SpriteManager.GetGrid(cellType, cellState);
     }

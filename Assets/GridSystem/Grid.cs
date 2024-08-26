@@ -43,7 +43,8 @@ public class Grid
     {
         if (x >= 0 && y >= 0 && x < width && y < height)
         {
-
+            Debug.Log(x + " " + y);
+            cell[x, y].setCell(CellType.Structure, CellState.Wall);
         }
     }
 

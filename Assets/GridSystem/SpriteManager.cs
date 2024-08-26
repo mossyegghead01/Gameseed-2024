@@ -12,7 +12,7 @@ public static class SpriteManager
     }
     else if (cellType == CellType.Structure)
     {
-      return Resources.Load<Sprite>($"Sprites/Grid/Structure/{cellState}");
+      return Resources.Load<Sprite>($"Sprites/Grid/Structures/{cellState}");
     }
     else
     {

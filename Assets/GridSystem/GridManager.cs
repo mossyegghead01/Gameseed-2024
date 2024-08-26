@@ -20,6 +20,7 @@ public class GridManager : MonoBehaviour
         {
             grid.GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y);
             grid.SetCell(x, y, CellType.Plant, CellState.Carrot);
+            print("click");
         }
     }
 }
