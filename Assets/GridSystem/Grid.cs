@@ -10,7 +10,7 @@ public class Grid
     private Cell[,] cell;
     private int width, height, cellSize;
     private int[,] gridArray;
-    public Grid(int width, int height, int cellSize, GameObject cellObject)
+    public Grid(int width, int height, int cellSize, GameObject cellObject, GameObject gridContainer)
     {
         this.width = width;
         this.height = height;
@@ -23,9 +23,7 @@ public class Grid
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                Debug.Log(x + " " + y);
-                cell[x, y] = new Cell(CellType.Empty);
-                var spawnedTile = GameObject.Instantiate(cellObject, GetWorldPosition(x, y), Quaternion.identity);
+                cell[x, y] = new Cell(x, y, gridContainer, cellSize);
                 // spawnedTile.GetComponent<SpriteRenderer>().sprite = cell[x, y].GetSprite();
             }
         }
@@ -39,7 +37,7 @@ public class Grid
         }
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize;
     }
