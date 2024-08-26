@@ -729,6 +729,7 @@ MonoBehaviour:
   weaponRange: 50
   damage: 5
   gunFireType: 0
+  piercing: 0
 --- !u!114 &220806985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,7 +1039,7 @@ Transform:
   m_GameObject: {fileID: 353906835}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: -0.2, z: 0}
+  m_LocalPosition: {x: 1.15, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1064,6 +1065,7 @@ MonoBehaviour:
   weaponRange: 5
   damage: 50
   gunFireType: 1
+  piercing: 1
 --- !u!212 &353906838
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1412,7 +1414,7 @@ Transform:
   m_GameObject: {fileID: 671628415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: -0.55, z: 0}
+  m_LocalPosition: {x: 1.15, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1448,9 +1450,10 @@ MonoBehaviour:
   fireRate: 0.75
   projectileSpeed: 10
   bulletPrefab: {fileID: 7725268332692948002, guid: 6083b943a6aacdd49bc40f6b75c82b98, type: 3}
-  weaponRange: 100
+  weaponRange: 20
   damage: 3
   gunFireType: 2
+  piercing: 0
 --- !u!212 &671628419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16738,8 +16741,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 671628416}
   - {fileID: 353906836}
+  - {fileID: 671628416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520755723

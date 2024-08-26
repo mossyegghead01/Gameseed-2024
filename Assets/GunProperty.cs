@@ -14,6 +14,7 @@ public class GunProperty : MonoBehaviour
     public float weaponRange = 50;
     public float damage = 5;
     public FireType gunFireType = FireType.Automatic;
+    public float piercing = 0;
 
     // Single Shot and Scatter Shot internals
     private bool fired = false;
@@ -33,6 +34,7 @@ public class GunProperty : MonoBehaviour
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * projectileSpeed, ForceMode2D.Impulse);
         bullet.GetComponent<BulletHit>().SetRange(weaponRange);
         bullet.GetComponent<BulletHit>().SetDamage(damage);
+        bullet.GetComponent<BulletHit>().SetPiercing(piercing);
     }
 
     void FixedUpdate()

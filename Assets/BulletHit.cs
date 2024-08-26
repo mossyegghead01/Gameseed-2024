@@ -7,6 +7,7 @@ public class BulletHit : MonoBehaviour
     // Bullet properties, inheritted from the gun it was fired from.
     private float range;
     private float damage;
+    private float piercing;
 
     // Internal properties
     private Vector3 initialPos;
@@ -41,7 +42,14 @@ public class BulletHit : MonoBehaviour
             }
             // Idea: Piercing
             // Instead of destroying on its first hit, destroy it after several hit
-            Destroy(gameObject);
+            if (piercing > 0)
+            {
+                piercing -= 1;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -55,5 +63,10 @@ public class BulletHit : MonoBehaviour
     public void SetDamage(float damage)
     {
         this.damage = damage;
+    }
+
+    public void SetPiercing(float piercing)
+    {
+        this.piercing = piercing;
     }
 }
