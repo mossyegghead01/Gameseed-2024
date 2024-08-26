@@ -728,6 +728,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7725268332692948002, guid: 6083b943a6aacdd49bc40f6b75c82b98, type: 3}
   weaponRange: 50
   damage: 5
+  gunFireType: 0
 --- !u!114 &220806985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1037,9 +1038,9 @@ Transform:
   m_GameObject: {fileID: 353906835}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 1.15, y: -0.2, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 965606128}
   - {fileID: 1019135742}
@@ -1057,11 +1058,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa9a6737f2b46b4fb8397e2496ad094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.05
+  fireRate: 0.5
   projectileSpeed: 50
   bulletPrefab: {fileID: 7725268332692948002, guid: 6083b943a6aacdd49bc40f6b75c82b98, type: 3}
   weaponRange: 5
   damage: 50
+  gunFireType: 1
 --- !u!212 &353906838
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1103,7 +1105,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 43f3d97bc3267734c97132c37cee6266, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1244,7 +1246,7 @@ Transform:
   m_GameObject: {fileID: 525441183}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.003000021, y: 0.052, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1410,9 +1412,9 @@ Transform:
   m_GameObject: {fileID: 671628415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 1.15, y: -0.55, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 741100397}
   - {fileID: 525441184}
@@ -1443,11 +1445,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa9a6737f2b46b4fb8397e2496ad094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 0.2
-  projectileSpeed: 20
+  fireRate: 0.75
+  projectileSpeed: 10
   bulletPrefab: {fileID: 7725268332692948002, guid: 6083b943a6aacdd49bc40f6b75c82b98, type: 3}
-  weaponRange: 50
-  damage: 5
+  weaponRange: 100
+  damage: 3
+  gunFireType: 2
 --- !u!212 &671628419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1489,7 +1492,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e709ec511a7e66442a2e676e7f0a2938, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1660,7 +1663,7 @@ Transform:
   m_GameObject: {fileID: 741100396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.003, y: 0.052, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6490,7 +6493,7 @@ Transform:
   m_GameObject: {fileID: 965606127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.05, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11452,7 +11455,7 @@ Transform:
   m_GameObject: {fileID: 1019135741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.05, y: 0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16735,8 +16738,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 353906836}
   - {fileID: 671628416}
+  - {fileID: 353906836}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1520755723

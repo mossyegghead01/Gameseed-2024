@@ -41,13 +41,20 @@ public class PlayerControl : MonoBehaviour
 
         // Shooting
         // TODO: Fix issue where clickin on UI component still register
-        if (Input.GetButton("Fire1"))
+        
+        if (Input.GetButtonDown("Fire1"))
         {
             if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
             {
                 prop.Fire();
             }
-            //gun.Fire();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
+            {
+                prop.EndFire();
+            }
         }
     }
 

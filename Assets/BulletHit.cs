@@ -31,15 +31,18 @@ public class BulletHit : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the object it collided with has health
-        // If it has, reduce it by the amount of bullet damage
-        if (collision.gameObject.TryGetComponent<Health>(out var collidedHealth))
+        if (!collision.gameObject.TryGetComponent<BulletHit>(out _))
         {
-            collidedHealth.health -= damage;
+            // Check if the object it collided with has health
+            // If it has, reduce it by the amount of bullet damage
+            if (collision.gameObject.TryGetComponent<Health>(out var collidedHealth))
+            {
+                collidedHealth.health -= damage;
+            }
+            // Idea: Piercing
+            // Instead of destroying on its first hit, destroy it after several hit
+            Destroy(gameObject);
         }
-        // Idea: Piercing
-        // Instead of destroying on its first hit, destroy it after several hit
-        Destroy(gameObject);
     }
 
     // Set the bullet range
