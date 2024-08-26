@@ -10,45 +10,43 @@ public class Cell
     private bool isLit, canCollide;
     private Sprite sprite;
     private GameObject gridContainer;
+    private PlantType plantType;
+    private StructureType structureType;
 
-    public Cell(CellType cellType, PlantType plantType, int x, int y, GameObject gridContainer, int cellSize)
+    public Cell(CellType cellType, PlantType plantType, int x, int y, Grid grid)
     {
         this.cellType = cellType;
         if (cellType == CellType.Plant)
         {
-            // Plant plant = new Plant(plantType);
-            // maxHealth = plant.GetMaxHealth();
-            // sprite = plant.GetSprite();
-            StartCell(x, y, gridContainer, cellSize);
+            this.plantType = plantType;
+            StartCell(x, y, grid);
         }
     }
-    public Cell(CellType cellType, StructureType structureType, int x, int y, GameObject gridContainer, int cellSize)
+    public Cell(CellType cellType, StructureType structureType, int x, int y, Grid grid)
     {
         this.cellType = cellType;
         if (cellType == CellType.Structure)
         {
-            // Structure structure = new Structure(structureType);
-            // maxHealth = structure.GetMaxHealth();
-            StartCell(x, y, gridContainer, cellSize);
+            StartCell(x, y, grid);
         }
     }
 
-    public Cell(int x, int y, GameObject gridContainer, int cellSize)
+    public Cell(int x, int y, Grid grid)
     {
         if (cellType == CellType.Empty)
         {
             maxHealth = 1;
         }
-        StartCell(x, y, gridContainer, cellSize);
+        StartCell(x, y, grid);
     }
 
-    private void StartCell(int x, int y, GameObject gridContainer, int cellSize)
+    private void StartCell(int x, int y, Grid grid)
     {
-        this.gridContainer = gridContainer;
+        gridContainer = grid.GetGridContainer();
         health = maxHealth;
         this.x = x;
         this.y = y;
-        this.cellSize = cellSize;
+        cellSize = grid.GetCellSize();
         Instantiate();
     }
 
@@ -58,6 +56,7 @@ public class Cell
         if (cellObject != null)
         {
             var spawnedTile = GameObject.Instantiate(cellObject, GetWorldPosition(x, y), Quaternion.identity);
+            spawnedTile.GetComponent<SpriteRenderer>().sprite = GetSprite();
             spawnedTile.transform.parent = gridContainer.transform;
             spawnedTile.GetComponent<CellObject>().x = x;
             spawnedTile.GetComponent<CellObject>().y = y;
@@ -84,7 +83,15 @@ public class Cell
 
     public Sprite GetSprite()
     {
-        return Resources.Load<Sprite>("Sprites/Square");
+        if (cellType == CellType.Structure)
+        {
+            return SpriteManager.GetGridStructure(structureType);
+        }
+        else if (cellType == CellType.Plant)
+        {
+            return SpriteManager.GetGridPlant(plantType);
+        }
+        return SpriteManager.GetGridEmpty();
     }
 
     public Vector3 GetWorldPosition(int x, int y)

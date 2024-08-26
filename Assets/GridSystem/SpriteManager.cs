@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteManager
+public static class SpriteManager
 {
-  private Dictionary<string, Sprite> spriteDict;
-
-  public SpriteManager()
+  public static Sprite GetGridPlant(PlantType name)
   {
-    spriteDict = new Dictionary<string, Sprite>();
-    Sprite[] sprites = Resources.LoadAll<Sprite>("Sprites");
-    foreach (Sprite sprite in sprites)
-    {
-      spriteDict.Add(sprite.name, sprite);
-    }
+    return Resources.Load<Sprite>($"Sprites/Grid/Plants/{name}");
   }
-  public Sprite GetSprite(string name)
+  public static Sprite GetGridStructure(StructureType name)
   {
-    return spriteDict[name];
+    return Resources.Load<Sprite>($"Sprites/Grid/Structure/{name}");
+  }
+  public static Sprite GetGridEmpty()
+  {
+    return Resources.Load<Sprite>("Sprites/Grid/Shadow");
   }
 }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Grid
 {
-    public GameObject gridBg;
+    public GameObject gridContainer;
     private Cell[,] cell;
     private int width, height, cellSize;
     private int[,] gridArray;
@@ -15,6 +15,7 @@ public class Grid
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
+        this.gridContainer = gridContainer;
 
         gridArray = new int[width, height];
         cell = new Cell[width, height];
@@ -23,10 +24,19 @@ public class Grid
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                cell[x, y] = new Cell(x, y, gridContainer, cellSize);
+                cell[x, y] = new Cell(x, y, this);
                 // spawnedTile.GetComponent<SpriteRenderer>().sprite = cell[x, y].GetSprite();
             }
         }
+    }
+    public int GetCellSize()
+    {
+        return cellSize;
+    }
+
+    public GameObject GetGridContainer()
+    {
+        return gridContainer;
     }
 
     private void SetValue(int x, int y, int value)
