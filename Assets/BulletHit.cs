@@ -42,14 +42,14 @@ public class BulletHit : MonoBehaviour
             }
             // Idea: Piercing
             // Instead of destroying on its first hit, destroy it after several hit
-            if (piercing > 0)
-            {
-                piercing -= 1;
-            }
-            else
-            {
+            //if (piercing > 0)
+            //{
+            //    piercing -= 1;
+            //}
+            //else
+            //{
                 Destroy(gameObject);
-            }
+            //}
         }
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -44,6 +45,7 @@ public class PlayerControl : MonoBehaviour
         
         if (Input.GetButtonDown("Fire1"))
         {
+            if (EventSystem.current.IsPointerOverGameObject()) { return; }
             if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
             {
                 prop.Fire();
