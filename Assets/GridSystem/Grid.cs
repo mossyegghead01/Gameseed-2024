@@ -48,15 +48,20 @@ public class Grid
         }
     }
 
-    public Vector3 GetWorldPosition(int x, int y)
+
+
+}
+
+public static class GridFunctions
+{
+    public static Vector3 GetWorldPosition(int x, int y, int cellSize)
     {
         return new Vector3(x, y) * cellSize;
     }
 
-    public void GetXY(Vector3 worldPosition, out int x, out int y)
+    public static void GetXY(Vector3 worldPosition, out int x, out int y, int cellSize)
     {
         x = Mathf.FloorToInt(worldPosition.x / cellSize);
         y = Mathf.FloorToInt(worldPosition.y / cellSize);
     }
-
 }

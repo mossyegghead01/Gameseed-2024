@@ -18,9 +18,18 @@ public class GridManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            grid.GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y);
+            GridFunctions.GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y, grid.GetCellSize());
             grid.SetCell(x, y, CellType.Plant, CellState.Carrot);
             print("click");
         }
     }
+
+    public enum ToolCategory
+    {
+        Weapon,
+        Build,
+        Break
+    }
+
+
 }

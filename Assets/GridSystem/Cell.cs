@@ -56,7 +56,7 @@ public class Cell
             var cellPrefab = Resources.Load<GameObject>("Prefabs/Cell");
             if (cellPrefab != null)
             {
-                cellObject = GameObject.Instantiate(cellPrefab, GetWorldPosition(x, y) + new Vector3(cellSize * 0.5f, cellSize * 0.5f), Quaternion.identity);
+                cellObject = GameObject.Instantiate(cellPrefab, GridFunctions.GetWorldPosition(x, y, cellSize) + new Vector3(cellSize * 0.5f, cellSize * 0.5f), Quaternion.identity);
                 cellObject.GetComponent<SpriteRenderer>().sprite = GetSprite();
                 cellObject.transform.parent = gridContainer.transform;
                 cellObject.GetComponent<CellObject>().x = x;
@@ -102,16 +102,6 @@ public class Cell
         return SpriteManager.GetGrid(cellType, cellState);
     }
 
-    public Vector3 GetWorldPosition(int x, int y)
-    {
-        return new Vector3(x, y) * cellSize;
-    }
-
-    public void GetXY(Vector3 worldPosition, out int x, out int y)
-    {
-        x = Mathf.FloorToInt(worldPosition.x / cellSize);
-        y = Mathf.FloorToInt(worldPosition.y / cellSize);
-    }
 }
 public enum CellType
 {
