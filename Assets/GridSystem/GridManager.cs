@@ -2,25 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 public class GridManager : MonoBehaviour
 {
+    [DllImport("user32.dll")]
+    public static extern short GetKeyState(int keyCode);
     private Grid grid;
     [SerializeField] GameObject cellObject;
     [SerializeField] Tilemap tilemap;
+    private bool isCaps = false;
     // Start is called before the first frame update
     void Start()
     {
         grid = new Grid(tilemap);
+        isCaps = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
     }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.CapsLock))
         {
-            grid.SetCell(CellState.Fence, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            print("click");
+            isCaps = !isCaps;
+        }
+        if (Input.GetMouseButton(1))
+        {
+            if (!isCaps)
+            {
+                grid.SetCell(CellState.Fence, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                print("click");
+            }
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (isCaps)
+            {
+                grid.BreakCell(2, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                Debug.Log("caps on");
+            }
         }
     }
 
