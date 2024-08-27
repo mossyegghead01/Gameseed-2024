@@ -14,9 +14,11 @@ public class Cell
     private CellState cellState;
     private Vector3Int position;
     private Tilemap tilemap;
+    private BuildInventory buildInventory;
 
     public Cell(Vector3Int position, CellState cellState, Grid grid)
     {
+        buildInventory = grid.GetBuildInventory();
         this.position = position;
         tilemap = grid.GetTilemap();
         SetCell(cellState);
@@ -57,6 +59,10 @@ public class Cell
         }
         else
         {
+            if (cellType == CellType.Plant)
+            {
+                // * GACHA CODE HERE, make new class pls
+            }
             SetCell(CellState.Empty);
         }
     }
@@ -96,7 +102,9 @@ public static class CellFunctions
     };
     public static Dictionary<CellState, int> health = new Dictionary<CellState, int>{
         {CellState.Empty,-1},
-        {CellState.Fence, 3}
+        {CellState.Fence, 3},
+        {CellState.Carrot, 1},
+        {CellState.Corn, 1},
     };
     public static CellType GetCellType(CellState cellState)
     {

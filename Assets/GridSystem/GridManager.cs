@@ -9,13 +9,15 @@ public class GridManager : MonoBehaviour
     [DllImport("user32.dll")]
     public static extern short GetKeyState(int keyCode);
     private Grid grid;
+    private BuildInventory buildInventory;
     [SerializeField] GameObject cellObject;
     [SerializeField] Tilemap tilemap;
     private bool isCaps = false;
     // Start is called before the first frame update
     void Start()
     {
-        grid = new Grid(tilemap);
+        buildInventory = new BuildInventory();
+        grid = new Grid(tilemap, buildInventory);
         isCaps = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
     }
     // Update is called once per frame
@@ -24,13 +26,15 @@ public class GridManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.CapsLock))
         {
             isCaps = !isCaps;
+            buildInventory.ToggleBuildState(isCaps);
         }
         if (Input.GetMouseButton(1))
         {
             if (!isCaps)
             {
-                grid.SetCell(CellState.Fence, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                print("click");
+                grid.GetBuildInventory().AddSlot(SlotState.Empty, 1);
+                grid.SetCell(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState()), Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                print("build");
             }
         }
         if (Input.GetMouseButtonDown(1))
@@ -38,10 +42,11 @@ public class GridManager : MonoBehaviour
             if (isCaps)
             {
                 grid.BreakCell(2, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                Debug.Log("caps on");
+                Debug.Log("break");
             }
         }
     }
+
 
     public enum ToolCategory
     {

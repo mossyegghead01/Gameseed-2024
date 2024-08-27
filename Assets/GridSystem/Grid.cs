@@ -9,6 +9,7 @@ public class Grid
 {
     private Dictionary<(int, int), Cell> cells;
     private Tilemap tilemap;
+    private BuildInventory buildInventory;
     // public Grid(int width, int height, int cellSize, GameObject cellObject, GameObject gridContainer)
     // {
 
@@ -29,7 +30,7 @@ public class Grid
         return tilemap;
     }
 
-    public Grid(Tilemap tilemap)
+    public Grid(Tilemap tilemap, BuildInventory buildInventory)
     {
         this.tilemap = tilemap;
         cells = new Dictionary<(int, int), Cell>();
@@ -44,7 +45,10 @@ public class Grid
     //         cell[x, y].SetCell(CellType.Structure, CellState.Wall);
     //     }
     // }
-
+    public BuildInventory GetBuildInventory()
+    {
+        return buildInventory;
+    }
     public void SetCell(Vector3Int position, CellState cellState)
     {
         cells.TryGetValue((position.x, position.y), out Cell res);
