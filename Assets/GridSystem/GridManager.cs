@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
     private Grid grid;
     [SerializeField] GameObject cellObject;
-    [SerializeField] GameObject gridContainer;
+    [SerializeField] Tilemap tilemap;
     // Start is called before the first frame update
     void Start()
     {
-        grid = new Grid(20, 10, 1, cellObject, gridContainer);
+        grid = new Grid(tilemap);
     }
 
     // Update is called once per frame
@@ -18,8 +19,7 @@ public class GridManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            GridFunctions.GetXY(Camera.main.ScreenToWorldPoint(Input.mousePosition), out int x, out int y, grid.GetCellSize());
-            grid.SetCell(x, y, CellType.Plant, CellState.Carrot);
+            grid.SetCell(CellState.Fence, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             print("click");
         }
     }
