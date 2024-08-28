@@ -7,10 +7,21 @@ public class BuildInventory
 {
     private BuildState buildState;
     private List<Slot> slots;
+    private BuildInventoryUI buildInventoryUI;
     private int selectedIndex;
     public BuildInventory()
     {
-        slots = new();
+        slots = new List<Slot>(){
+            new Slot(SlotState.Wall, this),
+            new Slot(SlotState.Carrot, this),
+            new Slot(SlotState.Corn, this),
+            new Slot(SlotState.Fence, this)
+        };
+        buildInventoryUI = new BuildInventoryUI(this);
+    }
+    public List<Slot> GetSlots()
+    {
+        return slots;
     }
     public void ToggleBuildState()
     {
@@ -22,6 +33,7 @@ public class BuildInventory
         {
             buildState = BuildState.Build;
         }
+        Update();
     }
     public void ToggleBuildState(bool state)
     {
@@ -33,6 +45,7 @@ public class BuildInventory
         {
             buildState = BuildState.Break;
         }
+        Update();
     }
     public void SelectSlot(int index)
     {
@@ -50,11 +63,13 @@ public class BuildInventory
     {
         selectedIndex = -1;
         slots.RemoveAt(index);
+        Update();
     }
     public void RemoveSlot(Slot slot)
     {
         selectedIndex = -1;
         slots.Remove(slot);
+        Update();
     }
     public void SubtractSlot(int index)
     {
@@ -62,21 +77,28 @@ public class BuildInventory
         {
             slots[index].SubtractCount(1);
         }
+        Update();
     }
     public void AddSlot(SlotState slotState, int count = 1)
     {
+
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].GetSlotState() == slotState)
             {
                 slots[i].AddCount(1);
+                Update();
                 return;
             }
-            else
-            {
-
-                slots.Add(new Slot(slotState, this, count));
-            }
+        }
+        slots.Add(new Slot(slotState, this, count));
+        Update();
+    }
+    private void Update()
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            Debug.Log(slots[i].GetSlotState());
         }
     }
 }
@@ -89,8 +111,8 @@ public class Slot
     public Slot(SlotState slotState, BuildInventory buildInventory, int count = 1)
     {
         this.count = count;
-        SetSlot(slotState);
         this.buildInventory = buildInventory;
+        SetSlot(slotState);
     }
     public SlotState GetSlotState()
     {
@@ -130,7 +152,6 @@ public enum BuildState
 }
 public enum SlotState
 {
-    Empty,
     Wall,
     Carrot,
     Corn,
@@ -148,5 +169,46 @@ public static class BuildInventoryFunctions
     public static CellState SlotToCell(SlotState slotState)
     {
         return slotAndCell[slotState];
+    }
+    public static CellState SlotToCell(Slot slot)
+    {
+        return SlotToCell(slot.GetSlotState());
+    }
+    public static Sprite SlotToSprite(SlotState slotState)
+    {
+        return Resources.Load<Sprite>($"Sprites/SlotState/{slotState}");
+    }
+    public static Sprite SlotToSprite(Slot slot)
+    {
+        return SlotToSprite(slot.GetSlotState());
+    }
+}
+
+public class BuildInventoryUI
+{
+    //* BuildInventory
+    private BuildInventory buildInventory;
+    private List<Slot> slots;
+    private GameObject buildSlotPrefab;
+    private GameObject buildInventoryContainer;
+    public BuildInventoryUI(BuildInventory buildInventory)
+    {
+        this.buildInventory = buildInventory;
+        buildSlotPrefab = (GameObject)Resources.Load("Prefabs/BuildSlot");
+        buildInventoryContainer = GameObject.Find("Canvas").transform.Find("BuildInventoryContainer").GameObject();
+        UpdateBuild();
+    }
+    private void UpdateBuild()
+    {
+        slots = buildInventory.GetSlots();
+        foreach (Transform child in buildInventoryContainer.transform)
+        {
+            Object.Destroy(child.gameObject);
+        }
+        foreach (Slot slot in slots)
+        {
+            GameObject buildSlot = Object.Instantiate(buildSlotPrefab, buildInventoryContainer.transform);
+            buildSlot.GetComponent<BuildInventoryButton>().SetSlot(slot);
+        }
     }
 }

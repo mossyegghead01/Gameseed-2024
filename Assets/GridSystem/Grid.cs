@@ -32,6 +32,7 @@ public class Grid
 
     public Grid(Tilemap tilemap, BuildInventory buildInventory)
     {
+        this.buildInventory = buildInventory;
         this.tilemap = tilemap;
         cells = new Dictionary<(int, int), Cell>();
     }

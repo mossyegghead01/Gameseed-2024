@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour
         {
             if (!isCaps)
             {
-                grid.GetBuildInventory().AddSlot(SlotState.Empty, 1);
+                grid.GetBuildInventory().AddSlot(SlotState.Carrot, 1);
                 grid.SetCell(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState()), Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 print("build");
             }
@@ -55,5 +55,8 @@ public class GridManager : MonoBehaviour
         Break
     }
 
-
+    public Grid GetGrid()
+    {
+        return grid;
+    }
 }
