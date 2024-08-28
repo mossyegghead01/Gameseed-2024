@@ -1616,7 +1616,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reroll Stats
+  m_text: 'New Gun
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2736,6 +2738,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808607174702751763, guid: e36fb227d51f65b45bcbec25200af211,
+        type: 3}
+      propertyPath: piercing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5707976156088381162, guid: e36fb227d51f65b45bcbec25200af211,
         type: 3}

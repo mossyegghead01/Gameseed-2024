@@ -30,8 +30,32 @@ public class BulletHit : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (!collision.gameObject.TryGetComponent<BulletHit>(out _))
+    //    {
+    //        // Check if the object it collided with has health
+    //        // If it has, reduce it by the amount of bullet damage
+    //        if (collision.gameObject.TryGetComponent<Health>(out var collidedHealth))
+    //        {
+    //            collidedHealth.health -= damage;
+    //        }
+    //        // Idea: Piercing
+    //        // Instead of destroying on its first hit, destroy it after several hit
+    //        //if (piercing > 0)
+    //        //{
+    //        //    piercing -= 1;
+    //        //}
+    //        //else
+    //        //{
+    //            Destroy(gameObject);
+    //        //}
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        print("E");
         if (!collision.gameObject.TryGetComponent<BulletHit>(out _))
         {
             // Check if the object it collided with has health
@@ -42,14 +66,14 @@ public class BulletHit : MonoBehaviour
             }
             // Idea: Piercing
             // Instead of destroying on its first hit, destroy it after several hit
-            //if (piercing > 0)
-            //{
-            //    piercing -= 1;
-            //}
-            //else
-            //{
+            if (piercing > 0)
+            {
+                piercing -= 1;
+            }
+            else
+            {
                 Destroy(gameObject);
-            //}
+            }
         }
     }
 
