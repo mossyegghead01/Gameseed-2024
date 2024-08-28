@@ -56,6 +56,7 @@ public class WeaponRolling : MonoBehaviour
     public StatBounds fireRateBounds = new(0.015f, 1.0f);
     public StatBounds projectileSpeedBounds = new(10, 50);
     public StatBounds rangeBounds = new(20, 70);
+    public StatBounds PiercingBounds = new(0, 3);
 
     // TEMPORARY, CHANGE WITH DIFFICULTY SCALING LATER
     public StatBounds damageBounds = new(5, 100);
@@ -72,18 +73,21 @@ public class WeaponRolling : MonoBehaviour
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.GoodRollRange().lower, rangeBounds.GoodRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
+                gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.GoodRollRange().lower, PiercingBounds.GoodRollRange().upper));
                 break;
             case GunProperty.FireType.Scatter:
                 gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper)*100)/100.0;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.BadRollRange().lower, rangeBounds.BadRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.GoodRollRange().lower, damageBounds.GoodRollRange().upper));
+                gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.MidRollRange().lower, PiercingBounds.MidRollRange().upper));
                 break;
             case GunProperty.FireType.Automatic:
                 gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.BadRollRange().lower, fireRateBounds.BadRollRange().upper) * 100)/100.0;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.BadRollRange().lower, rangeBounds.BadRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
+                gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.BadRollRange().lower, PiercingBounds.BadRollRange().upper));
                 break;
             default:
                 Debug.LogException(new System.MissingFieldException("First in the gun property, now in its gacha. Seriously, pick something that exist!"));

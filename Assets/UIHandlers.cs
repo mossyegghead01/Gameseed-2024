@@ -31,6 +31,7 @@ public class UIHandlers : MonoBehaviour
         statText.text = "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
         + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
         + "Range: " + playerGun.weaponRange.ToString() + "\n"
+        + "Piercing: " + playerGun.piercing.ToString() + "\n"
         + "Damage: " + playerGun.damage.ToString();
     }
 
