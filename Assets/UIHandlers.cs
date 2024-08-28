@@ -16,7 +16,7 @@ public class UIHandlers : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         for (int i = 0; i < inventoryHolder.transform.childCount; i++)
         {
