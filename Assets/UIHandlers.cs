@@ -13,20 +13,26 @@ public class UIHandlers : MonoBehaviour
 
     void Start()
     {
+        // First UI update, in case inventory is populated.
         UpdateUI();
     }
 
+    // Update the inventory UI
+    // May be expanded for other UI update
     public void UpdateUI()
     {
+        // Run through all items in inventory gameobject
         for (int i = 0; i < inventoryHolder.transform.childCount; i++)
         {
             Transform child = inventoryHolder.transform.GetChild(i);
             if (child.TryGetComponent<Item>(out var item))
             {
+                // Change the icon
                 inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
             }
         }
 
+        // Update debug statistic text
         GunProperty playerGun = playerGunAxis.GetComponentInChildren<GunProperty>();
         statText.text = "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
         + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
@@ -35,21 +41,8 @@ public class UIHandlers : MonoBehaviour
         + "Damage: " + playerGun.damage.ToString();
     }
 
-    // DO NOT USE, TESTING ONLY
-    public void Reroll()
-    {
-        GunProperty playerGun = playerGunAxis.GetComponentInChildren<GunProperty>();
-        playerGun.fireRate = Mathf.Round(Random.Range(0.1f, 1f) * 100) / 100.0;
-        playerGun.projectileSpeed = Random.Range(10, 40);
-        playerGun.weaponRange = Random.Range(10, 60);
-        playerGun.damage = Random.Range(1, 50);
-
-        statText.text = "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
-            + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
-            + "Range: " + playerGun.weaponRange.ToString() + "\n"
-            + "Damage: " + playerGun.damage.ToString();
-    }
-
+    // Handler for equipping
+    // TODO: Bind hotkey into this function too
     public void InventoryButtonClicked(int index)
     {
         if (index < inventoryHolder.transform.childCount)
@@ -61,10 +54,6 @@ public class UIHandlers : MonoBehaviour
             current.transform.SetParent(inventoryHolder.transform, false);
             current.SetSiblingIndex(index);
             current.GetComponentInChildren<ParticleSystem>().Stop();
-            //inventoryHolder.transform.GetChild(index).transform.SetParent(playerGun.transform.parent, false);
-            //playerGun.transform.SetParent(inventoryHolder.transform, false);
-            //playerGun
-            //print(inventoryHolder.transform.GetChild(index).name);
 
             UpdateUI();
         }

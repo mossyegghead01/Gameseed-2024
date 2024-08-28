@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GunProperty : MonoBehaviour
 {
+    // Firing type of  the gun
     public enum FireType { Automatic, Single, Scatter }
 
     // Gun Properties
@@ -23,9 +24,7 @@ public class GunProperty : MonoBehaviour
     private double cooldown = 0.0;
     private bool shooting = false;
 
-    // TODO
-    // Actually make angleOffset do something
-    // I've spend god knows how long trying to make scatter shot work and only god knows why it does weird things
+    // Spawn bullet(s), what else do you expect?
     private void SpawnBullet(float angleOffset)
     {
         // Instantiate bullet from prefab into the world with position inherited from the BulletSpawn Object and rotation inherited from gun rotation axis
@@ -54,9 +53,9 @@ public class GunProperty : MonoBehaviour
             switch (gunFireType)
             {
                 case FireType.Automatic:
+                    // Continuous fire
                     if (cooldown == 0.0)
                     {
-                        // Set the cooldown
                         cooldown = fireRate;
 
                         // Partcle system, temporary
@@ -66,6 +65,7 @@ public class GunProperty : MonoBehaviour
                     }
                     break;
                 case FireType.Single:
+                    // "Bolt Action"
                     if (!fired && cooldown == 0.0)
                     {
                         fired = true;
@@ -78,6 +78,7 @@ public class GunProperty : MonoBehaviour
                     }
                     break;
                 case FireType.Scatter:
+                    // Still "Bolt Action" but cooler
                     if (!fired && cooldown == 0.0)
                     {
                         fired = true;
@@ -92,6 +93,8 @@ public class GunProperty : MonoBehaviour
                     }
                     break;
                 default:
+                    // For whoever messed up so bad their compiler gave up on checking errors
+                    // I don't even know how or why you reached this point. Usually, the compiler screamed at you if you used a nonexistent enum value.
                     Debug.LogException(new System.MissingFieldException("What the heck are you trying to do mate? This thing does not exist!"));
                     break;
             }
@@ -105,6 +108,7 @@ public class GunProperty : MonoBehaviour
         
     }
 
+    // Stop firing the gun
     public void EndFire()
     {
         shooting = false;
