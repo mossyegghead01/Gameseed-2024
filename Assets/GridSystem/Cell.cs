@@ -15,6 +15,7 @@ public class Cell
     private Vector3Int position;
     private Tilemap tilemap;
     private BuildInventory buildInventory;
+    private Plant plant;
 
     public Cell(Vector3Int position, CellState cellState, Grid grid)
     {
@@ -22,6 +23,10 @@ public class Cell
         this.position = position;
         tilemap = grid.GetTilemap();
         SetCell(cellState);
+        if (CellFunctions.GetCellType(cellState) == CellType.Plant)
+        {
+            plant = new Plant(cellState);
+        }
     }
 
     private TileBase GetTile(CellState cellState)
@@ -57,20 +62,19 @@ public class Cell
 
     public void Break(int damage)
     {
-        if (health > 0)
+        health -= damage;
+        if (health <= 0)
         {
-            health -= damage;
-        }
-        else
-        {
-            if (cellType == CellType.Plant)
+            if (cellType == CellType.Plant && plant.IsGrown())
             {
+                Debug.Log("harvest");
                 // * GACHA CODE HERE, make new class pls
             }
+            Debug.Log("not harvest");
             SetCell(CellState.Empty);
-
         }
     }
+
 
     public void Heal(int health)
     {
@@ -110,6 +114,7 @@ public static class CellFunctions
         {CellState.Fence, 3},
         {CellState.Carrot, 1},
         {CellState.Corn, 1},
+        {CellState.Wall, 5}
     };
     public static CellType GetCellType(CellState cellState)
     {
