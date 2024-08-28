@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildInventory
 {
@@ -12,12 +15,13 @@ public class BuildInventory
     public BuildInventory()
     {
         slots = new List<Slot>(){
-            new Slot(SlotState.Wall, this),
+            new Slot(SlotState.Wall, this, 3),
             new Slot(SlotState.Carrot, this),
             new Slot(SlotState.Corn, this),
             new Slot(SlotState.Fence, this)
         };
         buildInventoryUI = new BuildInventoryUI(this);
+        SelectSlot(0);
     }
     public List<Slot> GetSlots()
     {
@@ -49,20 +53,30 @@ public class BuildInventory
     }
     public void SelectSlot(int index)
     {
+        if (selectedIndex < slots.Count && selectedIndex >= 0)
+        {
+            slots[selectedIndex].selected = false;
+        }
         selectedIndex = index;
+        slots[selectedIndex].selected = true;
+        Update();
+    }
+    public void SelectSlot(Slot slot)
+    {
+        SelectSlot(slots.FindIndex(s => s == slot));
     }
     public Slot GetSelectedSlot()
     {
-        if (selectedIndex == -1)
+        if (selectedIndex < slots.Count && selectedIndex >= 0)
         {
-            return null;
+            return slots[selectedIndex];
         }
-        return slots[selectedIndex];
+        return null;
     }
     public void RemoveSlot(int index)
     {
-        selectedIndex = -1;
         slots.RemoveAt(index);
+        selectedIndex = 1;
         Update();
     }
     public void RemoveSlot(Slot slot)
@@ -71,11 +85,11 @@ public class BuildInventory
         slots.Remove(slot);
         Update();
     }
-    public void SubtractSlot(int index)
+    public void SubtractSlot(int index, int count = 1)
     {
         if (slots[index].GetCount() > 0)
         {
-            slots[index].SubtractCount(1);
+            slots[index].SubtractCount(count);
         }
         Update();
     }
@@ -100,11 +114,13 @@ public class BuildInventory
         {
             Debug.Log(slots[i].GetSlotState());
         }
+        buildInventoryUI.Update();
     }
 }
 
 public class Slot
 {
+    public bool selected;
     private SlotState slotState;
     private int count;
     private BuildInventory buildInventory;
@@ -134,7 +150,7 @@ public class Slot
     }
     public void SubtractCount(int count)
     {
-        this.count += count;
+        this.count -= count;
         Update();
     }
     private void Update()
@@ -174,6 +190,10 @@ public static class BuildInventoryFunctions
     {
         return SlotToCell(slot.GetSlotState());
     }
+    public static SlotState CellToSlot(CellState cellState)
+    {
+        return slotAndCell.FirstOrDefault(x => x.Value == cellState).Key;
+    }
     public static Sprite SlotToSprite(SlotState slotState)
     {
         return Resources.Load<Sprite>($"Sprites/SlotState/{slotState}");
@@ -181,6 +201,10 @@ public static class BuildInventoryFunctions
     public static Sprite SlotToSprite(Slot slot)
     {
         return SlotToSprite(slot.GetSlotState());
+    }
+    public static int SlotToIndex(SlotState slotState, List<Slot> slots)
+    {
+        return slots.FindIndex(s => s.GetSlotState() == slotState);
     }
 }
 
@@ -196,19 +220,23 @@ public class BuildInventoryUI
         this.buildInventory = buildInventory;
         buildSlotPrefab = (GameObject)Resources.Load("Prefabs/BuildSlot");
         buildInventoryContainer = GameObject.Find("Canvas").transform.Find("BuildInventoryContainer").GameObject();
-        UpdateBuild();
+        Update();
     }
-    private void UpdateBuild()
+    public void Update()
     {
         slots = buildInventory.GetSlots();
         foreach (Transform child in buildInventoryContainer.transform)
         {
-            Object.Destroy(child.gameObject);
+            UnityEngine.Object.Destroy(child.gameObject);
         }
         foreach (Slot slot in slots)
         {
-            GameObject buildSlot = Object.Instantiate(buildSlotPrefab, buildInventoryContainer.transform);
-            buildSlot.GetComponent<BuildInventoryButton>().SetSlot(slot);
+            GameObject buildSlot = UnityEngine.Object.Instantiate(buildSlotPrefab, buildInventoryContainer.transform);
+            if (slot.selected)
+            {
+                buildSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UIBuildSlotSelected");
+            }
+            buildSlot.GetComponent<BuildInventoryButton>().SetSlot(slot, buildInventory);
         }
     }
 }

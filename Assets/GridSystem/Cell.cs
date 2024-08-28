@@ -24,8 +24,6 @@ public class Cell
         SetCell(cellState);
     }
 
-
-
     private TileBase GetTile(CellState cellState)
     {
         TileBase tileBase = Resources.Load($"Tilemap/Tiles/{cellState}") as TileBase;
@@ -35,19 +33,23 @@ public class Cell
 
     public void SetCell(CellState cellState)
     {
-        Debug.Log(cellState + " " + position);
-        maxHealth = CellFunctions.GetMaxHealth(cellState);
-        if (maxHealth != -1)
+        if (this.cellState != cellState)
         {
-            health = maxHealth;
+
+            maxHealth = CellFunctions.GetMaxHealth(cellState);
+            if (maxHealth != -1)
+            {
+                health = maxHealth;
+            }
+            else
+            {
+                health = 0;
+            }
+            this.cellState = cellState;
+            cellType = CellFunctions.GetCellType(cellState);
+            tilemap.SetTile(position, GetTile(cellState));
+            buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
         }
-        else
-        {
-            health = 0;
-        }
-        this.cellState = cellState;
-        cellType = CellFunctions.GetCellType(cellState);
-        tilemap.SetTile(position, GetTile(cellState));
     }
 
 
