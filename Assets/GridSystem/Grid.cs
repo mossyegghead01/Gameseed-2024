@@ -53,16 +53,30 @@ public class Grid
     public void SetCell(Vector3Int position, CellState cellState)
     {
         cells.TryGetValue((position.x, position.y), out Cell res);
+
         if (res == null)
         {
             cells[(position.x, position.y)] = new Cell(position, cellState, this);
+            Debug.Log("new cell");
+            buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
         }
         else
         {
-            cells[(position.x, position.y)].SetCell(cellState);
-        }
-    }
+            if (cells[(position.x, position.y)].GetCellState() != cellState)
+            {
 
+                cells[(position.x, position.y)].SetCell(cellState);
+                Debug.Log("replace cell");
+                buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+            }
+        }
+
+
+    }
+    public void BuildCell(CellState cellState, Vector3 mousePosition)
+    {
+        SetCell(cellState, mousePosition);
+    }
     public void SetCell(CellState cellState, Vector3 mousePosition)
     {
         SetCell(tilemap.WorldToCell(mousePosition), cellState);

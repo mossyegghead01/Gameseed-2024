@@ -30,26 +30,28 @@ public class Cell
         Debug.Log(tileBase);
         return tileBase;
     }
+    public CellState GetCellState()
+    {
+        return cellState;
+    }
 
     public void SetCell(CellState cellState)
     {
-        if (this.cellState != cellState)
-        {
 
-            maxHealth = CellFunctions.GetMaxHealth(cellState);
-            if (maxHealth != -1)
-            {
-                health = maxHealth;
-            }
-            else
-            {
-                health = 0;
-            }
-            this.cellState = cellState;
-            cellType = CellFunctions.GetCellType(cellState);
-            tilemap.SetTile(position, GetTile(cellState));
-            buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+
+        maxHealth = CellFunctions.GetMaxHealth(cellState);
+        if (maxHealth != -1)
+        {
+            health = maxHealth;
         }
+        else
+        {
+            health = 0;
+        }
+        this.cellState = cellState;
+        cellType = CellFunctions.GetCellType(cellState);
+        tilemap.SetTile(position, GetTile(cellState));
+
     }
 
 
@@ -66,6 +68,7 @@ public class Cell
                 // * GACHA CODE HERE, make new class pls
             }
             SetCell(CellState.Empty);
+
         }
     }
 

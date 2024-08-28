@@ -35,9 +35,8 @@ public class GridManager : MonoBehaviour
                 if (buildInventory.GetSelectedSlot() != null)
                 {
 
-                    grid.SetCell(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState()), Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    grid.BuildCell(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState()), Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
-                print("build");
             }
         }
         if (Input.GetMouseButtonDown(1))

@@ -110,10 +110,6 @@ public class BuildInventory
     }
     private void Update()
     {
-        for (int i = 0; i < slots.Count; i++)
-        {
-            Debug.Log(slots[i].GetSlotState());
-        }
         buildInventoryUI.Update();
     }
 }
