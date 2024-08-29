@@ -25,7 +25,7 @@ public class UIHandlers : MonoBehaviour
         for (int i = 0; i < inventoryHolder.transform.childCount; i++)
         {
             Transform child = inventoryHolder.transform.GetChild(i);
-            if (child.TryGetComponent<Item>(out var item))
+            if (child.TryGetComponent<Item>(out var item) && inventoryPanels.transform.Find("Panel" + i) != null)
             {
                 // Change the icon
                 inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
