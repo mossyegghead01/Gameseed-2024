@@ -42,8 +42,6 @@ public class Cell
 
     public void SetCell(CellState cellState)
     {
-
-
         maxHealth = CellFunctions.GetMaxHealth(cellState);
         if (maxHealth != -1)
         {
