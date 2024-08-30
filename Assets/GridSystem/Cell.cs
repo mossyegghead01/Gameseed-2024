@@ -35,7 +35,6 @@ public class Cell
     private TileBase GetTile(CellState cellState)
     {
         TileBase tileBase = Resources.Load($"Tilemap/Tiles/{cellState}") as TileBase;
-        Debug.Log(tileBase);
         return tileBase;
     }
     public CellState GetCellState()
