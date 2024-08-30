@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -16,9 +17,11 @@ public class Cell
     private Tilemap tilemap;
     private BuildInventory buildInventory;
     private Plant plant;
+    private Grid grid;
 
     public Cell(Vector3Int position, CellState cellState, Grid grid)
     {
+        this.grid = grid;
         buildInventory = grid.GetBuildInventory();
         this.position = position;
         tilemap = grid.GetTilemap();
@@ -53,11 +56,13 @@ public class Cell
         }
         this.cellState = cellState;
         cellType = CellFunctions.GetCellType(cellState);
+        var bounds = new GraphUpdateObject(grid.GetTilemap().GetComponent<CompositeCollider2D>().bounds);
+        bounds.updatePhysics = true;
+        AstarPath.active.UpdateGraphs(bounds);
+
         tilemap.SetTile(position, GetTile(cellState));
         // var graphToScan = AstarPath.active.data.gridGraph;
         // AstarPath.active.Scan(graphToScan);
-        AstarPath.active.Scan();
-
     }
 
 
