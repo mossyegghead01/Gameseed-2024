@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Runtime.InteropServices;
-using Unity.VisualScripting;
+
 public class GridManager : MonoBehaviour
 {
     [DllImport("user32.dll")]
     public static extern short GetKeyState(int keyCode);
     private Grid grid;
+    private AstarPath astarPath;
     private BuildInventory buildInventory;
     [SerializeField] GameObject cellObject, cursorObject;
     [SerializeField] Tilemap tilemap;
@@ -41,7 +42,6 @@ public class GridManager : MonoBehaviour
             {
                 if (buildInventory.GetSelectedSlot() != null)
                 {
-
                     grid.BuildCell(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState()), Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
             }

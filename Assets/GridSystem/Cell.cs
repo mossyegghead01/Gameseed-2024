@@ -54,8 +54,12 @@ public class Cell
         this.cellState = cellState;
         cellType = CellFunctions.GetCellType(cellState);
         tilemap.SetTile(position, GetTile(cellState));
+        // var graphToScan = AstarPath.active.data.gridGraph;
+        // AstarPath.active.Scan(graphToScan);
+        AstarPath.active.Scan();
 
     }
+
 
 
     public void Break(int damage)
