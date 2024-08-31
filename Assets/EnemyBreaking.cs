@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class EnemyBreaking : MonoBehaviour
 {
-    public int breakSpeed;
-    public GameObject player, tilemap, gridManager;
+    public float playerDamage = 1, breakSpeed = 3f, playerDamageMultiplier = 0.01f, breakSpeedMultiplier = 0.01f;
+    private GameObject player, tilemap, gameManager;
     // Start is called before the first frame update
     void Start()
     {
-
+        gameManager = GameObject.Find("GameManager");
+        player = gameManager.GetComponent<GameManager>().GetPlayer();
+        tilemap = gameManager.GetComponent<GameManager>().GetTilemap();
+        GetComponent<AIDestinationSetter>().target = player.transform;
     }
 
     // Update is called once per frame
@@ -31,14 +35,13 @@ public class EnemyBreaking : MonoBehaviour
             if (contacts.Length > 0)
             {
                 Vector3 intersectionPoint = contacts[0].point;
-                gridManager.GetComponent<GridManager>().GetGrid().BreakCell(breakSpeed, intersectionPoint + new Vector3(0, 0.01f, 0));
-                Debug.Log("Collision with tilemap at position: " + intersectionPoint);
+                gameManager.GetComponent<GridManager>().GetGrid().BreakCell(breakSpeed * breakSpeedMultiplier, intersectionPoint + new Vector3(0, 0.01f, 0));
             }
         }
 
         if (enemyCollider.IsTouching(player.GetComponent<Collider2D>()))
         {
-            // Debug.Log("Hit Player");
+            gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<Health>().ModifyHealth(-playerDamage * playerDamageMultiplier);
         }
     }
 }
