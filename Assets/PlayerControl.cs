@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour
     private Vector2 lookVector;
     // Gun Pivot
     private Transform pivotObject;
+    private float actualMovementSpeed = 5;
 
     void Start()
     {
@@ -40,22 +41,31 @@ public class PlayerControl : MonoBehaviour
         // Where the player should look (where their gun should point)
         lookVector = worldMousePos - pivotObject.position;
 
+        GunProperty held = null;
+        if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
+        {
+            held = prop;
+            actualMovementSpeed = movementSpeed + prop.movementBonus;
+        }
+        else
+        {
+            actualMovementSpeed = movementSpeed;
+        }
+
         // Shooting
-        // TODO: Fix issue where clickin on UI component still register
-        
         if (Input.GetButtonDown("Fire1"))
         {
             if (EventSystem.current.IsPointerOverGameObject()) { return; }
-            if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
+            if (held != null)
             {
-                prop.Fire();
+                held.Fire();
             }
         }
         if (Input.GetButtonUp("Fire1"))
         {
-            if (pivotObject.GetChild(0).TryGetComponent<GunProperty>(out var prop))
+            if (held != null)
             {
-                prop.EndFire();
+                held.EndFire();
             }
         }
 
@@ -68,12 +78,20 @@ public class PlayerControl : MonoBehaviour
                 break;
             }
         }
+
+        if (Input.GetButtonDown("Reload"))
+        {
+            if (held != null)
+            {
+                held.Reload();
+            }
+        }
     }
 
     void FixedUpdate()
     {
         // Move the player
-        GetComponent<Rigidbody2D>().velocity = new Vector3(inputX, inputY).normalized * movementSpeed;
+        GetComponent<Rigidbody2D>().velocity = new Vector3(inputX, inputY).normalized * actualMovementSpeed;
         // Rotate the weapon
         pivotObject.eulerAngles = new Vector3(0, 0, -(Mathf.Atan2(lookVector.x, lookVector.y) * Mathf.Rad2Deg - 90f));
         

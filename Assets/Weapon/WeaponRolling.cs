@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static GunProperty;
 
 // Consider merging with Harvesting script later.
 public class WeaponRolling : MonoBehaviour
@@ -66,6 +67,9 @@ public class WeaponRolling : MonoBehaviour
     public StatBounds projectileSpeedBounds = new(10, 50);
     public StatBounds rangeBounds = new(20, 70);
     public StatBounds PiercingBounds = new(0, 3);
+    public StatBounds innacuracyBounds = new(0, 5);
+    public StatBounds movementBonusBounds = new(-2, 2);
+    public StatBounds reloadSpeedBounds = new(2, 7);
 
     // TEMPORARY, CHANGE WITH DIFFICULTY SCALING LATER
     public StatBounds damageBounds = new(5, 100);
@@ -76,34 +80,62 @@ public class WeaponRolling : MonoBehaviour
     {
         // Tinky Winky, Dipsy, La-La, Po. Who's getting sacreficed into the almighty god?
         // Oh wait, it's just rolling for how the gun would work.
-        var firetype = (GunProperty.FireType)UnityEngine.Random.Range(0, 3);
+        var firetype = (GunProperty.FireType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GunProperty.FireType)).Length);
         // Change inventory.transform later, used for testing for now
         GunProperty gun = Instantiate(gunPrefab, inventory.transform).GetComponent<GunProperty>();
         switch (firetype)
         {
             case GunProperty.FireType.Single:
                 // No, there's no hot single in your area. You're on your own bro.
-                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper) * 100)/100.0;
+                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper) * 100)/100.0f;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.GoodRollRange().lower, rangeBounds.GoodRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
                 gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.GoodRollRange().lower, PiercingBounds.GoodRollRange().upper));
+                gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.GoodRollRange().lower, innacuracyBounds.GoodRollRange().upper));
+                gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.MidRollRange().lower, movementBonusBounds.MidRollRange().upper));
+                gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.MidRollRange().lower, reloadSpeedBounds.MidRollRange().upper));
+                List<int> magSizesSingle = new() { 10, 12 };
+                gun.magazineSize = magSizesSingle[UnityEngine.Random.Range(0, magSizesSingle.Count)];
                 break;
             case GunProperty.FireType.Scatter:
                 // Your gun go pew, mine goes pew pew pew
-                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper)*100)/100.0;
+                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper)*100)/100.0f;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.BadRollRange().lower, rangeBounds.BadRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.GoodRollRange().lower, damageBounds.GoodRollRange().upper));
                 gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.MidRollRange().lower, PiercingBounds.MidRollRange().upper));
+                gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.MidRollRange().lower, innacuracyBounds.MidRollRange().upper));
+                gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.BadRollRange().lower, movementBonusBounds.BadRollRange().upper));
+                gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.BadRollRange().lower, reloadSpeedBounds.BadRollRange().upper));
+                List<int> magSizesScatter = new() { 5, 7 };
+                gun.magazineSize = magSizesScatter[UnityEngine.Random.Range(0, magSizesScatter.Count)];
                 break;
             case GunProperty.FireType.Automatic:
                 // America's wife
-                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.BadRollRange().lower, fireRateBounds.BadRollRange().upper) * 100)/100.0;
+                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.BadRollRange().lower, fireRateBounds.BadRollRange().upper) * 100)/100.0f;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.BadRollRange().lower, rangeBounds.BadRollRange().upper));
                 gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
                 gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.BadRollRange().lower, PiercingBounds.BadRollRange().upper));
+                gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.BadRollRange().lower, innacuracyBounds.BadRollRange().upper));
+                gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.GoodRollRange().lower, movementBonusBounds.GoodRollRange().upper));
+                gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.GoodRollRange().lower, reloadSpeedBounds.GoodRollRange().upper));
+                List<int> magSizesAuto = new() { 30, 31 };
+                gun.magazineSize = magSizesAuto[UnityEngine.Random.Range(0, magSizesAuto.Count)];
+                break;
+            case FireType.Burst:
+                // Basically scatter but better, or worse actually?
+                gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.BadRollRange().lower, fireRateBounds.BadRollRange().upper) * 100) / 100.0f;
+                gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
+                gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.BadRollRange().lower, rangeBounds.BadRollRange().upper));
+                gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
+                gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.MidRollRange().lower, PiercingBounds.MidRollRange().upper));
+                gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.BadRollRange().lower, innacuracyBounds.BadRollRange().upper));
+                gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.GoodRollRange().lower, movementBonusBounds.GoodRollRange().upper));
+                gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.GoodRollRange().lower, reloadSpeedBounds.GoodRollRange().upper));
+                List<int> magSizesBurst = new() { 27, 30 };
+                gun.magazineSize = magSizesBurst[UnityEngine.Random.Range(0, magSizesBurst.Count)];
                 break;
             default:
                 // Still here?

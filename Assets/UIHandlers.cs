@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,9 +15,8 @@ public class UIHandlers : MonoBehaviour
 
     private float score = 0;
 
-    void Start()
+    void Update()
     {
-        // First UI update, in case inventory is populated.
         UpdateUI();
     }
 
@@ -41,7 +41,11 @@ public class UIHandlers : MonoBehaviour
         + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
         + "Range: " + playerGun.weaponRange.ToString() + "\n"
         + "Piercing: " + playerGun.piercing.ToString() + "\n"
-        + "Damage: " + playerGun.damage.ToString();
+        + "Damage: " + playerGun.damage.ToString() + "\n"
+        + "Ammo: " + playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString() + "\n"
+        + "Fire Type: " + Enum.GetName(typeof(GunProperty.FireType), playerGun.gunFireType);
+
+        scoreText.text = score.ToString();
     }
 
     // Handler for equipping
@@ -57,14 +61,11 @@ public class UIHandlers : MonoBehaviour
             current.transform.SetParent(inventoryHolder.transform, false);
             current.SetSiblingIndex(index);
             current.GetComponentInChildren<ParticleSystem>().Stop();
-
-            UpdateUI();
         }
     }
 
     public void IncrementScore(float scoreIncrement = 1)
     {
         score += scoreIncrement;
-        scoreText.text = score.ToString();
     }
 }
