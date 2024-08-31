@@ -58,6 +58,16 @@ public class PlayerControl : MonoBehaviour
                 prop.EndFire();
             }
         }
+
+        // Inventory Hotkey
+        for (int i = 1; i <= 3; i++)
+        {
+            if (Input.GetButtonDown("Num" + i))
+            {
+                EventSystem.current.GetComponent<UIHandlers>().InventoryButtonClicked(i - 1);
+                break;
+            }
+        }
     }
 
     void FixedUpdate()

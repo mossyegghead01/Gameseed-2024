@@ -30,7 +30,7 @@ public class BulletHit : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.gameObject.TryGetComponent<BulletHit>(out _))
         {
@@ -40,16 +40,17 @@ public class BulletHit : MonoBehaviour
             {
                 collidedHealth.health -= damage;
             }
-            // Idea: Piercing
+
+            // Piercing
             // Instead of destroying on its first hit, destroy it after several hit
-            //if (piercing > 0)
-            //{
-            //    piercing -= 1;
-            //}
-            //else
-            //{
+            if (piercing > 0)
+            {
+                piercing -= 1;
+            }
+            else
+            {
                 Destroy(gameObject);
-            //}
+            }
         }
     }
 
@@ -65,6 +66,7 @@ public class BulletHit : MonoBehaviour
         this.damage = damage;
     }
 
+    // Set how many enemy can the bullet pierce
     public void SetPiercing(float piercing)
     {
         this.piercing = piercing;
