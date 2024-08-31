@@ -23,7 +23,8 @@ public class EnemyPathfinding : MonoBehaviour
     }
     void UpdatePath()
     {
-        seeker.StartPath(rb.position, target.position, OnPathComplete);
+        if (seeker.IsDone())
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
     void OnPathComplete(Path p)
     {
@@ -53,7 +54,8 @@ public class EnemyPathfinding : MonoBehaviour
         }
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
+        Debug.Log(direction);
+        Vector2 force = speed * Time.deltaTime * direction;
 
         rb.AddForce(force);
 

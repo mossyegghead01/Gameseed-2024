@@ -31,14 +31,14 @@ public class EnemyBreaking : MonoBehaviour
             if (contacts.Length > 0)
             {
                 Vector3 intersectionPoint = contacts[0].point;
-                gridManager.GetComponent<GridManager>().GetGrid().BreakCell(breakSpeed, intersectionPoint);
+                gridManager.GetComponent<GridManager>().GetGrid().BreakCell(breakSpeed, intersectionPoint + new Vector3(0, 0.01f, 0));
                 Debug.Log("Collision with tilemap at position: " + intersectionPoint);
             }
         }
 
         if (enemyCollider.IsTouching(player.GetComponent<Collider2D>()))
         {
-            Debug.Log("Hit Player");
+            // Debug.Log("Hit Player");
         }
     }
 }
