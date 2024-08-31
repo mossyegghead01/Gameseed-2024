@@ -10,6 +10,9 @@ public class UIHandlers : MonoBehaviour
     public TextMeshProUGUI statText;
     public GameObject inventoryHolder;
     public CanvasRenderer inventoryPanels;
+    public TextMeshProUGUI scoreText;
+
+    private float score = 0;
 
     void Start()
     {
@@ -57,5 +60,11 @@ public class UIHandlers : MonoBehaviour
 
             UpdateUI();
         }
+    }
+
+    public void IncrementScore(float scoreIncrement = 1)
+    {
+        score += scoreIncrement;
+        scoreText.text = score.ToString();
     }
 }

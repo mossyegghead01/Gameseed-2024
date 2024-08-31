@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Health : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class Health : MonoBehaviour
     public float health = 100;
     // Object Maximum Health
     public float maxHealth = 100;
+    // Should object be destroyed after the health ran out?
+    public bool destroyAfterDeath = false;
+    // Should this object death increment score?
+    public bool incrementScoreOnDeath = false;
 
     void Start()
     {
@@ -19,6 +24,17 @@ public class Health : MonoBehaviour
     {
         // Still clamping health
         health = Mathf.Clamp(health, 0, maxHealth);
+        if (health <= 0)
+        {
+            if (destroyAfterDeath)
+            {
+                Destroy(this.gameObject);
+            }
+            if (incrementScoreOnDeath)
+            {
+                EventSystem.current.GetComponent<UIHandlers>().IncrementScore();
+            }
+        }
     }
     public float GetHealth()
     {
