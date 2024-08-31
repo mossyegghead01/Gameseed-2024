@@ -20,4 +20,16 @@ public class Health : MonoBehaviour
         // Still clamping health
         health = Mathf.Clamp(health, 0, maxHealth);
     }
+    public float GetHealth()
+    {
+        return health;
+    }
+    public void SetHealth(float health)
+    {
+        this.health = health;
+    }
+    public void ModifyHealth(float modHealth)
+    {
+        health += modHealth;
+    }
 }

@@ -15,10 +15,10 @@ public class BuildInventory
     public BuildInventory()
     {
         slots = new List<Slot>(){
-            new Slot(SlotState.Wall, this, 3),
-            new Slot(SlotState.Carrot, this),
-            new Slot(SlotState.Corn, this),
-            new Slot(SlotState.Fence, this)
+            new Slot(SlotState.Wall, this, 999),
+            new Slot(SlotState.Carrot, this, 999),
+            new Slot(SlotState.Corn, this, 999),
+            new Slot(SlotState.Fence, this, 999)
         };
         buildInventoryUI = new BuildInventoryUI(this);
         SelectSlot(0);

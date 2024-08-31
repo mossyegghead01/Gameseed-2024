@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,7 +9,8 @@ using UnityEngine.Tilemaps;
 public class Cell
 {
     private CellType cellType = CellType.Empty;
-    public int health, maxHealth, x, y, cellSize;
+    public int x, y, cellSize;
+    public float health, maxHealth;
     private float lightLevel;
     private bool isLit, canCollide;
     private CellState cellState;
@@ -16,9 +18,11 @@ public class Cell
     private Tilemap tilemap;
     private BuildInventory buildInventory;
     private Plant plant;
+    private Grid grid;
 
     public Cell(Vector3Int position, CellState cellState, Grid grid)
     {
+        this.grid = grid;
         buildInventory = grid.GetBuildInventory();
         this.position = position;
         tilemap = grid.GetTilemap();
@@ -32,7 +36,6 @@ public class Cell
     private TileBase GetTile(CellState cellState)
     {
         TileBase tileBase = Resources.Load($"Tilemap/Tiles/{cellState}") as TileBase;
-        Debug.Log(tileBase);
         return tileBase;
     }
     public CellState GetCellState()
@@ -42,8 +45,6 @@ public class Cell
 
     public void SetCell(CellState cellState)
     {
-
-
         maxHealth = CellFunctions.GetMaxHealth(cellState);
         if (maxHealth != -1)
         {
@@ -55,12 +56,18 @@ public class Cell
         }
         this.cellState = cellState;
         cellType = CellFunctions.GetCellType(cellState);
-        tilemap.SetTile(position, GetTile(cellState));
+        var bounds = new GraphUpdateObject(grid.GetTilemap().GetComponent<CompositeCollider2D>().bounds);
+        bounds.updatePhysics = true;
+        AstarPath.active.UpdateGraphs(bounds);
 
+        tilemap.SetTile(position, GetTile(cellState));
+        // var graphToScan = AstarPath.active.data.gridGraph;
+        // AstarPath.active.Scan(graphToScan);
     }
 
 
-    public void Break(int damage)
+
+    public void Break(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -109,7 +116,7 @@ public static class CellFunctions
         CellState.Fence,
         CellState.Wall
     };
-    public static Dictionary<CellState, int> health = new Dictionary<CellState, int>{
+    public static Dictionary<CellState, float> health = new Dictionary<CellState, float>{
         {CellState.Empty,-1},
         {CellState.Fence, 3},
         {CellState.Carrot, 1},
@@ -128,7 +135,7 @@ public static class CellFunctions
         }
         else return CellType.Empty;
     }
-    public static int GetMaxHealth(CellState cellState)
+    public static float GetMaxHealth(CellState cellState)
     {
         if (health.ContainsKey(cellState))
         {
