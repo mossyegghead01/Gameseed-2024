@@ -73,8 +73,9 @@ public class PlayerControl : MonoBehaviour
     void FixedUpdate()
     {
         // Move the player
-        GetComponent<Rigidbody2D>().velocity = new Vector3(inputX * movementSpeed, inputY * movementSpeed);
+        GetComponent<Rigidbody2D>().velocity = new Vector3(inputX, inputY).normalized * movementSpeed;
         // Rotate the weapon
         pivotObject.eulerAngles = new Vector3(0, 0, -(Mathf.Atan2(lookVector.x, lookVector.y) * Mathf.Rad2Deg - 90f));
+        
     }
 }
