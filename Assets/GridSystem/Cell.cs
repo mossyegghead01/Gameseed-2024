@@ -9,7 +9,8 @@ using UnityEngine.Tilemaps;
 public class Cell
 {
     private CellType cellType = CellType.Empty;
-    public int health, maxHealth, x, y, cellSize;
+    public int x, y, cellSize;
+    public float health, maxHealth;
     private float lightLevel;
     private bool isLit, canCollide;
     private CellState cellState;
@@ -66,7 +67,7 @@ public class Cell
 
 
 
-    public void Break(int damage)
+    public void Break(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -115,7 +116,7 @@ public static class CellFunctions
         CellState.Fence,
         CellState.Wall
     };
-    public static Dictionary<CellState, int> health = new Dictionary<CellState, int>{
+    public static Dictionary<CellState, float> health = new Dictionary<CellState, float>{
         {CellState.Empty,-1},
         {CellState.Fence, 3},
         {CellState.Carrot, 1},
@@ -134,7 +135,7 @@ public static class CellFunctions
         }
         else return CellType.Empty;
     }
-    public static int GetMaxHealth(CellState cellState)
+    public static float GetMaxHealth(CellState cellState)
     {
         if (health.ContainsKey(cellState))
         {

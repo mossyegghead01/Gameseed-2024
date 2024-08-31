@@ -81,7 +81,7 @@ public class Grid
     {
         SetCell(tilemap.WorldToCell(mousePosition), cellState);
     }
-    public void BreakCell(int damage, Vector3Int position)
+    public void BreakCell(float damage, Vector3Int position)
     {
         cells.TryGetValue((position.x, position.y), out Cell res);
         if (res != null)
@@ -89,7 +89,7 @@ public class Grid
             res.Break(damage);
         }
     }
-    public void BreakCell(int damage, Vector3 position)
+    public void BreakCell(float damage, Vector3 position)
     {
         BreakCell(damage, tilemap.WorldToCell(position));
     }
