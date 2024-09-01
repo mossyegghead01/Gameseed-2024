@@ -8,6 +8,7 @@ public class BulletHit : MonoBehaviour
     private float range;
     private float damage;
     private float piercing;
+    public float PointsMultiplier { private get; set; }
 
     // Internal properties
     private Vector3 initialPos;
@@ -39,6 +40,7 @@ public class BulletHit : MonoBehaviour
             if (collision.gameObject.TryGetComponent<Health>(out var collidedHealth))
             {
                 collidedHealth.health -= damage;
+                collidedHealth.IncrementMultiplier = PointsMultiplier;
             }
 
             // Piercing

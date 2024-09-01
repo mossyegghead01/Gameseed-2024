@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public bool destroyAfterDeath = false;
     // Should this object death increment score?
     public bool incrementScoreOnDeath = false;
+    public float IncrementMultiplier { private get; set; } = 1;
+    public float scoreValue = 1;
 
     void Start()
     {
@@ -32,7 +34,7 @@ public class Health : MonoBehaviour
             }
             if (incrementScoreOnDeath)
             {
-                EventSystem.current.GetComponent<UIHandlers>().IncrementScore();
+                EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
             }
         }
     }

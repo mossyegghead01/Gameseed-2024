@@ -144,6 +144,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 1
   incrementScoreOnDeath: 1
+  scoreValue: 1
 --- !u!1 &74640423
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +259,15 @@ MonoBehaviour:
   PiercingBounds:
     lower: 0
     upper: 3
+  innacuracyBounds:
+    lower: 0
+    upper: 5
+  movementBonusBounds:
+    lower: -2
+    upper: 2
+  reloadSpeedBounds:
+    lower: 2
+    upper: 7
   damageBounds:
     lower: 5
     upper: 100
@@ -2092,6 +2102,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 1
   incrementScoreOnDeath: 1
+  scoreValue: 1
 --- !u!1001 &831442641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2211,6 +2222,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 1
   incrementScoreOnDeath: 1
+  scoreValue: 1
 --- !u!1 &864471704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,6 +2259,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!50 &864471706
 Rigidbody2D:
   serializedVersion: 4
@@ -2736,6 +2749,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!1 &1056647557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,6 +2786,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!50 &1056647559
 Rigidbody2D:
   serializedVersion: 4
@@ -2948,6 +2963,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!50 &1115141355
 Rigidbody2D:
   serializedVersion: 4
@@ -3415,6 +3431,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 1
   incrementScoreOnDeath: 1
+  scoreValue: 1
 --- !u!1 &1440774313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,6 +3499,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!50 &1445546038
 Rigidbody2D:
   serializedVersion: 4
@@ -3990,6 +4008,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyAfterDeath: 0
   incrementScoreOnDeath: 0
+  scoreValue: 1
 --- !u!50 &1659371019
 Rigidbody2D:
   serializedVersion: 4
@@ -4319,6 +4338,16 @@ PrefabInstance:
         type: 3}
       propertyPath: piercing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808607174702751763, guid: e36fb227d51f65b45bcbec25200af211,
+        type: 3}
+      propertyPath: gunAbility.type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808607174702751763, guid: e36fb227d51f65b45bcbec25200af211,
+        type: 3}
+      propertyPath: gunAbility.modifier
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5707976156088381162, guid: e36fb227d51f65b45bcbec25200af211,
         type: 3}

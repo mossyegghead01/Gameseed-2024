@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,6 +8,28 @@ public class GunProperty : MonoBehaviour
 {
     // Firing type of  the gun
     public enum FireType { Automatic, Single, Scatter, Burst }
+    public enum AbilityTypes
+    {
+        Accuracy,
+        Range,
+        FireRate,
+        Damage,
+        MovementBonus,
+        PointsMultiplier,
+    }
+
+    [Serializable]
+    public class Ability
+    {
+        public AbilityTypes type;
+        public float modifier;
+        public Ability(AbilityTypes ability, float modifier)
+        {
+            this.type = ability;
+            this.modifier = modifier;
+        }
+    }
+    
 
     // Gun Properties
     // Some properties will be inherited to bullets it fired.
@@ -21,6 +44,9 @@ public class GunProperty : MonoBehaviour
     public float magazineSize = 30;
     public float reloadSpeed = 2;
     public float innacuracy = 1;
+    public Ability gunAbility;
+    public float pointsMultiplier = 1;
+    
 
     // Single Shot and Scatter Shot internals
     private bool fired = false;
@@ -39,12 +65,13 @@ public class GunProperty : MonoBehaviour
     private void SpawnBullet(float angleOffset, bool decrementBulletHere = false)
     {
         // Instantiate bullet from prefab into the world with position inherited from the BulletSpawn Object and rotation inherited from gun rotation axis
-        GameObject bullet = Instantiate(bulletPrefab, transform.GetChild(1).transform.position, transform.GetChild(1).transform.rotation * Quaternion.Euler(0, 0, angleOffset + Random.Range(-innacuracy, innacuracy)));
+        GameObject bullet = Instantiate(bulletPrefab, transform.GetChild(1).transform.position, transform.GetChild(1).transform.rotation * Quaternion.Euler(0, 0, angleOffset + UnityEngine.Random.Range(-innacuracy, innacuracy)));
         // Apply Force then set range and damage of the bullet
         bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * projectileSpeed, ForceMode2D.Impulse);
         bullet.GetComponent<BulletHit>().SetRange(weaponRange);
         bullet.GetComponent<BulletHit>().SetDamage(damage);
         bullet.GetComponent<BulletHit>().SetPiercing(piercing);
+        bullet.GetComponent<BulletHit>().PointsMultiplier = pointsMultiplier;
 
         if (decrementBulletHere) 
         {
@@ -55,6 +82,43 @@ public class GunProperty : MonoBehaviour
     void Start()
     {
         MagazineContent = magazineSize;
+        if (gunAbility != null)
+        {
+            switch (gunAbility.type)
+            {
+                case AbilityTypes.Range:
+                    this.weaponRange += gunAbility.modifier;
+                    break;
+                case AbilityTypes.Damage:
+                    this.damage += gunAbility.modifier;
+                    break;
+                case AbilityTypes.PointsMultiplier:
+                    this.pointsMultiplier = gunAbility.modifier;
+                    if (this.pointsMultiplier <= 0)
+                    {
+                        this.pointsMultiplier = 1;
+                    }
+                    break;
+                case AbilityTypes.Accuracy:
+                    this.innacuracy -= gunAbility.modifier;
+                    if (this.innacuracy < 0)
+                    {
+                        this.innacuracy = 0;
+                    }
+                    break;
+                case AbilityTypes.FireRate:
+                    this.fireRate -= gunAbility.modifier;
+                    if (this.fireRate < 0.02f)
+                    {
+                        this.fireRate = 0.02f;
+                    }
+                    break;
+                default:
+                    // I swear to god there's no way you could get to this point without getting scolded by the compiler
+                    Debug.LogException(new System.MissingFieldException("Find something that exist, bucko."));
+                    break;
+            }
+        }
     }
 
     void FixedUpdate()
