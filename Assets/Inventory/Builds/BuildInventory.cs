@@ -164,10 +164,15 @@ public enum BuildState
 }
 public enum SlotState
 {
-    Wall,
+    Empty,
     Carrot,
     Corn,
-    Fence
+    Fence,
+    Wall,
+    ReinforcedWall,
+    Concrete,
+    ReinforcedConcrete,
+    Post
 }
 
 public static class BuildInventoryFunctions

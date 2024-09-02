@@ -103,7 +103,11 @@ public enum CellState
     Carrot,
     Corn,
     Fence,
-    Wall
+    Wall,
+    ReinforcedWall,
+    Concrete,
+    ReinforcedConcrete,
+    Post
 }
 
 public static class CellFunctions
