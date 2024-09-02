@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static GunProperty;
@@ -16,7 +18,8 @@ public class WeaponRolling : MonoBehaviour
     // Also confused?
     // Go play minecraft.
     public GameObject inventory;
-    
+    public Sprite placeholderSprite;
+
     // Don't judge me on these two classes, I used too much java and I love inheritance.
     [Serializable]
     public class Bounds
@@ -60,6 +63,55 @@ public class WeaponRolling : MonoBehaviour
         }
     }
 
+    public enum WeaponPlantType { Eggplant, Carrot, Corn, Tomato, Cauliflower, Broccolli }
+    public List<string> weaponListScatter = new()
+    {
+        "Mossberg",
+        "CoachGun",
+        "BrowningCitori",
+        "Winchester1887",
+    };
+    public List<string> weaponListSingle = new()
+    {
+        "DessertEagle",
+        "Remington700",
+        "AR15",
+        "SCARH",
+    };
+    public List<string> weaponListBurst = new()
+    {
+        "FAMAS",
+        "AN94",
+        "Beretta93R",
+        "MP5A2",
+    };
+    public List<string> weaponListAuto = new()
+    {
+        "AK47",
+        "Uzi",
+        "M16",
+        "PKM",
+    };
+
+
+    public Dictionary<WeaponPlantType, AbilityTypes> abilityMap = new()
+    {
+        {WeaponPlantType.Eggplant, AbilityTypes.Accuracy},
+        {WeaponPlantType.Carrot, AbilityTypes.Range},
+        {WeaponPlantType.Corn, AbilityTypes.FireRate},
+        {WeaponPlantType.Tomato, AbilityTypes.Damage},
+        {WeaponPlantType.Cauliflower, AbilityTypes.MovementBonus},
+        {WeaponPlantType.Broccolli, AbilityTypes.PointsMultiplier},
+    };
+    //{
+    //    new(WeaponPlantType.Eggplant, AbilityTypes.Accuracy),
+    //    new(WeaponPlantType.Carrot, AbilityTypes.Range),
+    //    new(WeaponPlantType.Corn, AbilityTypes.FireRate),
+    //    new(WeaponPlantType.Tomato, AbilityTypes.Damage),
+    //    new(WeaponPlantType.Cauliflower, AbilityTypes.MovementBonus),
+    //    new(WeaponPlantType.Broccolli, AbilityTypes.PointsMultiplier),
+    //};
+
     // Note for fireRate
     // GoodRollRange is actually BadRollRange and vice versa
     // Fuck mossy (me) for coding it that way
@@ -74,15 +126,21 @@ public class WeaponRolling : MonoBehaviour
     // TEMPORARY, CHANGE WITH DIFFICULTY SCALING LATER
     public StatBounds damageBounds = new(5, 100);
 
+    public void RollAny()
+    {
+        Roll((WeaponPlantType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(WeaponPlantType)).Length));
+    }
+
     // Roll the dice baby, its time to go gambling
     // AW DANGIT
-    public void Roll()
+    public void Roll(WeaponPlantType plantType = WeaponPlantType.Eggplant)
     {
         // Tinky Winky, Dipsy, La-La, Po. Who's getting sacreficed into the almighty god?
         // Oh wait, it's just rolling for how the gun would work.
         var firetype = (GunProperty.FireType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GunProperty.FireType)).Length);
         // Change inventory.transform later, used for testing for now
         GunProperty gun = Instantiate(gunPrefab, inventory.transform).GetComponent<GunProperty>();
+        Sprite gunSprite = placeholderSprite;
         switch (firetype)
         {
             case GunProperty.FireType.Single:
@@ -95,8 +153,10 @@ public class WeaponRolling : MonoBehaviour
                 gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.GoodRollRange().lower, innacuracyBounds.GoodRollRange().upper));
                 gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.MidRollRange().lower, movementBonusBounds.MidRollRange().upper));
                 gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.MidRollRange().lower, reloadSpeedBounds.MidRollRange().upper));
-                List<int> magSizesSingle = new() { 10, 12 };
+                List<int> magSizesSingle = new() { 10, 12, 30 };
                 gun.magazineSize = magSizesSingle[UnityEngine.Random.Range(0, magSizesSingle.Count)];
+                gun.gunAbility = new Ability(abilityMap[plantType], 2);
+                gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponListSingle[UnityEngine.Random.Range(0, weaponListSingle.Count)] + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
             case GunProperty.FireType.Scatter:
                 // Your gun go pew, mine goes pew pew pew
@@ -110,6 +170,8 @@ public class WeaponRolling : MonoBehaviour
                 gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.BadRollRange().lower, reloadSpeedBounds.BadRollRange().upper));
                 List<int> magSizesScatter = new() { 5, 7 };
                 gun.magazineSize = magSizesScatter[UnityEngine.Random.Range(0, magSizesScatter.Count)];
+                gun.gunAbility = new Ability(abilityMap[plantType], 2);
+                gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponListScatter[UnityEngine.Random.Range(0, weaponListScatter.Count)] + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
             case GunProperty.FireType.Automatic:
                 // America's wife
@@ -123,6 +185,8 @@ public class WeaponRolling : MonoBehaviour
                 gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.GoodRollRange().lower, reloadSpeedBounds.GoodRollRange().upper));
                 List<int> magSizesAuto = new() { 30, 31 };
                 gun.magazineSize = magSizesAuto[UnityEngine.Random.Range(0, magSizesAuto.Count)];
+                gun.gunAbility = new Ability(abilityMap[plantType], 2);
+                gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponListAuto[UnityEngine.Random.Range(0, weaponListAuto.Count)] + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
             case FireType.Burst:
                 // Basically scatter but better, or worse actually?
@@ -136,6 +200,8 @@ public class WeaponRolling : MonoBehaviour
                 gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.GoodRollRange().lower, reloadSpeedBounds.GoodRollRange().upper));
                 List<int> magSizesBurst = new() { 27, 30 };
                 gun.magazineSize = magSizesBurst[UnityEngine.Random.Range(0, magSizesBurst.Count)];
+                gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponListBurst[UnityEngine.Random.Range(0, weaponListBurst.Count)] + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
+                gun.gunAbility = new Ability(abilityMap[plantType], 2);
                 break;
             default:
                 // Still here?
@@ -145,6 +211,8 @@ public class WeaponRolling : MonoBehaviour
                 break;
         }
         gun.gunFireType = firetype;
+        gun.GetComponent<Item>().itemIcon = gunSprite;
+        gun.GetComponent<SpriteRenderer>().sprite = gunSprite;
         EventSystem.current.transform.GetComponent<UIHandlers>().UpdateUI();
     }
 }

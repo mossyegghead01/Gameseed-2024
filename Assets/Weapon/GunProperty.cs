@@ -113,6 +113,9 @@ public class GunProperty : MonoBehaviour
                         this.fireRate = 0.02f;
                     }
                     break;
+                case AbilityTypes.MovementBonus:
+                    this.movementBonus = gunAbility.modifier;
+                    break;
                 default:
                     // I swear to god there's no way you could get to this point without getting scolded by the compiler
                     Debug.LogException(new System.MissingFieldException("Find something that exist, bucko."));

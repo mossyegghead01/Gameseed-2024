@@ -247,6 +247,27 @@ MonoBehaviour:
   gunPrefab: {fileID: 1579318644165747042, guid: e36fb227d51f65b45bcbec25200af211,
     type: 3}
   inventory: {fileID: 1440774313}
+  placeholderSprite: {fileID: 21300000, guid: 43f3d97bc3267734c97132c37cee6266, type: 3}
+  weaponListScatter:
+  - Mossberg
+  - CoachGun
+  - BrowningCitori
+  - Winchester1887
+  weaponListSingle:
+  - DessertEagle
+  - Remington700
+  - AR15
+  - SCARH
+  weaponListBurst:
+  - FAMAS
+  - AN94
+  - Beretta93R
+  - MP5A2
+  weaponListAuto:
+  - AK47
+  - Uzi
+  - M16
+  - PKM
   fireRateBounds:
     lower: 0.015
     upper: 1
@@ -2032,7 +2053,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 74640428}
         m_TargetAssemblyTypeName: WeaponRolling, Assembly-CSharp
-        m_MethodName: Roll
+        m_MethodName: RollAny
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
