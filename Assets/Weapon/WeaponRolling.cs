@@ -63,29 +63,33 @@ public class WeaponRolling : MonoBehaviour
         }
     }
 
-    public enum WeaponPlantType { Eggplant, Carrot, Corn, Tomato, Cauliflower, Broccolli }
-    public List<string> weaponListScatter = new()
+    public enum WeaponPlantType { Eggplant, Carrot, Corn, Tomato, Cauliflower, Broccoli }
+    [NonSerialized]
+    public List<string> weaponScatter = new()
     {
         "Mossberg500",
         "CoachGun",
         "BrowningCitori",
         "Winchester1887",
     };
-    public List<string> weaponListBurst = new()
+    [NonSerialized]
+    public List<string> weaponBurst = new()
     {
         "FAMAS",
         "AN94",
         "Beretta93R",
         "MP5A2",
     };
-    public List<string> weaponListAuto = new()
+    [NonSerialized]
+    public List<string> weaponAuto = new()
     {
         "AK47",
         "Uzi",
         "M16",
         "PKM",
     };
-    public List<string> weaponListSingle = new()
+    [NonSerialized]
+    public List<string> weaponSingle = new()
     {
         "DesertEagle",
         "Remington700",
@@ -121,7 +125,7 @@ public class WeaponRolling : MonoBehaviour
         {WeaponPlantType.Corn, AbilityTypes.FireRate},
         {WeaponPlantType.Tomato, AbilityTypes.Damage},
         {WeaponPlantType.Cauliflower, AbilityTypes.MovementBonus},
-        {WeaponPlantType.Broccolli, AbilityTypes.PointsMultiplier},
+        {WeaponPlantType.Broccoli, AbilityTypes.PointsMultiplier},
     };
 
     // Note for fireRate
@@ -169,7 +173,7 @@ public class WeaponRolling : MonoBehaviour
                 List<int> magSizesSingle = new() { 10, 12, 30 };
                 gun.magazineSize = magSizesSingle[UnityEngine.Random.Range(0, magSizesSingle.Count)];
                 gun.gunAbility = new Ability(abilityMap[plantType], 2);
-                weaponType = weaponListSingle[UnityEngine.Random.Range(0, weaponListSingle.Count)];
+                weaponType = weaponSingle[UnityEngine.Random.Range(0, weaponSingle.Count)];
                 print(weaponType);
                 gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponType + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
@@ -186,7 +190,7 @@ public class WeaponRolling : MonoBehaviour
                 List<int> magSizesScatter = new() { 5, 7 };
                 gun.magazineSize = magSizesScatter[UnityEngine.Random.Range(0, magSizesScatter.Count)];
                 gun.gunAbility = new Ability(abilityMap[plantType], 2);
-                weaponType = weaponListScatter[UnityEngine.Random.Range(0, weaponListScatter.Count)];
+                weaponType = weaponScatter[UnityEngine.Random.Range(0, weaponScatter.Count)];
                 print(weaponType);
                 gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponType + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
@@ -203,7 +207,7 @@ public class WeaponRolling : MonoBehaviour
                 List<int> magSizesAuto = new() { 30, 31 };
                 gun.magazineSize = magSizesAuto[UnityEngine.Random.Range(0, magSizesAuto.Count)];
                 gun.gunAbility = new Ability(abilityMap[plantType], 2);
-                weaponType = weaponListAuto[UnityEngine.Random.Range(0, weaponListAuto.Count)];
+                weaponType = weaponAuto[UnityEngine.Random.Range(0, weaponAuto.Count)];
                 print(weaponType);
                 gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponType + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 break;
@@ -219,7 +223,7 @@ public class WeaponRolling : MonoBehaviour
                 gun.reloadSpeed = Mathf.Round(UnityEngine.Random.Range(reloadSpeedBounds.GoodRollRange().lower, reloadSpeedBounds.GoodRollRange().upper));
                 List<int> magSizesBurst = new() { 27, 30 };
                 gun.magazineSize = magSizesBurst[UnityEngine.Random.Range(0, magSizesBurst.Count)];
-                weaponType = weaponListBurst[UnityEngine.Random.Range(0, weaponListBurst.Count)];
+                weaponType = weaponBurst[UnityEngine.Random.Range(0, weaponBurst.Count)];
                 print(weaponType);
                 gunSprite = Resources.Load<Sprite>("Sprites/Guns/" + weaponType + "_" + Enum.GetName(typeof(WeaponPlantType), plantType));
                 gun.gunAbility = new Ability(abilityMap[plantType], 2);
