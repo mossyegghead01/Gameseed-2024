@@ -92,8 +92,21 @@ public class PlayerControl : MonoBehaviour
     {
         // Move the player
         GetComponent<Rigidbody2D>().velocity = new Vector3(inputX, inputY).normalized * actualMovementSpeed;
+
+        var angle = -(Mathf.Atan2(lookVector.x, lookVector.y) * Mathf.Rad2Deg - 90f);
+        var yOverride = 0;
+        if (!(angle < 90 && angle > -90))
+        {
+            yOverride = 180;
+            angle = -angle - 180;
+        }
+        else
+        {
+            yOverride = 0;
+        }
+
         // Rotate the weapon
-        pivotObject.eulerAngles = new Vector3(0, 0, -(Mathf.Atan2(lookVector.x, lookVector.y) * Mathf.Rad2Deg - 90f));
+        pivotObject.eulerAngles = new Vector3(0, yOverride, angle);
         
     }
 }
