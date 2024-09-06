@@ -248,26 +248,6 @@ MonoBehaviour:
     type: 3}
   inventory: {fileID: 1440774313}
   placeholderSprite: {fileID: 21300000, guid: 43f3d97bc3267734c97132c37cee6266, type: 3}
-  weaponListScatter:
-  - Mossberg
-  - CoachGun
-  - BrowningCitori
-  - Winchester1887
-  weaponListSingle:
-  - DessertEagle
-  - Remington700
-  - AR15
-  - SCARH
-  weaponListBurst:
-  - FAMAS
-  - AN94
-  - Beretta93R
-  - MP5A2
-  weaponListAuto:
-  - AK47
-  - Uzi
-  - M16
-  - PKM
   fireRateBounds:
     lower: 0.015
     upper: 1
