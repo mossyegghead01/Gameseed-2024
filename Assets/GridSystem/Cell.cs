@@ -107,7 +107,11 @@ public enum CellState
     ReinforcedWall,
     Concrete,
     ReinforcedConcrete,
-    Post
+    Post,
+    Eggplant,
+    Cauliflower,
+    Tomato,
+    Broccoli,
 }
 
 public static class CellFunctions
