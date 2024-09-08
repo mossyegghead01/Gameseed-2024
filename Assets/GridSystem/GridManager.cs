@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Runtime.InteropServices;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class GridManager : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class GridManager : MonoBehaviour
     private BuildInventory buildInventory;
     [SerializeField] GameObject cellObject, cursorObject;
     [SerializeField] Tilemap tilemap;
-    private Sprite cursorBuild, cursorBreak;
+    private Sprite cursorBuild, cursorBreak, cursorHarvest;
     private Vector3Int currentXY;
     private bool isCaps = false;
     [SerializeField] private float lerpSpeed = 15f;
@@ -27,6 +29,7 @@ public class GridManager : MonoBehaviour
         isCaps = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
         cursorBuild = Resources.Load<Sprite>("Sprites/cursorBuild");
         cursorBreak = Resources.Load<Sprite>("Sprites/cursorBreak");
+        cursorHarvest = Resources.Load<Sprite>("Sprites/cursorHarvest");
     }
     // Update is called once per frame
     void Update()
@@ -77,7 +80,11 @@ public class GridManager : MonoBehaviour
 
         if (isCaps)
         {
-            cursorObject.GetComponent<SpriteRenderer>().sprite = cursorBreak;
+            var cell = grid.GetCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            if (cell != null && CellFunctions.plant.Contains(cell.GetCellState()) && cell.getPlant().GetGrowStage() == 3)
+                cursorObject.GetComponent<SpriteRenderer>().sprite = cursorHarvest;
+            else
+                cursorObject.GetComponent<SpriteRenderer>().sprite = cursorBreak;
         }
         else if (!isCaps)
         {
