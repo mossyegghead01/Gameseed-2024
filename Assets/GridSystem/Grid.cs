@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,8 +10,10 @@ using UnityEngine.UIElements;
 public class Grid
 {
     private Dictionary<(int, int), Cell> cells;
+    private Dictionary<(int, int), bool> lightCells;
     private Tilemap tilemap;
     private BuildInventory buildInventory;
+    private GameObject gameManager;
     // public Grid(int width, int height, int cellSize, GameObject cellObject, GameObject gridContainer)
     // {
 
@@ -40,8 +43,9 @@ public class Grid
         return tilemap;
     }
 
-    public Grid(Tilemap tilemap, BuildInventory buildInventory)
+    public Grid(Tilemap tilemap, BuildInventory buildInventory, GameObject gameManager)
     {
+        this.gameManager = gameManager;
         this.buildInventory = buildInventory;
         this.tilemap = tilemap;
         cells = new Dictionary<(int, int), Cell>();
@@ -63,7 +67,8 @@ public class Grid
     public void SetCell(Vector3Int position, CellState cellState)
     {
         var res = GetCell(position);
-        if (res == null)
+        lightCells = ObeliskFunctions.GetObeliskCoordinates(gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().GetStage());
+        if ((res == null || cells[(position.x, position.y)].GetCellState() == CellState.Empty) && ((CellFunctions.plant.Contains(cellState) && lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true) || CellFunctions.structure.Contains(cellState)))
         {
             cells[(position.x, position.y)] = new Cell(position, cellState, this);
             Debug.Log("new cell");
@@ -71,13 +76,13 @@ public class Grid
         }
         else
         {
-            if (cells[(position.x, position.y)].GetCellState() != cellState)
-            {
+            // if (cells[(position.x, position.y)].GetCellState() != cellState)
+            // {
 
-                cells[(position.x, position.y)].SetCell(cellState);
-                Debug.Log("replace cell");
-                buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
-            }
+            //     cells[(position.x, position.y)].SetCell(cellState);
+            //     Debug.Log("replace cell");
+            //     buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+            // }
         }
 
 

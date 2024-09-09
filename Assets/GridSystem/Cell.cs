@@ -30,6 +30,7 @@ public class Cell
         if (CellFunctions.GetCellType(cellState) == CellType.Plant)
         {
             plant = new Plant(this);
+            Debug.Log(plant);
         }
     }
     public Plant getPlant()
@@ -65,8 +66,6 @@ public class Cell
         AstarPath.active.UpdateGraphs(bounds);
 
         tilemap.SetTile(position, GetTile(cellState));
-        // var graphToScan = AstarPath.active.data.gridGraph;
-        // AstarPath.active.Scan(graphToScan);
     }
 
     public void SetTile(TileBase tileBase)
@@ -86,6 +85,7 @@ public class Cell
             }
             Debug.Log("not harvest");
             SetCell(CellState.Empty);
+            plant = null;
         }
     }
 

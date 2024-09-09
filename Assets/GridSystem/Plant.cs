@@ -28,9 +28,13 @@ public class Plant
             cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_1") as TileBase);
             growStage = 1;
             await System.Threading.Tasks.Task.Delay(growTime * 500);
+            if (cell.getPlant() == null || Application.isEditor)
+                return;
             cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_2") as TileBase);
             growStage = 2;
             await System.Threading.Tasks.Task.Delay(growTime * 500);
+            if (cell.getPlant() == null || Application.isEditor)
+                return;
             cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_3") as TileBase);
             growStage = 3;
             isGrown = true;
