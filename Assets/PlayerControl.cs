@@ -10,8 +10,6 @@ public class PlayerControl : MonoBehaviour
 
     // Movement Speed for the player
     public float movementSpeed = 5;
-    // Gun Object
-    public GunProperty gun;
 
     // Internal Values
     // Input axis
@@ -26,6 +24,9 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         pivotObject = gameObject.transform.GetChild(0);
+        EventSystem.current.GetComponent<WeaponRolling>().RollAny();
+        EventSystem.current.GetComponent<UIHandlers>().InventoryButtonClicked(0);
+        Destroy(EventSystem.current.GetComponent<UIHandlers>().inventoryHolder.transform.GetChild(0).gameObject);
     }
 
     void Update()

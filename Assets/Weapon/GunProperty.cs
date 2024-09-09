@@ -114,7 +114,7 @@ public class GunProperty : MonoBehaviour
                     }
                     break;
                 case AbilityTypes.MovementBonus:
-                    this.movementBonus = gunAbility.modifier;
+                    this.movementBonus += gunAbility.modifier;
                     break;
                 default:
                     // I swear to god there's no way you could get to this point without getting scolded by the compiler

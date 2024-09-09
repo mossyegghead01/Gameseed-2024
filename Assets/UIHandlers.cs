@@ -11,6 +11,7 @@ public class UIHandlers : MonoBehaviour
     public TextMeshProUGUI statText;
     public GameObject inventoryHolder;
     public CanvasRenderer inventoryPanels;
+    public Image currentGunIcon;
     public TextMeshProUGUI scoreText;
 
     private float score = 0;
@@ -33,6 +34,13 @@ public class UIHandlers : MonoBehaviour
                 // Change the icon
                 inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
             }
+        }
+
+        // Update the equipped gun icon
+        Transform currentGun = playerGunAxis.transform.GetChild(0);
+        if (currentGun.TryGetComponent<Item>(out var itemCurrent))
+        {
+            currentGunIcon.sprite = itemCurrent.itemIcon;
         }
 
         // Update debug statistic text
