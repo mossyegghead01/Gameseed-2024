@@ -131,7 +131,7 @@ public class WeaponRolling : MonoBehaviour
     // Note for fireRate
     // GoodRollRange is actually BadRollRange and vice versa
     // Fuck mossy (me) for coding it that way
-    public StatBounds fireRateBounds = new(0.015f, 1.0f);
+    public StatBounds fireRateBounds = new(0.3f, 1.5f);
     public StatBounds projectileSpeedBounds = new(10, 50);
     public StatBounds rangeBounds = new(20, 70);
     public StatBounds PiercingBounds = new(0, 3);
