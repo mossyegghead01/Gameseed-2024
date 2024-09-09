@@ -29,8 +29,12 @@ public class Cell
         SetCell(cellState);
         if (CellFunctions.GetCellType(cellState) == CellType.Plant)
         {
-            plant = new Plant(cellState);
+            plant = new Plant(this);
         }
+    }
+    public Plant getPlant()
+    {
+        return plant;
     }
 
     private TileBase GetTile(CellState cellState)
@@ -65,7 +69,10 @@ public class Cell
         // AstarPath.active.Scan(graphToScan);
     }
 
-
+    public void SetTile(TileBase tileBase)
+    {
+        tilemap.SetTile(position, tileBase);
+    }
 
     public void Break(float damage)
     {
@@ -107,25 +114,47 @@ public enum CellState
     ReinforcedWall,
     Concrete,
     ReinforcedConcrete,
-    Post
+    Post,
+    Eggplant,
+    Cauliflower,
+    Tomato,
+    Broccoli,
 }
 
 public static class CellFunctions
 {
     public static CellState[] plant = {
         CellState.Carrot,
-        CellState.Corn
+        CellState.Corn,
+        CellState.Eggplant,
+        CellState.Cauliflower,
+        CellState.Tomato,
+        CellState.Broccoli
     };
     public static CellState[] structure = {
         CellState.Fence,
-        CellState.Wall
+        CellState.Wall,
+        CellState.ReinforcedWall,
+        CellState.Concrete,
+        CellState.ReinforcedConcrete,
+        CellState.Post,
+
     };
     public static Dictionary<CellState, float> health = new Dictionary<CellState, float>{
         {CellState.Empty,-1},
         {CellState.Fence, 3},
         {CellState.Carrot, 1},
         {CellState.Corn, 1},
-        {CellState.Wall, 5}
+        {CellState.Wall, 5},
+        {CellState.ReinforcedWall, 10},
+        {CellState.Concrete, 20},
+        {CellState.ReinforcedConcrete, 35},
+        {CellState.Post, 2},
+        {CellState.Eggplant, 1},
+        {CellState.Cauliflower, 1},
+        {CellState.Tomato, 1},
+        {CellState.Broccoli, 1},
+
     };
     public static CellType GetCellType(CellState cellState)
     {

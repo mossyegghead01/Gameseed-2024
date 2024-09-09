@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1869315837
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 19b65ba7f92eefc47b98a5b8337bab1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -236,9 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDamage: 1
   breakSpeed: 13
-  player: {fileID: 0}
-  tilemap: {fileID: 0}
-  gridManager: {fileID: 0}
+  playerDamageMultiplier: 0.01
+  breakSpeedMultiplier: 0.01
 --- !u!114 &3351277104679076968
 MonoBehaviour:
   m_ObjectHideFlags: 0

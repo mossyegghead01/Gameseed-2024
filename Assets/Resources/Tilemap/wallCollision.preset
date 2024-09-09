@@ -1158,7 +1158,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.size
-    value: 10
+    value: 8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[0].x
@@ -1223,22 +1223,6 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[7].y
     value: -1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[8].x
-    value: 8
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[8].y
-    value: -1
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[9].x
-    value: 8
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_PhysicsShape.Array.data[0].Array.data[9].y
-    value: -8
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_SpriteSheet.m_Sprites.Array.data[5].m_TessellationDetail

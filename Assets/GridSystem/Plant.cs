@@ -1,23 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Plant
 {
     private int growTime;
     private CellState cellState;
     private bool isGrown = false;
-    public Plant(CellState cellState)
+    private int growStage = 0;
+    private Cell cell;
+    public Plant(Cell cell)
     {
-        this.cellState = cellState;
+        this.cell = cell;
+        cellState = cell.GetCellState();
         growTime = PlantFunctions.GetGrowTime(cellState);
-        Grow();
+        _ = Grow();
+    }
+    public int GetGrowStage()
+    {
+        return growStage;
     }
     public async System.Threading.Tasks.Task Grow()
     {
         if (growTime != -1)
         {
-            await System.Threading.Tasks.Task.Delay(growTime * 1000);
+            cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_1") as TileBase);
+            growStage = 1;
+            await System.Threading.Tasks.Task.Delay(growTime * 500);
+            cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_2") as TileBase);
+            growStage = 2;
+            await System.Threading.Tasks.Task.Delay(growTime * 500);
+            cell.SetTile(Resources.Load($"Tilemap/Tiles/{cellState}_3") as TileBase);
+            growStage = 3;
             isGrown = true;
         }
     }
@@ -37,6 +52,14 @@ public static class PlantFunctions
                 return 10;
             case CellState.Corn:
                 return 15;
+            case CellState.Eggplant:
+                return 20;
+            case CellState.Cauliflower:
+                return 40;
+            case CellState.Tomato:
+                return 120;
+            case CellState.Broccoli:
+                return 200;
             default:
                 return -1;
         }

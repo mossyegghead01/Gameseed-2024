@@ -18,7 +18,14 @@ public class BuildInventory
             new Slot(SlotState.Wall, this, 999),
             new Slot(SlotState.Carrot, this, 999),
             new Slot(SlotState.Corn, this, 999),
-            new Slot(SlotState.Fence, this, 999)
+            new Slot(SlotState.Fence, this, 999),
+            new Slot(SlotState.ReinforcedWall, this, 999),
+            new Slot(SlotState.Concrete, this, 999),
+            new Slot(SlotState.ReinforcedConcrete, this, 999),
+            new Slot(SlotState.Eggplant, this, 999),
+            new Slot(SlotState.Broccoli, this, 999),
+            new Slot(SlotState.Cauliflower, this, 999),
+            new Slot(SlotState.Tomato, this, 999),
         };
         buildInventoryUI = new BuildInventoryUI(this);
         SelectSlot(0);
@@ -172,7 +179,11 @@ public enum SlotState
     ReinforcedWall,
     Concrete,
     ReinforcedConcrete,
-    Post
+    Post,
+    Eggplant,
+    Cauliflower,
+    Tomato,
+    Broccoli,
 }
 
 public static class BuildInventoryFunctions
@@ -181,7 +192,15 @@ public static class BuildInventoryFunctions
         {SlotState.Wall, CellState.Wall},
         {SlotState.Carrot, CellState.Carrot},
         {SlotState.Corn, CellState.Corn},
-        {SlotState.Fence, CellState.Fence}
+        {SlotState.Fence, CellState.Fence},
+        {SlotState.ReinforcedWall, CellState.ReinforcedWall},
+        {SlotState.Concrete, CellState.Concrete},
+        {SlotState.ReinforcedConcrete, CellState.ReinforcedConcrete},
+        {SlotState.Post, CellState.Post},
+        {SlotState.Eggplant, CellState.Eggplant},
+        {SlotState.Cauliflower, CellState.Cauliflower},
+        {SlotState.Tomato, CellState.Tomato},
+        {SlotState.Broccoli, CellState.Broccoli},
     };
     public static CellState SlotToCell(SlotState slotState)
     {
@@ -220,7 +239,7 @@ public class BuildInventoryUI
     {
         this.buildInventory = buildInventory;
         buildSlotPrefab = (GameObject)Resources.Load("Prefabs/BuildSlot");
-        buildInventoryContainer = GameObject.Find("Canvas").transform.Find("BuildInventoryContainer").GameObject();
+        buildInventoryContainer = GameObject.Find("Canvas").transform.Find("BuildInventoryContainer").GetChild(0).GetChild(0).GameObject();
         Update();
     }
     public void Update()
@@ -235,7 +254,7 @@ public class BuildInventoryUI
             GameObject buildSlot = UnityEngine.Object.Instantiate(buildSlotPrefab, buildInventoryContainer.transform);
             if (slot.selected)
             {
-                buildSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/UIBuildSlotSelected");
+                buildSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ui/UIBuildSlotSelected");
             }
             buildSlot.GetComponent<BuildInventoryButton>().SetSlot(slot, buildInventory);
         }

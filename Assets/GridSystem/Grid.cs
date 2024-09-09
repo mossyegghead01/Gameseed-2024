@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class Grid
 {
@@ -25,6 +26,15 @@ public class Grid
     //         }
     //     }
     // }
+    public Cell GetCell(Vector3Int position)
+    {
+        cells.TryGetValue((position.x, position.y), out Cell res);
+        return res;
+    }
+    public Cell GetCell(Vector3 mousePosition)
+    {
+        return GetCell(tilemap.WorldToCell(mousePosition));
+    }
     public Tilemap GetTilemap()
     {
         return tilemap;
@@ -52,8 +62,7 @@ public class Grid
     }
     public void SetCell(Vector3Int position, CellState cellState)
     {
-        cells.TryGetValue((position.x, position.y), out Cell res);
-
+        var res = GetCell(position);
         if (res == null)
         {
             cells[(position.x, position.y)] = new Cell(position, cellState, this);
