@@ -19,13 +19,14 @@ public class GridManager : MonoBehaviour
     private Vector3Int currentXY;
     private bool isCaps = false;
     [SerializeField] private float lerpSpeed = 15f;
+    [SerializeField] private GameObject gameManager;
     private Vector3 targetPosition;
     private bool isMoving = false;
     // Start is called before the first frame update
     void Start()
     {
         buildInventory = new BuildInventory();
-        grid = new Grid(tilemap, buildInventory);
+        grid = new Grid(tilemap, buildInventory, gameManager);
         isCaps = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
         cursorBuild = Resources.Load<Sprite>("Sprites/cursorBuild");
         cursorBreak = Resources.Load<Sprite>("Sprites/cursorBreak");
