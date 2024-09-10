@@ -7945,6 +7945,7 @@ GameObject:
   - component: {fileID: 2052550153}
   - component: {fileID: 2052550155}
   - component: {fileID: 2052550154}
+  - component: {fileID: 2052550156}
   m_Layer: 5
   m_Name: SelectedWeapon
   m_TagString: Untagged
@@ -8010,6 +8011,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052550152}
   m_CullTransparentMesh: 1
+--- !u!114 &2052550156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052550152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619a09f32b6ccac469cf680266b845b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGunAxis: {fileID: 300598384}
+  playerInventory: {fileID: 0}
+  referenceMain: 1
+  SlotIndex: 0
 --- !u!1 &2073404406
 GameObject:
   m_ObjectHideFlags: 0

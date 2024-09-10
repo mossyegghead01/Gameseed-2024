@@ -112,6 +112,7 @@ public class GunProperty : MonoBehaviour
                     {
                         this.fireRate = 0.02f;
                     }
+                    this.fireRate = Mathf.Round(this.fireRate * 100) / 100.0f;
                     break;
                 case AbilityTypes.MovementBonus:
                     this.movementBonus += gunAbility.modifier;
