@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player, tilemap, obelisk;
+    [SerializeField] private GameObject player, tilemap, obelisk, lightTilemap;
     // Start is called before the first frame update
     public void Start()
     {
@@ -24,5 +24,9 @@ public class GameManager : MonoBehaviour
     {
 
         return obelisk;
+    }
+    public GameObject GetLightTilemap()
+    {
+        return lightTilemap;
     }
 }
