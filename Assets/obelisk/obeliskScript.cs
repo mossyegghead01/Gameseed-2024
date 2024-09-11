@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 
 public class obeliskScript : MonoBehaviour
 {
-    private float health = 100;
+    private float health = 100, maxHealth = 100;
     private Animator animator;
     [SerializeField] private GameObject gameManager;
     private TileBase backgroundTile;
@@ -45,6 +45,8 @@ public class obeliskScript : MonoBehaviour
     public void Damage(float damage)
     {
         health -= damage;
+        var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(0).GetChild(0).transform.GetComponent<RectTransform>();
+        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), 0);
         if (health <= 0)
         {
             Destroy(gameObject);

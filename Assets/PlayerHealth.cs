@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     // Object Health
     public float health = 100;
@@ -38,6 +38,8 @@ public class Health : MonoBehaviour
                 EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
             }
         }
+        var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
+        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), 0);
 
     }
     public float GetHealth()
