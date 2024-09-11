@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,13 +8,14 @@ using UnityEngine.Tilemaps;
 public class EnemyBreaking : MonoBehaviour
 {
     public float playerDamage = 1, breakSpeed = 3f, playerDamageMultiplier = 0.01f, breakSpeedMultiplier = 0.01f;
-    private GameObject player, tilemap, gameManager;
+    private GameObject player, tilemap, gameManager, obelisk;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
         player = gameManager.GetComponent<GameManager>().GetPlayer();
         tilemap = gameManager.GetComponent<GameManager>().GetTilemap();
+        obelisk = gameManager.GetComponent<GameManager>().GetObelisk();
         GetComponent<AIDestinationSetter>().target = player.transform;
     }
 
@@ -42,6 +44,16 @@ public class EnemyBreaking : MonoBehaviour
         if (enemyCollider.IsTouching(player.GetComponent<Collider2D>()))
         {
             gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<Health>().ModifyHealth(-playerDamage * playerDamageMultiplier);
+        }
+
+        if (enemyCollider.IsTouching(obelisk.GetComponent<Collider2D>()))
+        {
+            gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().Damage(breakSpeed * breakSpeedMultiplier);
+        }
+        var cell = gameManager.GetComponent<GridManager>().GetGrid().GetCell(transform.position);
+        if (cell != null && CellFunctions.plant.Contains<CellState>(cell.GetCellState()))
+        {
+            cell.Trample();
         }
     }
 }

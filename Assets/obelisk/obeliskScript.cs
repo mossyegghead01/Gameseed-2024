@@ -31,8 +31,6 @@ public class obeliskScript : MonoBehaviour
         {
             gameManager.GetComponent<GameManager>().GetLightTilemap().GetComponent<Tilemap>().SetTile(new Vector3Int(coord.Key.Item1, coord.Key.Item2, 0), backgroundTile);
         }
-
-
     }
     public int GetStage()
     {
@@ -42,6 +40,15 @@ public class obeliskScript : MonoBehaviour
     public Dictionary<(int, int), bool> GetObeliskCoordinates()
     {
         return obeliskCoordinates;
+    }
+
+    public void Damage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
