@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIHandlers : MonoBehaviour
@@ -14,6 +15,9 @@ public class UIHandlers : MonoBehaviour
     public Image currentGunIcon;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI ammoText;
+    public GameObject notificationUiPrefab;
+    public GameObject gachaHolder;
+    public GameObject canvas;
 
     private float score = 0;
 
@@ -56,15 +60,33 @@ public class UIHandlers : MonoBehaviour
 
         if (playerGun.reloading)
         {
-            print("Reload");
             ammoText.text = "Reloading...";
         } 
         else
         {
-            print("Not Reloading");
             ammoText.text = playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString();
         }
-        
+
+        for (int i = 0; i < gachaHolder.transform.childCount; i++)
+        {
+            if (canvas.transform.childCount > 0)
+            {
+                if (canvas.transform.GetChild(i).GetComponent<GachaNotificationHandler>().held != gachaHolder.transform.GetChild(i).gameObject)
+                {
+                    var ui = Instantiate(notificationUiPrefab, canvas.transform);
+                    ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
+                    ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
+                    ui.transform.GetChild(0).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+                }
+            }
+            else
+            {
+                var ui = Instantiate(notificationUiPrefab, canvas.transform);
+                ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
+                ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
+                ui.transform.GetChild(0).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+            }
+        }
 
         scoreText.text = score.ToString();
     }
