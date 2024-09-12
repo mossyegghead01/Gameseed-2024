@@ -58,7 +58,7 @@ public class GunProperty : MonoBehaviour
     private double cooldown = 0.0;
     private double reloadCooldown = 0.0;
     private bool shooting = false;
-    private bool reloading = false;
+    public bool reloading = false;
     public float MagazineContent { get; private set; }
 
     // Spawn bullet(s), what else do you expect?

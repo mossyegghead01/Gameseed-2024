@@ -4,6 +4,7 @@ using System.Linq;
 using Pathfinding;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class Cell
@@ -82,6 +83,27 @@ public class Cell
             {
                 Debug.Log("harvest");
                 // * GACHA CODE HERE, make new class pls
+                switch (cellState) { 
+                    case CellState.Carrot:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Carrot);
+                        break;
+                    case CellState.Corn:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Corn);
+                        break;
+                    case CellState.Eggplant:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Eggplant);
+                        break;
+                    case CellState.Cauliflower:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Cauliflower);
+                        break;
+                    case CellState.Tomato:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Tomato);
+                        break;
+                    case CellState.Broccoli:
+                        EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Broccoli);
+                        break;
+                }
+                
             }
             Debug.Log("not harvest");
             SetCell(CellState.Empty);

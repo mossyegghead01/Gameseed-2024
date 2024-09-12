@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
 
     // Movement Speed for the player
     public float movementSpeed = 5;
+    public float scrollSensitivity = 10;
 
     // Internal Values
     // Input axis
@@ -24,7 +25,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         pivotObject = gameObject.transform.GetChild(0);
-        EventSystem.current.GetComponent<WeaponRolling>().RollAny();
+        EventSystem.current.GetComponent<WeaponRolling>().RollAny(true);
         EventSystem.current.GetComponent<UIHandlers>().InventoryButtonClicked(0);
         Destroy(EventSystem.current.GetComponent<UIHandlers>().inventoryHolder.transform.GetChild(0).gameObject);
     }
@@ -51,6 +52,21 @@ public class PlayerControl : MonoBehaviour
         else
         {
             actualMovementSpeed = movementSpeed;
+        }
+
+        // Camera FOV
+        if (held != null)
+        {
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, 5, held.weaponRange);
+        }
+        else
+        {
+            Camera.main.orthographicSize = 5;
+        }
+        float inputScroll = Input.GetAxis("Mouse ScrollWheel");
+        if (inputScroll != 0)
+        {
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - inputScroll * scrollSensitivity, 5, held.weaponRange);
         }
 
         // Shooting

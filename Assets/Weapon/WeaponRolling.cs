@@ -19,6 +19,7 @@ public class WeaponRolling : MonoBehaviour
     // Go play minecraft.
     public GameObject inventory;
     public Sprite placeholderSprite;
+    public GameObject gachaHolder;
 
     // Don't judge me on these two classes, I used too much java and I love inheritance.
     [Serializable]
@@ -144,20 +145,20 @@ public class WeaponRolling : MonoBehaviour
     // TEMPORARY, CHANGE WITH DIFFICULTY SCALING LATER
     public StatBounds damageBounds = new(5, 100);
 
-    public void RollAny()
+    public void RollAny(bool pushToInv = false)
     {
-        Roll((WeaponPlantType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(WeaponPlantType)).Length));
+        Roll((WeaponPlantType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(WeaponPlantType)).Length), pushToInv);
     }
 
     // Roll the dice baby, its time to go gambling
     // AW DANGIT
-    public void Roll(WeaponPlantType plantType = WeaponPlantType.Eggplant)
+    public void Roll(WeaponPlantType plantType = WeaponPlantType.Eggplant, bool pushToInv = false)
     {
         // Tinky Winky, Dipsy, La-La, Po. Who's getting sacreficed into the almighty god?
         // Oh wait, it's just rolling for how the gun would work.
         var firetype = (GunProperty.FireType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GunProperty.FireType)).Length);
         // Change inventory.transform later, used for testing for now
-        GunProperty gun = Instantiate(gunPrefab, inventory.transform).GetComponent<GunProperty>();
+        GunProperty gun = Instantiate(gunPrefab, pushToInv ? inventory.transform : gachaHolder.transform).GetComponent<GunProperty>();
         Sprite gunSprite = placeholderSprite;
         string weaponType = "";
         switch (firetype)

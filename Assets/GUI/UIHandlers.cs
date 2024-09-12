@@ -13,6 +13,7 @@ public class UIHandlers : MonoBehaviour
     public CanvasRenderer inventoryPanels;
     public Image currentGunIcon;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI ammoText;
 
     private float score = 0;
 
@@ -52,6 +53,18 @@ public class UIHandlers : MonoBehaviour
         + "Damage: " + playerGun.damage.ToString() + "\n"
         + "Ammo: " + playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString() + "\n"
         + "Fire Type: " + Enum.GetName(typeof(GunProperty.FireType), playerGun.gunFireType);
+
+        if (playerGun.reloading)
+        {
+            print("Reload");
+            ammoText.text = "Reloading...";
+        } 
+        else
+        {
+            print("Not Reloading");
+            ammoText.text = playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString();
+        }
+        
 
         scoreText.text = score.ToString();
     }
