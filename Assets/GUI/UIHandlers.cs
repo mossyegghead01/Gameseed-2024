@@ -19,7 +19,7 @@ public class UIHandlers : MonoBehaviour
     public GameObject gachaHolder;
     public GameObject canvas;
 
-    private float score = 0;
+    [SerializeField] private float score = 0;
 
     void Update()
     {
@@ -110,5 +110,10 @@ public class UIHandlers : MonoBehaviour
     public void IncrementScore(float scoreIncrement = 1)
     {
         score += scoreIncrement;
+    }
+
+    public float GetScore()
+    {
+        return score;
     }
 }

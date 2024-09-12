@@ -110,7 +110,15 @@ public class Cell
             plant = null;
         }
     }
-
+    public void Trample()
+    {
+        if (cellType == CellType.Plant)
+        {
+            health = 0;
+            SetCell(CellState.Empty);
+            plant = null;
+        }
+    }
 
     public void Heal(int health)
     {
