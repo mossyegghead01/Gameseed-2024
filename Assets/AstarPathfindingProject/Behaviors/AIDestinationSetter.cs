@@ -20,6 +20,8 @@ namespace Pathfinding
 		/// <summary>The object that the AI should move to</summary>
 		public Transform player, obelisk, target;
 		IAstarAI ai;
+		private Vector3 lastPosition;
+		private Vector3 movementDirection;
 
 		void OnEnable()
 		{
@@ -30,10 +32,12 @@ namespace Pathfinding
 			// scripts as well. So it makes sense that it is up to date every frame.
 			if (ai != null) ai.onSearchPath += Update;
 		}
+
 		void Start()
 		{
 			player = GameObject.Find("Player").transform;
 			obelisk = GameObject.Find("Obelisk").transform;
+			lastPosition = transform.position;
 		}
 
 		void OnDisable()
@@ -60,8 +64,14 @@ namespace Pathfinding
 
 				ai.destination = target.position;
 
+				// Calculate the movement direction from the last frame
+				if ((transform.position - lastPosition).normalized != Vector3.zero)
+					movementDirection = (transform.position - lastPosition).normalized;
+				transform.GetComponent<Animator>().SetFloat("x", movementDirection.x);
+				transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
+				lastPosition = transform.position;
+				Debug.Log(movementDirection);
 			}
-
 		}
 	}
 }

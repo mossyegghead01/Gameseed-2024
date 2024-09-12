@@ -46,7 +46,7 @@ public class EnemyBreaking : MonoBehaviour
             gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<PlayerHealth>().ModifyHealth(-playerDamage * playerDamageMultiplier);
         }
 
-        if (enemyCollider.IsTouching(obelisk.GetComponent<Collider2D>()))
+        if (obelisk != null && enemyCollider.IsTouching(obelisk.GetComponent<Collider2D>()))
         {
             gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().Damage(breakSpeed * breakSpeedMultiplier);
         }
