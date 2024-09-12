@@ -70,7 +70,19 @@ namespace Pathfinding
 				transform.GetComponent<Animator>().SetFloat("x", movementDirection.x);
 				transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
 				lastPosition = transform.position;
-				Debug.Log(movementDirection);
+			}
+			else if (player != null && ai != null)
+			{
+				target = player;
+
+				ai.destination = target.position;
+
+				// Calculate the movement direction from the last frame
+				if ((transform.position - lastPosition).normalized != Vector3.zero)
+					movementDirection = (transform.position - lastPosition).normalized;
+				transform.GetComponent<Animator>().SetFloat("x", movementDirection.x);
+				transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
+				lastPosition = transform.position;
 			}
 		}
 	}

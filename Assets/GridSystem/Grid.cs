@@ -70,14 +70,22 @@ public class Grid
     {
         var res = GetCell(position);
         // lightCells = ObeliskFunctions.GetObeliskCoordinates(gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().GetStage());
-        lightCells = gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().GetObeliskCoordinates();
-        if ((res == null || cells[(position.x, position.y)].GetCellState() == CellState.Empty) && ((CellFunctions.plant.Contains(cellState) && lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true) || CellFunctions.structure.Contains(cellState)))
+        var obelisk = gameManager.GetComponent<GameManager>().GetObelisk();
+        if (obelisk != null)
+            lightCells = obelisk.GetComponent<obeliskScript>().GetObeliskCoordinates();
+        if (res == null || cells[(position.x, position.y)].GetCellState() == CellState.Empty)
         {
-            cells[(position.x, position.y)] = new Cell(position, cellState, this);
-            Debug.Log("new cell");
-            buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
-            if (CellFunctions.plant.Contains(cellState))
+            if (obelisk != null && CellFunctions.plant.Contains(cellState) && lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true)
             {
+                cells[(position.x, position.y)] = new Cell(position, cellState, this);
+                Debug.Log("new cell");
+                buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+            }
+            else if (CellFunctions.structure.Contains(cellState))
+            {
+                cells[(position.x, position.y)] = new Cell(position, cellState, this);
+                Debug.Log("new cell");
+                buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
             }
         }
     }

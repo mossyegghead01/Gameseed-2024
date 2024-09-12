@@ -49,7 +49,7 @@ public class obeliskScript : MonoBehaviour
         healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), 0);
         if (health <= 0)
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 

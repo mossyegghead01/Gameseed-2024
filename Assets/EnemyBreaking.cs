@@ -19,6 +19,15 @@ public class EnemyBreaking : MonoBehaviour
         GetComponent<AIDestinationSetter>().target = player.transform;
     }
 
+    public void SetDamage(float damage)
+    {
+        playerDamage = damage;
+    }
+    public void SetBreakSpeed(float speed)
+    {
+        breakSpeed = speed;
+    }
+
     // Update is called once per frame
     void Update()
     {

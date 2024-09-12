@@ -48,6 +48,10 @@ public class Health : MonoBehaviour
     {
         this.health = health;
     }
+    public void SetMaxHealth(float maxHealth)
+    {
+        this.maxHealth = maxHealth;
+    }
     public void ModifyHealth(float modHealth)
     {
         health += modHealth;

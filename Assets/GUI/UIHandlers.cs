@@ -76,4 +76,9 @@ public class UIHandlers : MonoBehaviour
     {
         score += scoreIncrement;
     }
+
+    public float GetScore()
+    {
+        return score;
+    }
 }

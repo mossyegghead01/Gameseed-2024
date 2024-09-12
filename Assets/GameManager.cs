@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     }
     public GameObject GetTilemap()
     {
-        Debug.Log("tilemap is " + tilemap);
         return tilemap;
     }
     public GameObject GetObelisk()

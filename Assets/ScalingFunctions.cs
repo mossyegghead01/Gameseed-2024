@@ -8,7 +8,7 @@ using UnityEngine;
 public static class ScalingFunctions
 {
     // Enemy be chonky
-    public static float EnemyScalling(int score)
+    public static float EnemyScalling(float score)
     {
         return (0.0135f * Mathf.Pow(score, 2) + 5f);
     }
