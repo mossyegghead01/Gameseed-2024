@@ -98,6 +98,7 @@ public class GunProperty : MonoBehaviour
                     {
                         this.pointsMultiplier = 1;
                     }
+                    this.pointsMultiplier = Mathf.Ceil(this.pointsMultiplier);
                     break;
                 case AbilityTypes.Accuracy:
                     this.innacuracy -= gunAbility.modifier;
