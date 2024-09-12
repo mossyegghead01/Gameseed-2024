@@ -116,6 +116,7 @@ MonoBehaviour:
     type: 0
     modifier: 0
   pointsMultiplier: 1
+  reloading: 0
 --- !u!114 &7532731156897959292
 MonoBehaviour:
   m_ObjectHideFlags: 0
