@@ -16,11 +16,17 @@ public class Health : MonoBehaviour
     public bool incrementScoreOnDeath = false;
     public float IncrementMultiplier { private get; set; } = 1;
     public float scoreValue = 1;
+    private EnemyType enemyType;
+    private GameObject gameManager;
+    private UIHandlers uiHandlers;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager");
         // Clamp health
         health = Mathf.Clamp(health, 0, maxHealth);
+        enemyType = GetComponent<Enemy>().GetEnemyType();
+        uiHandlers = gameManager.GetComponent<GameManager>().GetEventSystem().GetComponent<UIHandlers>();
     }
 
     void Update()
@@ -29,17 +35,38 @@ public class Health : MonoBehaviour
         // Still clamping health
         if (health <= 0)
         {
+            if (incrementScoreOnDeath)
+            {
+                if (Random.Range(0, 100) <= 50) gameManager.GetComponent<GridManager>().GetBuildInventory().AddSlot(Enemy.Functions.EnemyToSlotState(enemyType));
+                var score = uiHandlers.GetScore();
+                var random = System.Math.Clamp(Random.Range(0, 100) * score / 200, 0, 100);
+                Debug.Log(random);
+                if (random <= 20)
+                    AddSlot(SlotState.Post);
+                else if (random <= 40)
+                    AddSlot(SlotState.Fence);
+                else if (random <= 70)
+                    AddSlot(SlotState.Wall);
+                else if (random <= 85)
+                    AddSlot(SlotState.ReinforcedWall);
+                else if (random <= 90)
+                    AddSlot(SlotState.Concrete);
+                else if (random <= 95)
+                    AddSlot(SlotState.ReinforcedConcrete);
+                EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
+            }
             if (destroyAfterDeath)
             {
                 Destroy(this.gameObject);
             }
-            if (incrementScoreOnDeath)
-            {
-                EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
-            }
         }
-
     }
+
+    public void AddSlot(SlotState slotState)
+    {
+        gameManager.GetComponent<GridManager>().GetBuildInventory().AddSlot(slotState);
+    }
+
     public float GetHealth()
     {
         return health;

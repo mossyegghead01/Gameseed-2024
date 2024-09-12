@@ -6,9 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private EnemyType type = EnemyType.Broccoli;
+    private GameObject eventSystem;
     // Start is called before the first frame update
     void Start()
     {
+        eventSystem = GameObject.Find("EventSystem");
         if (type == EnemyType.Broccoli)
             GetComponent<Animator>().SetInteger("Type", 1);
         else if (type == EnemyType.Carrot)
@@ -25,62 +27,77 @@ public class Enemy : MonoBehaviour
     public void SetType(EnemyType type)
     {
         this.type = type;
+        var difficulty = getDifficulty();
         switch (type)
         {
             case EnemyType.Broccoli:
-                GetComponent<Health>().SetMaxHealth(100);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(15f);
-                GetComponent<EnemyBreaking>().SetDamage(0.3f);
-                GetComponent<AIPath>().maxSpeed = 1f;
+                GetComponent<Health>().SetMaxHealth(100 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(15f * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(0.3f * difficulty);
+                GetComponent<AIPath>().maxSpeed = 1f * difficulty;
                 break;
             case EnemyType.Carrot:
-                GetComponent<Health>().SetMaxHealth(50);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(3);
-                GetComponent<EnemyBreaking>().SetDamage(0.3f);
-                GetComponent<AIPath>().maxSpeed = 5f;
+                GetComponent<Health>().SetMaxHealth(50 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(3 * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(0.3f * difficulty);
+                GetComponent<AIPath>().maxSpeed = 5f * difficulty;
                 break;
             case EnemyType.Corn:
-                GetComponent<Health>().SetMaxHealth(60);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(6);
-                GetComponent<EnemyBreaking>().SetDamage(2);
-                GetComponent<AIPath>().maxSpeed = 2f;
+                GetComponent<Health>().SetMaxHealth(60 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(6 * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(2 * difficulty);
+                GetComponent<AIPath>().maxSpeed = 2f * difficulty;
                 break;
             case EnemyType.Cauliflower:
-                GetComponent<Health>().SetMaxHealth(10);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(5);
-                GetComponent<EnemyBreaking>().SetDamage(5);
-                GetComponent<AIPath>().maxSpeed = 2.5f;
+                GetComponent<Health>().SetMaxHealth(10 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(5 * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(5 * difficulty);
+                GetComponent<AIPath>().maxSpeed = 2.5f * difficulty;
                 break;
             case EnemyType.Eggplant:
-                GetComponent<Health>().SetMaxHealth(86);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(6);
-                GetComponent<EnemyBreaking>().SetDamage(1);
-                GetComponent<AIPath>().maxSpeed = 3f;
+                GetComponent<Health>().SetMaxHealth(86 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(6 * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(1 * difficulty);
+                GetComponent<AIPath>().maxSpeed = 3f * difficulty;
                 break;
             case EnemyType.Tomato:
-                GetComponent<Health>().SetMaxHealth(2);
-                GetComponent<EnemyBreaking>().SetBreakSpeed(1);
-                GetComponent<EnemyBreaking>().SetDamage(20);
-                GetComponent<AIPath>().maxSpeed = 0.5f;
+                GetComponent<Health>().SetMaxHealth(2 * difficulty);
+                GetComponent<EnemyBreaking>().SetBreakSpeed(1 * difficulty);
+                GetComponent<EnemyBreaking>().SetDamage(20 * difficulty);
+                GetComponent<AIPath>().maxSpeed = 0.5f * difficulty;
                 break;
         }
     }
 
-    private void SetMeleeProperties()
+    private float getDifficulty()
     {
-        // Set properties specific to melee enemies
+        eventSystem = GameObject.Find("EventSystem");
+        return ScalingFunctions.EnemyScalling(eventSystem.GetComponent<UIHandlers>().GetScore()) / 5f;
     }
 
-    private void SetRangedProperties()
+    public EnemyType GetEnemyType()
     {
-        // Set properties specific to ranged enemies
+
+        return type;
     }
 
-    private void SetBossProperties()
+    public static class Functions
     {
-        // Set properties specific to boss enemies
+        private static Dictionary<EnemyType, SlotState> enemyAndSlotState = new Dictionary<EnemyType, SlotState>{
+            {EnemyType.Broccoli, SlotState.Broccoli},
+            {EnemyType.Carrot, SlotState.Carrot},
+            {EnemyType.Corn, SlotState.Corn},
+            {EnemyType.Cauliflower, SlotState.Cauliflower},
+            {EnemyType.Eggplant, SlotState.Eggplant},
+            {EnemyType.Tomato, SlotState.Tomato}
+        };
+        public static SlotState EnemyToSlotState(EnemyType enemyType)
+        {
+            return enemyAndSlotState[enemyType];
+        }
     }
 }
+
 
 public enum EnemyType
 {

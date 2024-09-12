@@ -338,6 +338,7 @@ MonoBehaviour:
   inventoryPanels: {fileID: 441573142}
   currentGunIcon: {fileID: 1639532158}
   scoreText: {fileID: 414040102}
+  score: 0
 --- !u!114 &74640428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,6 +1143,7 @@ MonoBehaviour:
   tilemap: {fileID: 114300486}
   obelisk: {fileID: 488933777}
   lightTilemap: {fileID: 231459722}
+  eventSystem: {fileID: 74640423}
 --- !u!114 &173200223
 MonoBehaviour:
   m_ObjectHideFlags: 0

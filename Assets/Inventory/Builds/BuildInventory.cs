@@ -14,18 +14,9 @@ public class BuildInventory
     private int selectedIndex;
     public BuildInventory()
     {
-        slots = new List<Slot>(){
-            new Slot(SlotState.Wall, this, 999),
-            new Slot(SlotState.Carrot, this, 999),
-            new Slot(SlotState.Corn, this, 999),
-            new Slot(SlotState.Fence, this, 999),
-            new Slot(SlotState.ReinforcedWall, this, 999),
-            new Slot(SlotState.Concrete, this, 999),
-            new Slot(SlotState.ReinforcedConcrete, this, 999),
-            new Slot(SlotState.Eggplant, this, 999),
-            new Slot(SlotState.Broccoli, this, 999),
-            new Slot(SlotState.Cauliflower, this, 999),
-            new Slot(SlotState.Tomato, this, 999),
+        slots = new List<Slot>()
+        {
+            // new Slot(SlotState.Empty, this, 1),
         };
         buildInventoryUI = new BuildInventoryUI(this);
         SelectSlot(0);
@@ -65,7 +56,8 @@ public class BuildInventory
             slots[selectedIndex].selected = false;
         }
         selectedIndex = index;
-        slots[selectedIndex].selected = true;
+        if (selectedIndex < slots.Count && selectedIndex >= 0 && slots[selectedIndex] != null)
+            slots[selectedIndex].selected = true;
         Update();
     }
     public void SelectSlot(Slot slot)

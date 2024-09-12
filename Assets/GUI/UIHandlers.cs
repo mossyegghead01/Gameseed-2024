@@ -14,7 +14,7 @@ public class UIHandlers : MonoBehaviour
     public Image currentGunIcon;
     public TextMeshProUGUI scoreText;
 
-    private float score = 0;
+    [SerializeField] private float score = 0;
 
     void Update()
     {

@@ -59,6 +59,8 @@ public class EnemySpawning : MonoBehaviour
         }
     }
 
+
+
     void Update()
     {
         // Debug.Log(ScalingFunctions.EnemyScalling(EventSystem.GetComponent<UIHandlers>().GetScore()));

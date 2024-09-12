@@ -27,6 +27,7 @@ public class GridManager : MonoBehaviour
     {
         buildInventory = new BuildInventory();
         grid = new Grid(tilemap, buildInventory, gameManager);
+        Debug.Log("grid is" + grid);
         isCaps = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
         cursorBuild = Resources.Load<Sprite>("Sprites/cursorBuild");
         cursorBreak = Resources.Load<Sprite>("Sprites/cursorBreak");
@@ -104,5 +105,10 @@ public class GridManager : MonoBehaviour
     public Grid GetGrid()
     {
         return grid;
+    }
+
+    public BuildInventory GetBuildInventory()
+    {
+        return buildInventory;
     }
 }
