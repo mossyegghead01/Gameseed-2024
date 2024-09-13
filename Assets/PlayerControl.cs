@@ -20,7 +20,8 @@ public class PlayerControl : MonoBehaviour
     private Vector2 lookVector;
     // Gun Pivot
     private Transform pivotObject;
-    private float actualMovementSpeed = 5;
+    private float actualMovementSpeed = 5; private Vector3 lastPosition;
+    private Vector3 movementDirection;
 
     void Start()
     {
@@ -39,7 +40,7 @@ public class PlayerControl : MonoBehaviour
         // Mouse position in world
         var worldMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldMousePos.z = 0;
-        
+
         // Where the player should look (where their gun should point)
         lookVector = worldMousePos - pivotObject.position;
 
@@ -103,6 +104,12 @@ public class PlayerControl : MonoBehaviour
                 held.Reload();
             }
         }
+        if ((transform.position - lastPosition).normalized != Vector3.zero)
+            movementDirection = (transform.position - lastPosition).normalized;
+        Debug.Log(movementDirection.x);
+        transform.GetComponent<Animator>().SetFloat("x", movementDirection.x);
+        transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
+        lastPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -124,6 +131,6 @@ public class PlayerControl : MonoBehaviour
 
         // Rotate the weapon
         pivotObject.eulerAngles = new Vector3(0, yOverride, angle);
-        
+
     }
 }
