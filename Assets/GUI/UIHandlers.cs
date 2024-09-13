@@ -18,6 +18,7 @@ public class UIHandlers : MonoBehaviour
     public GameObject notificationUiPrefab;
     public GameObject gachaHolder;
     public GameObject canvas;
+    public Transform ReloadOverlay;
 
     [SerializeField] private float score = 0;
 
@@ -60,11 +61,14 @@ public class UIHandlers : MonoBehaviour
 
         if (playerGun.reloading)
         {
-            ammoText.text = "Reloading...";
-        } 
+
+            ammoText.text = "...";
+            ReloadOverlay.GetComponent<Animator>().SetBool("playReload", true);
+        }
         else
         {
             ammoText.text = playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString();
+            ReloadOverlay.GetComponent<Animator>().SetBool("playReload", false);
         }
 
         for (int i = 0; i < gachaHolder.transform.childCount; i++)
