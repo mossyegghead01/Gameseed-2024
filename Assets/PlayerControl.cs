@@ -63,11 +63,14 @@ public class PlayerControl : MonoBehaviour
         {
             Camera.main.orthographicSize = 5;
         }
+
         float inputScroll = Input.GetAxis("Mouse ScrollWheel");
         if (inputScroll != 0)
         {
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - inputScroll * scrollSensitivity, 5, held.weaponRange);
+            
         }
+        Camera.main.transform.position = transform.position + (new Vector3(2.25f, 0, 0) * Camera.main.orthographicSize / 5);
 
         // Shooting
         if (Input.GetButtonDown("Fire1"))

@@ -143,7 +143,7 @@ public class WeaponRolling : MonoBehaviour
 
 
     // TEMPORARY, CHANGE WITH DIFFICULTY SCALING LATER
-    public StatBounds damageBounds = new(5, 100);
+    //public StatBounds damageBounds = new(5, 100);
 
     public void RollAny(bool pushToInv = false)
     {
@@ -154,6 +154,7 @@ public class WeaponRolling : MonoBehaviour
     // AW DANGIT
     public void Roll(WeaponPlantType plantType = WeaponPlantType.Eggplant, bool pushToInv = false)
     {
+        StatBounds damageBounds = ScalingFunctions.WeaponDamageScalling(EventSystem.current.GetComponent<UIHandlers>().GetScore());
         // Tinky Winky, Dipsy, La-La, Po. Who's getting sacreficed into the almighty god?
         // Oh wait, it's just rolling for how the gun would work.
         var firetype = (GunProperty.FireType)UnityEngine.Random.Range(0, Enum.GetNames(typeof(GunProperty.FireType)).Length);

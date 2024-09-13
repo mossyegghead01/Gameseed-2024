@@ -338,12 +338,12 @@ MonoBehaviour:
   inventoryPanels: {fileID: 441573142}
   currentGunIcon: {fileID: 1639532158}
   scoreText: {fileID: 414040102}
-  score: 0
   ammoText: {fileID: 1118952730}
   notificationUiPrefab: {fileID: 6188568910675458361, guid: 9b2c8d906424ea14284562a34bf21cc7,
     type: 3}
   gachaHolder: {fileID: 1655873843}
   canvas: {fileID: 139099302}
+  score: 0
 --- !u!114 &74640428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,9 +382,6 @@ MonoBehaviour:
   reloadSpeedBounds:
     lower: 2
     upper: 7
-  damageBounds:
-    lower: 5
-    upper: 100
 --- !u!1 &85648622
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,39 +711,9 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 387bd2fa1dc354748b7286d58fa3b77e, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 98e358bb5ee5bf0418e940010ecc7b41, type: 2}
-  m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 5
-    m_Data: {fileID: 887267514, guid: c3c6848e2abc933448ba310160d59824, type: 3}
-  - m_RefCount: 2
-    m_Data: {fileID: 1797754030, guid: c3c6848e2abc933448ba310160d59824, type: 3}
-  m_TileMatrixArray:
-  - m_RefCount: 0
-    m_Data:
-      e00: 7.0684684e+28
-      e01: 0
-      e02: 2.439459e-19
-      e03: 2.439459e-19
-      e10: 2.7900757e+20
-      e11: 0
-      e12: 8.53e-43
-      e13: 8.53e-43
-      e20: -1.6241815e-31
-      e21: 5.7792536e+37
-      e22: -1.5642136e-25
-      e23: 2.339489
-      e30: 4.5904e-41
-      e31: 8.56e-43
-      e32: 8.53e-43
-      e33: 8.56e-43
-  m_TileColorArray:
-  - m_RefCount: 0
-    m_Data: {r: 3.5851e-41, g: 3.5851e-41, b: 3.5851e-41, a: 3.5851e-41}
+  m_TileSpriteArray: []
+  m_TileMatrixArray: []
+  m_TileColorArray: []
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1221,10 +1188,10 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5841076417616374029, guid: 98be9cae5037ac5459cda7ca72382bb9,
     type: 3}
   gameManager: {fileID: 0}
-  minSpawnInterval: 10
-  maxSpawnInterval: 20
-  minEnemyCount: 3
-  maxEnemyCount: 5
+  minSpawnInterval: 15
+  maxSpawnInterval: 30
+  minEnemyCount: 1
+  maxEnemyCount: 2
   canSpawn: 1
   EventSystem: {fileID: 0}
 --- !u!1 &186149915
@@ -2771,7 +2738,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.61, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3112,7 +3079,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 1984688335}]
+  m_Children:
+  - {fileID: 1984688335}
   m_Father: {fileID: 441573139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3269,7 +3237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315, y: -165}
+  m_AnchoredPosition: {x: -292.8, y: -130.69}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &697764011
@@ -3319,7 +3287,7 @@ MonoBehaviour:
       - m_Target: {fileID: 74640428}
         m_TargetAssemblyTypeName: WeaponRolling, Assembly-CSharp
         m_MethodName: RollAny
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3546,7 +3514,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 132007871}]
+  m_Children:
+  - {fileID: 132007871}
   m_Father: {fileID: 441573139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4785,7 +4754,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 575683488}, {fileID: 828617619}]
+  m_Children:
+  - {fileID: 575683488}
+  - {fileID: 828617619}
   m_Father: {fileID: 231242373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5629,7 +5600,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 1416047908}]
+  m_Children:
+  - {fileID: 1416047908}
   m_Father: {fileID: 441573139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5780,7 +5752,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 1639532155}]
+  m_Children:
+  - {fileID: 1639532155}
   m_Father: {fileID: 231242373}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6390,8 +6363,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: [{fileID: 4988067137715685609, guid: 98be9cae5037ac5459cda7ca72382bb9,
-        type: 3}]
+    m_RemovedGameObjects:
+    - {fileID: 4988067137715685609, guid: 98be9cae5037ac5459cda7ca72382bb9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5841076417616374029, guid: 98be9cae5037ac5459cda7ca72382bb9,
