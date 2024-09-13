@@ -35,8 +35,10 @@ namespace Pathfinding
 
 		void Start()
 		{
-			player = GameObject.Find("Player").transform;
-			obelisk = GameObject.Find("Obelisk").transform;
+			if (GameObject.Find("Player") != null)
+				player = GameObject.Find("Player").transform;
+			if (GameObject.Find("Obelisk") != null)
+				obelisk = GameObject.Find("Obelisk").transform;
 			lastPosition = transform.position;
 		}
 

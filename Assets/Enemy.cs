@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
     private float getDifficulty()
     {
         eventSystem = GameObject.Find("EventSystem");
-        return ScalingFunctions.EnemyScalling(eventSystem.GetComponent<UIHandlers>().GetScore()) / 5f;
+        return ScalingFunctions.EnemyScalling(eventSystem.GetComponent<UIHandlers>().GetScore());
     }
 
     public EnemyType GetEnemyType()

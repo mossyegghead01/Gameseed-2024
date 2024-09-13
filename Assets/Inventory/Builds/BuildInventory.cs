@@ -244,6 +244,7 @@ public class BuildInventoryUI
         foreach (Slot slot in slots)
         {
             GameObject buildSlot = UnityEngine.Object.Instantiate(buildSlotPrefab, buildInventoryContainer.transform);
+            buildSlot.GetComponent<BuildHoverTooltip>().slot = slot;
             if (slot.selected)
             {
                 buildSlot.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/ui/UIBuildSlotSelected");

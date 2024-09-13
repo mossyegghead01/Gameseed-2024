@@ -149,7 +149,7 @@ public class GunProperty : MonoBehaviour
             reloadCooldown = 0.0;
         }
 
-        if (shooting && MagazineContent > 0)
+        if (shooting && MagazineContent > 0 && !reloading)
         {
             switch (gunFireType)
             {
