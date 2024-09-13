@@ -21,6 +21,8 @@ public class UIHandlers : MonoBehaviour
     public Transform ReloadOverlay;
     public Transform gunFireType;
     private Image fireTypeImage;
+    public TextMeshProUGUI weaponTooltipText, slotTooptipText;
+    [SerializeField] private GameObject selectedWeapon;
 
     [SerializeField] private float score = 0;
 
@@ -46,6 +48,7 @@ public class UIHandlers : MonoBehaviour
             {
                 // Change the icon
                 inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
+                inventoryPanels.transform.Find("Panel" + i).GetComponent<HoverTooltip>().playerGun = child.GetComponent<GunProperty>();
             }
         }
 
@@ -54,11 +57,13 @@ public class UIHandlers : MonoBehaviour
         if (currentGun.TryGetComponent<Item>(out var itemCurrent))
         {
             currentGunIcon.sprite = itemCurrent.itemIcon;
+            selectedWeapon.GetComponent<HoverTooltip>().playerGun = currentGun.GetComponent<GunProperty>();
         }
 
         // Update debug statistic text
         GunProperty playerGun = playerGunAxis.GetComponentInChildren<GunProperty>();
-        statText.text = "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
+        weaponTooltipText.text =
+        "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
         + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
         + "Range: " + playerGun.weaponRange.ToString() + "\n"
         + "Piercing: " + playerGun.piercing.ToString() + "\n"

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject player, tilemap, obelisk, lightTilemap, eventSystem;
+    [SerializeField] private GameObject player, tilemap, obelisk, lightTilemap, eventSystem, buildTooltip;
     // Start is called before the first frame update
     public void Start()
     {
@@ -33,5 +33,9 @@ public class GameManager : MonoBehaviour
     public GameObject GetEventSystem()
     {
         return eventSystem;
+    }
+    public GameObject GetBuildTooltip()
+    {
+        return buildTooltip;
     }
 }
