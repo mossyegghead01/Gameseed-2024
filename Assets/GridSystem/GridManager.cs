@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using System.Runtime.InteropServices;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private GameObject gameManager;
     private Vector3 targetPosition;
     private bool isMoving = false;
+    [SerializeField] private GameObject buildStateImage;
+    private Sprite buildImage, breakImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,8 @@ public class GridManager : MonoBehaviour
         cursorBuild = Resources.Load<Sprite>("Sprites/cursorBuild");
         cursorBreak = Resources.Load<Sprite>("Sprites/cursorBreak");
         cursorHarvest = Resources.Load<Sprite>("Sprites/cursorHarvest");
+        buildImage = Resources.Load<Sprite>("Sprites/ui/build");
+        breakImage = Resources.Load<Sprite>("Sprites/ui/break");
     }
     // Update is called once per frame
     void Update()
@@ -59,6 +64,11 @@ public class GridManager : MonoBehaviour
                 Debug.Log("break");
             }
         }
+
+        if (isCaps)
+            buildStateImage.GetComponent<Image>().sprite = breakImage;
+        else
+            buildStateImage.GetComponent<Image>().sprite = buildImage;
 
         var XY = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         if (XY != currentXY)

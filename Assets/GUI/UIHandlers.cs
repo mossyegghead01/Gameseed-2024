@@ -18,8 +18,18 @@ public class UIHandlers : MonoBehaviour
     public GameObject notificationUiPrefab;
     public GameObject gachaHolder;
     public GameObject canvas;
+    public Transform ReloadOverlay;
+    public Transform gunFireType;
+    private Image fireTypeImage;
+    public TextMeshProUGUI weaponTooltipText, slotTooptipText;
+    [SerializeField] private GameObject selectedWeapon;
 
     [SerializeField] private float score = 0;
+
+    void Start()
+    {
+        fireTypeImage = gunFireType.GetComponent<Image>();
+    }
 
     void Update()
     {
@@ -38,6 +48,7 @@ public class UIHandlers : MonoBehaviour
             {
                 // Change the icon
                 inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = item.itemIcon;
+                inventoryPanels.transform.Find("Panel" + i).GetComponent<HoverTooltip>().playerGun = child.GetComponent<GunProperty>();
             }
         }
 
@@ -46,11 +57,13 @@ public class UIHandlers : MonoBehaviour
         if (currentGun.TryGetComponent<Item>(out var itemCurrent))
         {
             currentGunIcon.sprite = itemCurrent.itemIcon;
+            selectedWeapon.GetComponent<HoverTooltip>().playerGun = currentGun.GetComponent<GunProperty>();
         }
 
         // Update debug statistic text
         GunProperty playerGun = playerGunAxis.GetComponentInChildren<GunProperty>();
-        statText.text = "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
+        weaponTooltipText.text =
+        "Fire Rate: " + playerGun.fireRate.ToString() + "\n"
         + "Bullet Speed: " + playerGun.projectileSpeed.ToString() + "\n"
         + "Range: " + playerGun.weaponRange.ToString() + "\n"
         + "Piercing: " + playerGun.piercing.ToString() + "\n"
@@ -58,13 +71,31 @@ public class UIHandlers : MonoBehaviour
         + "Ammo: " + playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString() + "\n"
         + "Fire Type: " + Enum.GetName(typeof(GunProperty.FireType), playerGun.gunFireType);
 
+        switch (playerGun.gunFireType)
+        {
+            case GunProperty.FireType.Single:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunSingle");
+                break;
+            case GunProperty.FireType.Burst:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunBurst");
+                break;
+            case GunProperty.FireType.Scatter:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunScatter");
+                break;
+            case GunProperty.FireType.Automatic:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunAuto");
+                break;
+        }
         if (playerGun.reloading)
         {
-            ammoText.text = "Reloading...";
-        } 
+
+            ammoText.text = "...";
+            ReloadOverlay.GetComponent<Animator>().SetBool("playReload", true);
+        }
         else
         {
             ammoText.text = playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString();
+            ReloadOverlay.GetComponent<Animator>().SetBool("playReload", false);
         }
 
         for (int i = 0; i < gachaHolder.transform.childCount; i++)
