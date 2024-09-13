@@ -19,8 +19,15 @@ public class UIHandlers : MonoBehaviour
     public GameObject gachaHolder;
     public GameObject canvas;
     public Transform ReloadOverlay;
+    public Transform gunFireType;
+    private Image fireTypeImage;
 
     [SerializeField] private float score = 0;
+
+    void Start()
+    {
+        fireTypeImage = gunFireType.GetComponent<Image>();
+    }
 
     void Update()
     {
@@ -59,6 +66,21 @@ public class UIHandlers : MonoBehaviour
         + "Ammo: " + playerGun.MagazineContent.ToString() + "/" + playerGun.magazineSize.ToString() + "\n"
         + "Fire Type: " + Enum.GetName(typeof(GunProperty.FireType), playerGun.gunFireType);
 
+        switch (playerGun.gunFireType)
+        {
+            case GunProperty.FireType.Single:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunSingle");
+                break;
+            case GunProperty.FireType.Burst:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunBurst");
+                break;
+            case GunProperty.FireType.Scatter:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunScatter");
+                break;
+            case GunProperty.FireType.Automatic:
+                fireTypeImage.sprite = Resources.Load<Sprite>("Sprites/ui/gunAuto");
+                break;
+        }
         if (playerGun.reloading)
         {
 
