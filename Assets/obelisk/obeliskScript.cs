@@ -46,7 +46,7 @@ public class obeliskScript : MonoBehaviour
     {
         health -= damage;
         var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(0).GetChild(0).transform.GetComponent<RectTransform>();
-        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), 0);
+        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
         if (health <= 0)
         {
             Destroy(transform.parent.gameObject);
