@@ -18,13 +18,28 @@ public class PlayerHealth : MonoBehaviour
     public bool incrementScoreOnDeath = false;
     public float IncrementMultiplier { private get; set; } = 1;
     public float scoreValue = 1;
+    private AudioSource audioSource;
     [SerializeField] GameObject scoreObject;
     [SerializeField] Volume volume;
+    private Vignette vignette;
+    private ChromaticAberration ca;
 
     void Start()
     {
         // Clamp health
         health = Mathf.Clamp(health, 0, maxHealth);
+        audioSource = GetComponent<AudioSource>();
+        for (int i = 0; i < volume.profile.components.Count; i++)
+        {
+            if (volume.profile.components[i].GetType() == typeof(Vignette))
+            {
+                vignette = (Vignette)volume.profile.components[i];
+            }
+            else if (volume.profile.components[i].GetType() == typeof(ChromaticAberration))
+            {
+                ca = (ChromaticAberration)volume.profile.components[i];
+            }
+        }
     }
 
     void Update()
@@ -41,6 +56,11 @@ public class PlayerHealth : MonoBehaviour
         }
         var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
         healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
+        if (!audioSource.isPlaying)
+        {
+            vignette.intensity.value = 0.371f;
+            vignette.color.value = new Color(0, 0, 0, 1);
+        }
 
     }
     public float GetHealth()
@@ -56,21 +76,25 @@ public class PlayerHealth : MonoBehaviour
         health += modHealth;
         if (modHealth <= 0)
         {
-            for (int i = 0; i < volume.profile.components.Count; i++)
+            ca.intensity.value = .163f + (.197f * (1 - (health / maxHealth)));
+            // else if (volume.profile.components[i].GetType() == typeof(Vignette))
+            // {
+            //     Vignette vignette = (Vignette)volume.profile.components[i];
+            //     vignette.intensity.value = .371f + (.129f * (1 - (health / maxHealth)));
+            //     vignette.color.value = new Color(1 - (health / maxHealth), 0, 0, 1);
+            // }
+            if (!audioSource.isPlaying)
             {
-                if (volume.profile.components[i].GetType() == typeof(ChromaticAberration))
-                {
-                    ChromaticAberration ca = (ChromaticAberration)volume.profile.components[i];
-                    ca.intensity.value = .163f + (.197f * (1 - (health / maxHealth)));
-                }
-                else if (volume.profile.components[i].GetType() == typeof(Vignette))
-                {
-                    Vignette vignette = (Vignette)volume.profile.components[i];
-                    vignette.intensity.value = .371f + (.129f * (1 - (health / maxHealth)));
-                    vignette.color.value = new Color(1 - (health / maxHealth), 0, 0, 1);
-                    Debug.Log(new Color(1 - (health / maxHealth), 0, 0, 1));
-                }
+                audioSource.Play();
+                vignette.intensity.value = 0.5f;
+                vignette.color.value = new Color(1, 0, 0, 1);
             }
+            else
+            {
+                vignette.intensity.value = 0.371f;
+                vignette.color.value = new Color(0, 0, 0, 1);
+            }
+
         }
     }
     void Dead()
