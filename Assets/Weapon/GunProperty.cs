@@ -147,6 +147,7 @@ public class GunProperty : MonoBehaviour
             reloading = false;
             MagazineContent = magazineSize;
             reloadCooldown = 0.0;
+            GetComponent<AudioSource>().Stop();
         }
 
         if (shooting && MagazineContent > 0 && !reloading)
@@ -162,7 +163,8 @@ public class GunProperty : MonoBehaviour
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
                         GetComponent<AudioSource>().pitch = 2f;
-                        SpawnBullet(0, true);
+                        SpawnBullet(0, true); GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 case FireType.Single:
@@ -175,7 +177,8 @@ public class GunProperty : MonoBehaviour
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
 
-                        SpawnBullet(0, true);
+                        SpawnBullet(0, true); GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 case FireType.Scatter:
@@ -191,7 +194,8 @@ public class GunProperty : MonoBehaviour
                         SpawnBullet(0);
                         SpawnBullet(20);
                         SpawnBullet(-20);
-                        MagazineContent--;
+                        MagazineContent--; GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 case FireType.Burst:
@@ -204,6 +208,8 @@ public class GunProperty : MonoBehaviour
 
                         SpawnBullet(0, true);
                         burstCount++;
+                        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 default:
@@ -212,7 +218,6 @@ public class GunProperty : MonoBehaviour
                     Debug.LogException(new System.MissingFieldException("What the heck are you trying to do mate? This thing does not exist!"));
                     break;
             }
-            GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
         }
     }
 
@@ -237,6 +242,8 @@ public class GunProperty : MonoBehaviour
         {
             reloading = true;
             reloadCooldown = reloadSpeed;
+            GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Audio/gunReload");
+            GetComponent<AudioSource>().Play();
         }
     }
 }

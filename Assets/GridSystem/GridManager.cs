@@ -100,6 +100,10 @@ public class GridManager : MonoBehaviour
         }
         else if (!isCaps)
         {
+            // var position = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            // var lightCells = gameManager.GetComponent<GameManager>().GetObelisk().GetComponent<obeliskScript>().GetObeliskCoordinates();
+            // if (CellFunctions.plant.Contains(BuildInventoryFunctions.SlotToCell(buildInventory.GetSelectedSlot().GetSlotState())) && lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true)
+            //     cursorObject.GetComponent<SpriteRenderer>().sprite = cursorBreak;
             cursorObject.GetComponent<SpriteRenderer>().sprite = cursorBuild;
         }
     }

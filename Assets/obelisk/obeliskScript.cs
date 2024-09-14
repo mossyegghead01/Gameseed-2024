@@ -20,10 +20,11 @@ public class obeliskScript : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         backgroundTile = Resources.Load<TileBase>("Tilemap/Tiles/Background");
-        SetStage(3);
     }
     public void SetStage(int stage)
     {
+        if (stage != this.stage)
+            gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/levelUp"));
         this.stage = stage;
         animator.SetInteger("stage", stage);
         obeliskCoordinates = ObeliskFunctions.GetObeliskCoordinates(stage);

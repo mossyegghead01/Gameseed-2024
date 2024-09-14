@@ -69,7 +69,7 @@ public class PlayerControl : MonoBehaviour
         if (inputScroll != 0)
         {
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - inputScroll * scrollSensitivity, 5, held.weaponRange);
-            
+
         }
         Camera.main.transform.position = transform.position + (new Vector3(2.25f, 0, 0) * Camera.main.orthographicSize / 5);
 
@@ -109,7 +109,6 @@ public class PlayerControl : MonoBehaviour
         }
         if ((transform.position - lastPosition).normalized != Vector3.zero)
             movementDirection = (transform.position - lastPosition).normalized;
-        Debug.Log(movementDirection.x);
         transform.GetComponent<Animator>().SetFloat("x", movementDirection.x);
         transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
         lastPosition = transform.position;
