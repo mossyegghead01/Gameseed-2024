@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -17,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     public float IncrementMultiplier { private get; set; } = 1;
     public float scoreValue = 1;
     [SerializeField] GameObject scoreObject;
+    [SerializeField] Volume volume;
 
     void Start()
     {
@@ -51,7 +54,24 @@ public class PlayerHealth : MonoBehaviour
     public void ModifyHealth(float modHealth)
     {
         health += modHealth;
-
+        if (modHealth <= 0)
+        {
+            for (int i = 0; i < volume.profile.components.Count; i++)
+            {
+                if (volume.profile.components[i].GetType() == typeof(ChromaticAberration))
+                {
+                    ChromaticAberration ca = (ChromaticAberration)volume.profile.components[i];
+                    ca.intensity.value = .163f + (.197f * (1 - (health / maxHealth)));
+                }
+                else if (volume.profile.components[i].GetType() == typeof(Vignette))
+                {
+                    Vignette vignette = (Vignette)volume.profile.components[i];
+                    vignette.intensity.value = .371f + (.129f * (1 - (health / maxHealth)));
+                    vignette.color.value = new Color(1 - (health / maxHealth), 0, 0, 1);
+                    Debug.Log(new Color(1 - (health / maxHealth), 0, 0, 1));
+                }
+            }
+        }
     }
     void Dead()
     {
