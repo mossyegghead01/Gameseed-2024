@@ -11,6 +11,8 @@ public class PlayerControl : MonoBehaviour
     // Movement Speed for the player
     public float movementSpeed = 5;
     public float scrollSensitivity = 10;
+    public float shakeAmount = 0.7f;
+    public float decreaseFactor = 1.0f;
 
     // Internal Values
     // Input axis
@@ -22,6 +24,8 @@ public class PlayerControl : MonoBehaviour
     private Transform pivotObject;
     private float actualMovementSpeed = 5; private Vector3 lastPosition;
     private Vector3 movementDirection;
+    private Vector3 originalCamPos;
+    private float shakeDuration = 0f;
 
     void Start()
     {
@@ -68,10 +72,23 @@ public class PlayerControl : MonoBehaviour
         float inputScroll = Input.GetAxis("Mouse ScrollWheel");
         if (inputScroll != 0)
         {
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - inputScroll * scrollSensitivity, 5, held.weaponRange);
+            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - inputScroll * scrollSensitivity, 5, held.weaponRange - (held.weaponRange/10));
             
         }
         Camera.main.transform.position = transform.position + (new Vector3(2.25f, 0, 0) * Camera.main.orthographicSize / 5);
+        //originalCamPos = Camera.main.transform.position;
+
+        //if (shakeDuration > 0)
+        //{
+        //    Camera.main.transform.localPosition = originalCamPos + Random.insideUnitSphere * shakeAmount;
+
+        //    shakeDuration -= Time.deltaTime * decreaseFactor;
+        //}
+        //else
+        //{
+        //    shakeDuration = 0f;
+        //    Camera.main.transform.localPosition = originalCamPos;
+        //}
 
         // Shooting
         if (Input.GetButtonDown("Fire1"))
@@ -114,6 +131,11 @@ public class PlayerControl : MonoBehaviour
         transform.GetComponent<Animator>().SetFloat("y", movementDirection.y);
         lastPosition = transform.position;
     }
+
+    //public void Shake()
+    //{
+    //    shakeDuration = 0.05f;
+    //}
 
     void FixedUpdate()
     {

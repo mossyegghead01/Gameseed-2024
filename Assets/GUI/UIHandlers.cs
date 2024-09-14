@@ -107,7 +107,7 @@ public class UIHandlers : MonoBehaviour
                     var ui = Instantiate(notificationUiPrefab, canvas.transform);
                     ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
                     ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
-                    ui.transform.GetChild(0).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+                    ui.transform.GetChild(1).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
                 }
             }
             else
@@ -115,7 +115,7 @@ public class UIHandlers : MonoBehaviour
                 var ui = Instantiate(notificationUiPrefab, canvas.transform);
                 ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
                 ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
-                ui.transform.GetChild(0).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+                ui.transform.GetChild(1).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
             }
         }
 
