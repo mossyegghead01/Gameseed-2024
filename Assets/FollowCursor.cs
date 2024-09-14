@@ -13,7 +13,7 @@ public class FollowCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 cursorPos = Input.mousePosition;
+        Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(cursorPos.x, cursorPos.y, transform.position.z);
     }
 }
