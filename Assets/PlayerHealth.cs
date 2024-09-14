@@ -16,6 +16,7 @@ public class PlayerHealth : MonoBehaviour
     public bool incrementScoreOnDeath = false;
     public float IncrementMultiplier { private get; set; } = 1;
     public float scoreValue = 1;
+    [SerializeField] GameObject scoreObject;
 
     void Start()
     {
@@ -29,14 +30,11 @@ public class PlayerHealth : MonoBehaviour
         // Still clamping health
         if (health <= 0)
         {
-            if (destroyAfterDeath)
-            {
-                Destroy(this.gameObject);
-            }
             if (incrementScoreOnDeath)
             {
                 EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
             }
+            Dead();
         }
         var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
         healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
@@ -54,5 +52,12 @@ public class PlayerHealth : MonoBehaviour
     {
         health += modHealth;
 
+    }
+    void Dead()
+    {
+
+        // Change scene when player is dead
+
+        scoreObject.GetComponent<Score>().DeathScene();
     }
 }

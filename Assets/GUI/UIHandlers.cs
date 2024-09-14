@@ -24,7 +24,7 @@ public class UIHandlers : MonoBehaviour
     private Image fireTypeImage;
     private GameObject obelisk;
     public TextMeshProUGUI weaponTooltipText, slotTooptipText;
-    [SerializeField] private GameObject selectedWeapon;
+    [SerializeField] private GameObject selectedWeapon, scoreObject;
 
     [SerializeField] private float score = 0;
 
@@ -32,6 +32,10 @@ public class UIHandlers : MonoBehaviour
     {
         fireTypeImage = gunFireType.GetComponent<Image>();
         obelisk = GameObject.Find("Obelisk").transform.GetChild(0).gameObject;
+    }
+    void Awake()
+    {
+        DontDestroyOnLoad(scoreObject);
     }
 
     void Update()
@@ -146,6 +150,7 @@ public class UIHandlers : MonoBehaviour
         score += scoreIncrement;
         if (obelisk != null)
             obelisk.GetComponent<obeliskScript>().SetStage(Mathf.FloorToInt(score / 40) + 1);
+        scoreObject.GetComponent<Score>().score = score;
     }
 
     public float GetScore()
