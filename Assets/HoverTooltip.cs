@@ -10,11 +10,13 @@ public class HoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public GunProperty playerGun;
     [SerializeField] private TextMeshProUGUI weaponTooltip;
     [SerializeField] private GameObject weaponToolTipObject;
+    private GameObject player;
     private bool hovering = false;
     // Start is called before the first frame update
     void Start()
     {
         weaponToolTipObject.SetActive(false);
+        player = GameObject.Find("GameManager").GetComponent<GameManager>().GetPlayer();
     }
 
 
@@ -34,6 +36,7 @@ public class HoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
+        player.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/hoverUI"));
         if (playerGun != null)
         {
 

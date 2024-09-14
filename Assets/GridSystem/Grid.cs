@@ -75,11 +75,20 @@ public class Grid
             lightCells = obelisk.GetComponent<obeliskScript>().GetObeliskCoordinates();
         if (res == null || cells[(position.x, position.y)].GetCellState() == CellState.Empty)
         {
-            if (obelisk != null && CellFunctions.plant.Contains(cellState) && lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true)
+            if (obelisk != null && CellFunctions.plant.Contains(cellState))
             {
-                cells[(position.x, position.y)] = new Cell(position, cellState, this);
-                Debug.Log("new cell");
-                buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+                if (lightCells.ContainsKey((position.x, position.y)) && lightCells[(position.x, position.y)] == true)
+                {
+
+                    cells[(position.x, position.y)] = new Cell(position, cellState, this);
+                    Debug.Log("new cell");
+                    buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
+                }
+                else
+                {
+                    Debug.Log("not light");
+                    gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/failBuild"));
+                }
             }
             else if (CellFunctions.structure.Contains(cellState))
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -21,6 +22,7 @@ public class UIHandlers : MonoBehaviour
     public Transform ReloadOverlay;
     public Transform gunFireType;
     private Image fireTypeImage;
+    private GameObject obelisk;
     public TextMeshProUGUI weaponTooltipText, slotTooptipText;
     [SerializeField] private GameObject selectedWeapon;
 
@@ -29,6 +31,7 @@ public class UIHandlers : MonoBehaviour
     void Start()
     {
         fireTypeImage = gunFireType.GetComponent<Image>();
+        obelisk = GameObject.Find("Obelisk").transform.GetChild(0).gameObject;
     }
 
     void Update()
@@ -141,6 +144,8 @@ public class UIHandlers : MonoBehaviour
     public void IncrementScore(float scoreIncrement = 1)
     {
         score += scoreIncrement;
+        if (obelisk != null)
+            obelisk.GetComponent<obeliskScript>().SetStage(Mathf.FloorToInt(score / 40) + 1);
     }
 
     public float GetScore()

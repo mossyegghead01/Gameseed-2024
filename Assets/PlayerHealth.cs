@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
             }
         }
         var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
-        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), 0);
+        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
 
     }
     public float GetHealth()

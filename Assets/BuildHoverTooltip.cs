@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class BuildHoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Slot slot;
-    [SerializeField] private GameObject tooltip;
+    [SerializeField] private GameObject tooltip, player;
     private bool hovering = false;
     void Update()
     {
@@ -18,6 +18,8 @@ public class BuildHoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        player.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/hoverUI"));
+
         if (slot != null)
         {
 
@@ -32,6 +34,8 @@ public class BuildHoverTooltip : MonoBehaviour, IPointerEnterHandler, IPointerEx
     }
     void Start()
     {
+        player = GameObject.Find("GameManager").GetComponent<GameManager>().GetPlayer();
+
         tooltip = GameObject.Find("GameManager").GetComponent<GameManager>().GetBuildTooltip();
     }
 }

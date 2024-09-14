@@ -29,7 +29,7 @@ public class GunProperty : MonoBehaviour
             this.modifier = modifier;
         }
     }
-    
+
 
     // Gun Properties
     // Some properties will be inherited to bullets it fired.
@@ -46,7 +46,7 @@ public class GunProperty : MonoBehaviour
     public float innacuracy = 1;
     public Ability gunAbility;
     public float pointsMultiplier = 1;
-    
+
 
     // Single Shot and Scatter Shot internals
     private bool fired = false;
@@ -73,9 +73,9 @@ public class GunProperty : MonoBehaviour
         bullet.GetComponent<BulletHit>().SetPiercing(piercing);
         bullet.GetComponent<BulletHit>().PointsMultiplier = pointsMultiplier;
 
-        if (decrementBulletHere) 
+        if (decrementBulletHere)
         {
-            MagazineContent --;
+            MagazineContent--;
         }
     }
 
@@ -147,6 +147,7 @@ public class GunProperty : MonoBehaviour
             reloading = false;
             MagazineContent = magazineSize;
             reloadCooldown = 0.0;
+            GetComponent<AudioSource>().Stop();
         }
 
         if (shooting && MagazineContent > 0 && !reloading)
@@ -161,8 +162,9 @@ public class GunProperty : MonoBehaviour
 
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
+                        GetComponent<AudioSource>().pitch = 2f;
+                        SpawnBullet(0, true); GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
 
-                        SpawnBullet(0, true);
                     }
                     break;
                 case FireType.Single:
@@ -171,11 +173,12 @@ public class GunProperty : MonoBehaviour
                     {
                         fired = true;
                         cooldown = fireRate;
-
+                        GetComponent<AudioSource>().pitch = 1f;
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
 
-                        SpawnBullet(0, true);
+                        SpawnBullet(0, true); GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 case FireType.Scatter:
@@ -184,26 +187,29 @@ public class GunProperty : MonoBehaviour
                     {
                         fired = true;
                         cooldown = fireRate;
-
+                        GetComponent<AudioSource>().pitch = .8f;
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
 
                         SpawnBullet(0);
                         SpawnBullet(20);
                         SpawnBullet(-20);
-                        MagazineContent --;
+                        MagazineContent--; GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 case FireType.Burst:
                     if (cooldown == 0.0 && burstCount < 3)
                     {
                         cooldown = fireRate;
-
+                        GetComponent<AudioSource>().pitch = 1.5f;
                         // Partcle system, temporary
                         GetComponentInChildren<ParticleSystem>().Play();
 
                         SpawnBullet(0, true);
-                        burstCount ++;
+                        burstCount++;
+                        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Shoot"));
+
                     }
                     break;
                 default:
@@ -219,7 +225,7 @@ public class GunProperty : MonoBehaviour
     public void Fire()
     {
         shooting = true;
-        
+
     }
 
     // Stop firing the gun
@@ -236,6 +242,8 @@ public class GunProperty : MonoBehaviour
         {
             reloading = true;
             reloadCooldown = reloadSpeed;
+            GetComponent<AudioSource>().clip = Resources.Load<AudioClip>("Audio/gunReload");
+            GetComponent<AudioSource>().Play();
         }
     }
 }
