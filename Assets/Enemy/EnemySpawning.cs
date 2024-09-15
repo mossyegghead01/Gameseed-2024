@@ -48,7 +48,7 @@ public class EnemySpawning : MonoBehaviour
             float spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
             yield return new WaitForSeconds(spawnInterval);
 
-            int enemyCount = Random.Range(minEnemyCount, maxEnemyCount + 1);
+            int enemyCount = (int)Random.Range(minEnemyCount * Mathf.Floor(EventSystem.GetComponent<UIHandlers>().GetScore() * 0.025f), (maxEnemyCount + 1) * Mathf.Ceil(EventSystem.GetComponent<UIHandlers>().GetScore() * 0.025f));
             for (int i = 0; i < enemyCount; i++)
             {
                 Vector3 spawnPosition = GetRandomSpawn();
