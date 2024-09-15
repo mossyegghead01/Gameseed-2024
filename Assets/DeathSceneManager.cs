@@ -24,7 +24,7 @@ public class DeathSceneManager : MonoBehaviour
             PlayerPrefs.SetFloat("Highscore", highscore);
             PlayerPrefs.Save();
         }
-        StartCoroutine(AnimateScore());
+        StartCoroutine(GameObject.Find("Canvas/Black").GetComponent<FadeBlack>().FadeToNormal(() => StartCoroutine(AnimateScore())));
     }
 
     private IEnumerator AnimateScore()
