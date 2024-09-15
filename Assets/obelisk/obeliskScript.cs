@@ -24,7 +24,7 @@ public class obeliskScript : MonoBehaviour
     }
     public void SetStage(int stage)
     {
-        Debug.Log("Stage: " + stage);
+        //Debug.Log("Stage: " + stage);
         if (stage != this.stage)
             gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/levelUp"));
         this.stage = stage;

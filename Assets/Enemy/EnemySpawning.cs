@@ -35,7 +35,7 @@ public class EnemySpawning : MonoBehaviour
         var random = Random.Range(0, randomRadius);
         var random2 = Random.Range(0, randomRadius);
         Vector3 spawnPosition = new Vector3(playerPosition.x + random + (Random.value < 0.5f ? -spawnRadiusPlayer : spawnRadiusPlayer), playerPosition.y + random2 + (Random.value < 0.5f ? -spawnRadiusPlayer : spawnRadiusPlayer), 0);
-        Debug.Log(spawnPosition);
+        //Debug.Log(spawnPosition);
         if (Vector3.Distance(spawnPosition, obeliskPosition) < spawnRadiusObelisk)
             return GetRandomSpawn();
         else return spawnPosition;
@@ -54,7 +54,7 @@ public class EnemySpawning : MonoBehaviour
                 Vector3 spawnPosition = GetRandomSpawn();
                 var clone = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
                 clone.GetComponent<Enemy>().SetType(enemyTypes[Random.Range(0, enemyTypes.Length)]);
-                Debug.Log("spawned");
+                //Debug.Log("spawned");
             }
         }
     }
