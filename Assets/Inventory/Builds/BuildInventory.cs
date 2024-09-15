@@ -17,6 +17,7 @@ public class BuildInventory
         slots = new List<Slot>()
         {
             // new Slot(SlotState.Empty, this, 1),
+            new Slot(SlotState.Fence, this, 20)
         };
         buildInventoryUI = new BuildInventoryUI(this);
         SelectSlot(0);
