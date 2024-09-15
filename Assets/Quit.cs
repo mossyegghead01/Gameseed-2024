@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Quit : MonoBehaviour
+public class Quit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    private UnityEngine.UI.Button button;
+
+    void Start()
+    {
+        button = GetComponent<UnityEngine.UI.Button>();
+    }
+
     public void QuitGame()
     {
         GetComponent<AudioSource>().Play();
@@ -28,5 +36,16 @@ public class Quit : MonoBehaviour
 
             SceneManager.LoadScene("StartMenu");
         }
+    }
+
+    // Implement IPointerEnterHandler
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/hoverUI"));
+    }
+
+    // Implement IPointerExitHandler
+    public void OnPointerExit(PointerEventData eventData)
+    {
     }
 }

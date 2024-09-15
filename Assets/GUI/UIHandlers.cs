@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class UIHandlers : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class UIHandlers : MonoBehaviour
     private Image fireTypeImage;
     private GameObject obelisk;
     public TextMeshProUGUI weaponTooltipText, slotTooptipText;
+    public Sprite defaultInventorySpirte;
     [SerializeField] private GameObject selectedWeapon, scoreObject;
 
     [SerializeField] private float score = 0;
@@ -47,6 +49,14 @@ public class UIHandlers : MonoBehaviour
     // May be expanded for other UI update
     public void UpdateUI()
     {
+        if (inventoryHolder.transform.childCount == 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                inventoryPanels.transform.Find("Panel" + i).GetChild(0).GetComponent<Image>().sprite = defaultInventorySpirte;
+                inventoryPanels.transform.Find("Panel" + i).GetComponent<HoverTooltip>().playerGun = null;
+            }
+        }
         // Run through all items in inventory gameobject
         for (int i = 0; i < inventoryHolder.transform.childCount; i++)
         {
