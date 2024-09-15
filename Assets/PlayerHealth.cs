@@ -23,9 +23,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Volume volume;
     private Vignette vignette;
     private ChromaticAberration ca;
+    private RectTransform healthbar;
 
     void Start()
     {
+        healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
         // Clamp health
         health = Mathf.Clamp(health, 0, maxHealth);
         audioSource = GetComponent<AudioSource>();
@@ -54,8 +56,6 @@ public class PlayerHealth : MonoBehaviour
             }
             Dead();
         }
-        var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(1).GetChild(0).transform.GetComponent<RectTransform>();
-        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
         if (!audioSource.isPlaying)
         {
             vignette.intensity.value = 0.371f;
@@ -73,6 +73,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void ModifyHealth(float modHealth)
     {
+        healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
         health += modHealth;
         if (modHealth <= 0)
         {
