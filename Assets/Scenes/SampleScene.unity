@@ -348,6 +348,8 @@ MonoBehaviour:
   gunFireType: {fileID: 2023990622}
   weaponTooltipText: {fileID: 1972481919}
   slotTooptipText: {fileID: 0}
+  defaultInventorySpirte: {fileID: 21300000, guid: 4aec298f439ba1947b4f2c1260ae5d09,
+    type: 3}
   selectedWeapon: {fileID: 2052550152}
   scoreObject: {fileID: 1438060680}
   score: 0

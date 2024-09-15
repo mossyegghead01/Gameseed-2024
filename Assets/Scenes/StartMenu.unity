@@ -514,8 +514,8 @@ GameObject:
   - component: {fileID: 616449197}
   - component: {fileID: 616449201}
   - component: {fileID: 616449200}
-  - component: {fileID: 616449202}
   - component: {fileID: 616449199}
+  - component: {fileID: 616449202}
   - component: {fileID: 616449198}
   - component: {fileID: 616449203}
   m_Layer: 5
