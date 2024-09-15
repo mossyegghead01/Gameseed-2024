@@ -20,23 +20,30 @@ public class Story : MonoBehaviour
     };
     private int currentDialogueIndex = 0;
     private bool isAnimating = false;
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         textMesh = GetComponent<TMP_Text>();
         if (textMesh == null)
         {
             Debug.LogError("TextMesh component not found!");
             return;
         }
-        StartCoroutine(ChangeText(dialogues[currentDialogueIndex], 2.0f));
+        StartCoroutine(GameObject.Find("Canvas/Black").GetComponent<FadeBlack>().FadeToNormal(() => StartCoroutine(ChangeText(dialogues[currentDialogueIndex], 2.0f))));
+
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isAnimating)
+        if (!isAnimating)
         {
-            NextDialogue();
+            audioSource.Stop();
+            if (Input.GetMouseButtonDown(0))
+            {
+                NextDialogue();
+            }
         }
     }
 
@@ -49,13 +56,15 @@ public class Story : MonoBehaviour
         }
         else
         {
-            ChangeScene();
+            StartCoroutine(GameObject.Find("Canvas/Black").GetComponent<FadeBlack>().FadeToBlack(() => SceneManager.LoadScene("SampleScene")));
         }
     }
 
     public IEnumerator ChangeText(string newText, float animationDuration)
     {
+        Debug.Log("ChangeText called");
         isAnimating = true;
+        audioSource.Play();
         if (textMesh == null)
         {
             Debug.LogError("TextMesh component not found!");
@@ -79,11 +88,4 @@ public class Story : MonoBehaviour
         isAnimating = false;
     }
 
-    void ChangeScene()
-    {
-        // Assuming the next scene is the one with build index + 1
-        // You may need to adjust this based on your scene setup
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        SceneManager.LoadScene("SampleScene");
-    }
 }
