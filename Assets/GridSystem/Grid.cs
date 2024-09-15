@@ -81,6 +81,7 @@ public class Grid
                 {
 
                     cells[(position.x, position.y)] = new Cell(position, cellState, this);
+                    gameManager.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/build"));
                     Debug.Log("new cell");
                     buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
                 }
@@ -94,6 +95,7 @@ public class Grid
             {
                 cells[(position.x, position.y)] = new Cell(position, cellState, this);
                 Debug.Log("new cell");
+                gameManager.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/build"));
                 buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
             }
         }

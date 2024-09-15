@@ -82,6 +82,5 @@ public class Health : MonoBehaviour
     public void ModifyHealth(float modHealth)
     {
         health += modHealth;
-
     }
 }

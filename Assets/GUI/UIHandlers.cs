@@ -142,6 +142,7 @@ public class UIHandlers : MonoBehaviour
             current.transform.SetParent(inventoryHolder.transform, false);
             current.SetSiblingIndex(index);
             current.GetComponentInChildren<ParticleSystem>().Stop();
+            GameObject.Find("GameManager").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/gunSwitch"));
         }
     }
 

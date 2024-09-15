@@ -20,9 +20,11 @@ public class obeliskScript : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         backgroundTile = Resources.Load<TileBase>("Tilemap/Tiles/Background");
+        SetStage(1);
     }
     public void SetStage(int stage)
     {
+        Debug.Log("Stage: " + stage);
         if (stage != this.stage)
             gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/levelUp"));
         this.stage = stage;
@@ -48,6 +50,11 @@ public class obeliskScript : MonoBehaviour
         health -= damage;
         var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(0).GetChild(0).transform.GetComponent<RectTransform>();
         healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
+        if (GetComponent<AudioSource>().isPlaying == false)
+        {
+
+            GetComponent<AudioSource>().Play();
+        }
         if (health <= 0)
         {
             Destroy(transform.parent.gameObject);

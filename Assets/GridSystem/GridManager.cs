@@ -44,6 +44,7 @@ public class GridManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.CapsLock))
         {
             isCaps = !isCaps;
+            gameManager.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/click"));
             buildInventory.ToggleBuildState(isCaps);
         }
         if (Input.GetMouseButton(1))

@@ -9,6 +9,7 @@ public class BulletHit : MonoBehaviour
     private float damage;
     private float piercing;
     public float PointsMultiplier { private get; set; }
+    private GameObject gameManager;
 
     // Internal properties
     private Vector3 initialPos;
@@ -17,6 +18,7 @@ public class BulletHit : MonoBehaviour
     {
         // Initial position where the bullet were fired
         initialPos = transform.position;
+        gameManager = GameObject.Find("GameManager");
     }
 
     void FixedUpdate()
@@ -41,6 +43,8 @@ public class BulletHit : MonoBehaviour
             {
                 collidedHealth.health -= damage;
                 collidedHealth.IncrementMultiplier = PointsMultiplier;
+                gameManager.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/enemyHit"));
+
             }
 
             // Piercing
