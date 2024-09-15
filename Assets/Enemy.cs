@@ -31,37 +31,37 @@ public class Enemy : MonoBehaviour
         switch (type)
         {
             case EnemyType.Broccoli:
-                GetComponent<Health>().SetMaxHealth(100 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(100 * difficulty, 10, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(15f * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(0.3f * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(1f * Mathf.Ceil(difficulty * 0.25f), 1f, 5f);
                 break;
             case EnemyType.Carrot:
-                GetComponent<Health>().SetMaxHealth(50 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(50 * difficulty, 5, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(3 * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(0.3f * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(4f * Mathf.Ceil(difficulty * 0.25f), 1f, 5f);
                 break;
             case EnemyType.Corn:
-                GetComponent<Health>().SetMaxHealth(60 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(60 * difficulty, 6, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(6 * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(2 * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(2f * Mathf.Ceil(difficulty * 0.25f), 1f, 5f);
                 break;
             case EnemyType.Cauliflower:
-                GetComponent<Health>().SetMaxHealth(10 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(10 * difficulty, 1, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(5 * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(5 * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(2.5f * Mathf.Ceil(difficulty * 0.25f), 1f, 5f);
                 break;
             case EnemyType.Eggplant:
-                GetComponent<Health>().SetMaxHealth(86 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(86 * difficulty, 8.6f, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(6 * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(1 * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(3f * Mathf.Ceil(difficulty * 0.25f), 1f, 5f);
                 break;
             case EnemyType.Tomato:
-                GetComponent<Health>().SetMaxHealth(2 * difficulty);
+                GetComponent<Health>().SetMaxHealth(Mathf.Clamp(2 * difficulty, 2, Mathf.Infinity));
                 GetComponent<EnemyBreaking>().SetBreakSpeed(1 * Mathf.Ceil(difficulty * 0.025f));
                 GetComponent<EnemyBreaking>().SetDamage(20 * difficulty);
                 GetComponent<AIPath>().maxSpeed = Mathf.Clamp(0.5f * Mathf.Ceil(difficulty * 0.25f), 1f, 55f);
