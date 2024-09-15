@@ -127,6 +127,7 @@ public class UIHandlers : MonoBehaviour
                     ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
                     ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
                     ui.transform.GetChild(1).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+                    StartCoroutine(ui.GetComponent<ScaleAnim>().TransitionToOriginalSize());
                 }
             }
             else
@@ -135,8 +136,8 @@ public class UIHandlers : MonoBehaviour
                 ui.GetComponent<GachaNotificationHandler>().inventory = inventoryHolder;
                 ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
                 ui.transform.GetChild(1).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
+                StartCoroutine(ui.GetComponent<ScaleAnim>().TransitionToOriginalSize());
             }
-            StartCoroutine(notifHolder.GetComponent<ScaleAnim>().TransitionToOriginalSize());
         }
 
         scoreText.text = score.ToString();
