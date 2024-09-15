@@ -150,7 +150,7 @@ public class UIHandlers : MonoBehaviour
     {
         score += scoreIncrement;
         if (obelisk != null)
-            obelisk.GetComponent<obeliskScript>().SetStage(Mathf.FloorToInt(score / 40) + 1);
+            obelisk.GetComponent<obeliskScript>().SetStage(Mathf.FloorToInt(score / 15) + 1);
         scoreObject.GetComponent<Score>().score = score;
     }
 

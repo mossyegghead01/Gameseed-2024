@@ -137,7 +137,7 @@ public class WeaponRolling : MonoBehaviour
     public StatBounds rangeBounds = new(20, 70);
     public StatBounds PiercingBounds = new(0, 3);
     public StatBounds innacuracyBounds = new(0, 5);
-    public StatBounds movementBonusBounds = new(-5, 5);
+    public StatBounds movementBonusBounds = new(-10, 10);
     public StatBounds reloadSpeedBounds = new(2, 7);
 
 
@@ -169,7 +169,7 @@ public class WeaponRolling : MonoBehaviour
                 gun.fireRate = Mathf.Round(UnityEngine.Random.Range(fireRateBounds.GoodRollRange().lower, fireRateBounds.GoodRollRange().upper) * 100) / 100.0f;
                 gun.projectileSpeed = Mathf.Round(UnityEngine.Random.Range(projectileSpeedBounds.MidRollRange().lower, projectileSpeedBounds.MidRollRange().upper));
                 gun.weaponRange = Mathf.Round(UnityEngine.Random.Range(rangeBounds.GoodRollRange().lower, rangeBounds.GoodRollRange().upper));
-                gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.MidRollRange().lower, damageBounds.MidRollRange().upper));
+                gun.damage = Mathf.Round(UnityEngine.Random.Range(damageBounds.GoodRollRange().lower, damageBounds.GoodRollRange().upper));
                 gun.piercing = Mathf.Round(UnityEngine.Random.Range(PiercingBounds.GoodRollRange().lower, PiercingBounds.GoodRollRange().upper));
                 gun.innacuracy = Mathf.Round(UnityEngine.Random.Range(innacuracyBounds.GoodRollRange().lower, innacuracyBounds.GoodRollRange().upper));
                 gun.movementBonus = Mathf.Round(UnityEngine.Random.Range(movementBonusBounds.MidRollRange().lower, movementBonusBounds.MidRollRange().upper));

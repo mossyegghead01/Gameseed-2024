@@ -35,6 +35,14 @@ public class PlayerControl : MonoBehaviour
         Destroy(EventSystem.current.GetComponent<UIHandlers>().inventoryHolder.transform.GetChild(0).gameObject);
     }
 
+    //private void Awake()
+    //{
+    //    pivotObject = gameObject.transform.GetChild(0);
+    //    EventSystem.current.GetComponent<WeaponRolling>().RollAny(true);
+    //    EventSystem.current.GetComponent<UIHandlers>().InventoryButtonClicked(0);
+    //    Destroy(EventSystem.current.GetComponent<UIHandlers>().inventoryHolder.transform.GetChild(0).gameObject);
+    //}
+
     void Update()
     {
         // Input axis

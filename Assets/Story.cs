@@ -16,7 +16,7 @@ public class Story : MonoBehaviour
         "Now you're in a\ncave stranded",
         "Hopefully no monsters\nare around",
         "lol",
-        "[LMB] Shoot\n[RMB] Build/Break"
+        "[LMB] Shoot\n[RMB] Build/Break\n[R] Reload\n[ScrollWheel] Change zoom"
     };
     private int currentDialogueIndex = 0;
     private bool isAnimating = false;
