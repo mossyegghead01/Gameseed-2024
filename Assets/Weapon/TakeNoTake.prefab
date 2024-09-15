@@ -981,6 +981,7 @@ GameObject:
   - component: {fileID: 3458282420293644990}
   - component: {fileID: 4535151804609264642}
   - component: {fileID: 7051326452803110859}
+  - component: {fileID: 7237990660753077366}
   m_Layer: 5
   m_Name: TakeNoTake
   m_TagString: Untagged
@@ -1067,6 +1068,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   held: {fileID: 0}
   inventory: {fileID: 0}
+--- !u!114 &7237990660753077366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188568910675458361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c632182c5d7089043bcb9902bdd3f225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0
+  animTime: 0.5
+  startScale: 0.5
+  active: 1
 --- !u!1 &7039321170244544947
 GameObject:
   m_ObjectHideFlags: 0
