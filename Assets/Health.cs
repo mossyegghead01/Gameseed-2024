@@ -41,17 +41,17 @@ public class Health : MonoBehaviour
                 var score = uiHandlers.GetScore();
                 var random = System.Math.Clamp(Mathf.Ceil(Random.Range(0, 30) * Mathf.Ceil((score/4))), 0, 100);
                 Debug.Log(random);
-                if (random <= 20)
+                if (random <= 15)
                     AddSlot(SlotState.Post);
                 else if (random <= 40)
                     AddSlot(SlotState.Fence);
                 else if (random <= 70)
                     AddSlot(SlotState.Wall);
-                else if (random <= 85)
+                else if (random <= 80)
                     AddSlot(SlotState.ReinforcedWall);
-                else if (random <= 90)
-                    AddSlot(SlotState.Concrete);
                 else if (random <= 95)
+                    AddSlot(SlotState.Concrete);
+                else
                     AddSlot(SlotState.ReinforcedConcrete);
                 EventSystem.current.GetComponent<UIHandlers>().IncrementScore(scoreValue * IncrementMultiplier);
             }

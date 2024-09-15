@@ -136,7 +136,7 @@ public class WeaponRolling : MonoBehaviour
     public StatBounds rangeBounds = new(20, 70);
     public StatBounds PiercingBounds = new(0, 3);
     public StatBounds innacuracyBounds = new(0, 5);
-    public StatBounds movementBonusBounds = new(-10, 10);
+    public StatBounds movementBonusBounds = new(-5, 5);
     public StatBounds reloadSpeedBounds = new(2, 7);
 
 
