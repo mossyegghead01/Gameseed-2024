@@ -87,3 +87,6 @@ crashlytics-build.properties
 /.vscode
 
 *.json
+
+# Mossy's build output directory
+/BuildOutput
