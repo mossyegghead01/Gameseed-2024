@@ -62,6 +62,7 @@ public class GridManager : MonoBehaviour
             if (isCaps)
             {
                 grid.BreakCell(2, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/enemyHit"));
                 Debug.Log("break");
             }
         }

@@ -83,7 +83,8 @@ public class Cell
             {
                 Debug.Log("harvest");
                 // * GACHA CODE HERE, make new class pls
-                switch (cellState) { 
+                switch (cellState)
+                {
                     case CellState.Carrot:
                         EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Carrot);
                         break;
@@ -103,7 +104,7 @@ public class Cell
                         EventSystem.current.GetComponent<WeaponRolling>().Roll(WeaponRolling.WeaponPlantType.Broccoli);
                         break;
                 }
-                
+
             }
             Debug.Log("not harvest");
             SetCell(CellState.Empty);
@@ -117,6 +118,7 @@ public class Cell
             health = 0;
             SetCell(CellState.Empty);
             plant = null;
+            GameObject.Find("GameManager").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/Trample"));
         }
     }
 
