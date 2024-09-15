@@ -32,7 +32,19 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 yield return null;
             }
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Story");
+
+            if (SceneManager.GetActiveScene().name == "StartMenu")
+            {
+                SceneManager.LoadScene("Story");
+            }
+            else if (SceneManager.GetActiveScene().name == "DeathMenu")
+            {
+                SceneManager.LoadScene("SampleScene");
+            }
+            else
+            {
+                SceneManager.LoadScene("StartMenu");
+            }
         }
 
     }
