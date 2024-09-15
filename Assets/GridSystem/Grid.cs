@@ -98,6 +98,8 @@ public class Grid
                 gameManager.GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/build"));
                 buildInventory.SubtractSlot(BuildInventoryFunctions.SlotToIndex(BuildInventoryFunctions.CellToSlot(cellState), buildInventory.GetSlots()));
             }
+            else
+                gameManager.GetComponent<GameManager>().GetPlayer().GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/failBuild"));
         }
     }
     public void BuildCell(CellState cellState, Vector3 mousePosition)
