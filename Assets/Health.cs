@@ -39,7 +39,7 @@ public class Health : MonoBehaviour
             {
                 if (Random.Range(0, 100) <= 50) gameManager.GetComponent<GridManager>().GetBuildInventory().AddSlot(Enemy.Functions.EnemyToSlotState(enemyType));
                 var score = uiHandlers.GetScore();
-                var random = System.Math.Clamp(Mathf.Ceil(Random.Range(0, 20) * Mathf.Ceil((score/4))), 0, 100);
+                var random = System.Math.Clamp(Mathf.Ceil(Random.Range(0, 30) * Mathf.Ceil((score/4))), 0, 100);
                 Debug.Log(random);
                 if (random <= 20)
                     AddSlot(SlotState.Post);
