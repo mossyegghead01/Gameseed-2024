@@ -1328,8 +1328,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5841076417616374029, guid: 98be9cae5037ac5459cda7ca72382bb9,
     type: 3}
   gameManager: {fileID: 0}
-  minSpawnInterval: 5
-  maxSpawnInterval: 10
+  minSpawnInterval: 3
+  maxSpawnInterval: 5
   minEnemyCount: 1
   maxEnemyCount: 2
   canSpawn: 1

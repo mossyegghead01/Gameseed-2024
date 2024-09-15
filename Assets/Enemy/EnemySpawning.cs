@@ -43,18 +43,23 @@ public class EnemySpawning : MonoBehaviour
 
     IEnumerator SpawnEnemies()
     {
+        Debug.Log("Spawning enemies...");
         while (canSpawn)
         {
             float spawnInterval = Random.Range(minSpawnInterval, maxSpawnInterval);
             yield return new WaitForSeconds(spawnInterval);
 
             int enemyCount = (int)Random.Range(minEnemyCount * Mathf.Floor(EventSystem.GetComponent<UIHandlers>().GetScore() * 0.025f), (maxEnemyCount + 1) * Mathf.Ceil(EventSystem.GetComponent<UIHandlers>().GetScore() * 0.025f));
+            if (enemyCount <= 0)
+            {
+                enemyCount = (int)Random.Range(minEnemyCount, maxEnemyCount + 1);
+            }
             for (int i = 0; i < enemyCount; i++)
             {
                 Vector3 spawnPosition = GetRandomSpawn();
                 var clone = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
                 clone.GetComponent<Enemy>().SetType(enemyTypes[Random.Range(0, enemyTypes.Length)]);
-                //Debug.Log("spawned");
+                Debug.Log("spawned");
             }
         }
     }

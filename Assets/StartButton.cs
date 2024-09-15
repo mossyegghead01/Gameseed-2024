@@ -40,7 +40,7 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
             else if (SceneManager.GetActiveScene().name == "DeathMenu")
             {
-                SceneManager.LoadScene("SampleScene");
+                StartCoroutine(GameObject.Find("Canvas/Black").GetComponent<FadeBlack>().FadeToBlack(() => SceneManager.LoadScene("SampleScene")));
             }
             else
             {

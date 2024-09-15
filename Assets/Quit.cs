@@ -34,7 +34,7 @@ public class Quit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 yield return null;
             }
 
-            SceneManager.LoadScene("StartMenu");
+            StartCoroutine(GameObject.Find("Canvas/Black").GetComponent<FadeBlack>().FadeToBlack(() => SceneManager.LoadScene("StartMenu")));
         }
     }
 
