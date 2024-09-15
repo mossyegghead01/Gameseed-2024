@@ -393,7 +393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Highscore : 999'
+  m_text: 'Highscore : '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 82a43613707beeb4baf7f65cb8b71af7, type: 2}
   m_sharedMaterial: {fileID: 1004489802442590491, guid: 82a43613707beeb4baf7f65cb8b71af7,
