@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
                 GetComponent<Health>().SetMaxHealth(50 * difficulty);
                 GetComponent<EnemyBreaking>().SetBreakSpeed(3 * difficulty);
                 GetComponent<EnemyBreaking>().SetDamage(0.3f * difficulty);
-                GetComponent<AIPath>().maxSpeed = 5f * Mathf.Clamp(difficulty * 0.25f, 1, Mathf.Infinity);
+                GetComponent<AIPath>().maxSpeed = 4f * Mathf.Clamp(difficulty * 0.25f, 1, Mathf.Infinity);
                 break;
             case EnemyType.Corn:
                 GetComponent<Health>().SetMaxHealth(60 * difficulty);
