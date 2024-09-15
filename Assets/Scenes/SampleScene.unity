@@ -1347,7 +1347,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   minSpawnInterval: 5
   maxSpawnInterval: 10
-  minEnemyCount: 0
+  minEnemyCount: 1
   maxEnemyCount: 2
   canSpawn: 1
   EventSystem: {fileID: 0}
