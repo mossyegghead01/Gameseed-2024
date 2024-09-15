@@ -90,3 +90,5 @@ crashlytics-build.properties
 
 # Mossy's build output directory
 /BuildOutput
+/BuildOutputWeb
+*.zip

@@ -10,7 +10,7 @@ public static class ScalingFunctions
     // Enemy be chonky
     public static float EnemyScalling(float score)
     {
-        return (0.0135f * Mathf.Pow(score, 2));
+        return (0.0135f * Mathf.Pow(score, 2) + 1);
     }
 
     // I definetly going to need to change the tuple typing.
