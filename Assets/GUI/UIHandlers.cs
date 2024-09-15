@@ -13,6 +13,7 @@ public class UIHandlers : MonoBehaviour
     public TextMeshProUGUI statText;
     public GameObject inventoryHolder;
     public CanvasRenderer inventoryPanels;
+    public GameObject notifHolder;
     public Image currentGunIcon;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI ammoText;
@@ -24,6 +25,7 @@ public class UIHandlers : MonoBehaviour
     private Image fireTypeImage;
     private GameObject obelisk;
     public TextMeshProUGUI weaponTooltipText, slotTooptipText;
+    bool debounce = false;
     [SerializeField] private GameObject selectedWeapon, scoreObject;
 
     [SerializeField] private float score = 0;
@@ -124,6 +126,7 @@ public class UIHandlers : MonoBehaviour
                 ui.GetComponent<GachaNotificationHandler>().held = gachaHolder.transform.GetChild(i).gameObject;
                 ui.transform.GetChild(1).GetComponent<Image>().sprite = gachaHolder.transform.GetChild(i).GetComponent<Item>().itemIcon;
             }
+            StartCoroutine(notifHolder.GetComponent<ScaleAnim>().TransitionToOriginalSize());
         }
 
         scoreText.text = score.ToString();
@@ -142,8 +145,24 @@ public class UIHandlers : MonoBehaviour
             current.transform.SetParent(inventoryHolder.transform, false);
             current.SetSiblingIndex(index);
             current.GetComponentInChildren<ParticleSystem>().Stop();
-            GameObject.Find("GameManager").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/gunSwitch"));
+            if (debounce == false)
+            {
+                debounce = true;
+                StartCoroutine(WaitSwitch());
+            }
+            else
+            {
+                GameObject.Find("GameManager").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/gunSwitch"));
+
+            }
         }
+    }
+
+    private IEnumerator WaitSwitch()
+    {
+        yield return new WaitForSeconds(2.3f);
+        GameObject.Find("GameManager").GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/gunSwitch"));
+
     }
 
     public void IncrementScore(float scoreIncrement = 1)
