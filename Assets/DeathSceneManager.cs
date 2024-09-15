@@ -6,11 +6,24 @@ using UnityEngine;
 public class DeathSceneManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    private float score;
+    private float score, highscore;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI highscoreText;
+
+    private void Start()
+    {
+        highscore = PlayerPrefs.GetFloat("Highscore", 0f);
+    }
+
     public void SetScore(float score)
     {
         this.score = score;
+        if (score > highscore)
+        {
+            highscore = score;
+            PlayerPrefs.SetFloat("Highscore", highscore);
+            PlayerPrefs.Save();
+        }
         StartCoroutine(AnimateScore());
     }
 
@@ -29,7 +42,8 @@ public class DeathSceneManager : MonoBehaviour
             scoreText.text = "Final Score : \n" + Mathf.Round(currentScore);
             yield return null;
         }
-
+        gameObject.GetComponent<AudioSource>().Play();
         scoreText.text = "Final Score : \n" + score;
+        highscoreText.text = "Highscore : " + highscore;
     }
 }

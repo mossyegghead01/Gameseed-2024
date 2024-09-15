@@ -13,7 +13,7 @@ public class obeliskScript : MonoBehaviour
     [SerializeField] private GameObject gameManager;
     private TileBase backgroundTile;
     private Dictionary<(int, int), bool> obeliskCoordinates;
-
+    [SerializeField] private RectTransform healthbar;
     private int stage = 1;
     // Start is called before the first frame update
     void Start()
@@ -48,7 +48,6 @@ public class obeliskScript : MonoBehaviour
     public void Damage(float damage)
     {
         health -= damage;
-        var healthbar = GameObject.Find("Canvas").transform.GetChild(3).GetChild(0).GetChild(0).transform.GetComponent<RectTransform>();
         healthbar.offsetMax = new Vector2(-(170 - (health / maxHealth * 170)), healthbar.offsetMax.y);
         if (GetComponent<AudioSource>().isPlaying == false)
         {
